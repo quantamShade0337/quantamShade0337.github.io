@@ -512,6 +512,65 @@
             font-size: 15px;
         }
 
+        /* Contact Section */
+        .contact-section {
+            padding: 100px 60px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .contact-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .contact-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-btn {
+            padding: 16px 40px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-btn:hover {
+            background: rgba(30, 32, 60, 0.6);
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .contact-btn.primary {
+            background: var(--purple);
+            border-color: var(--purple);
+        }
+
+        .contact-btn.primary:hover {
+            background: #5558e3;
+        }
+
         /* Footer */
         .footer {
             padding: 60px;
@@ -545,6 +604,25 @@
 
             .accomplishment-card {
                 min-width: 280px;
+            }
+
+            .contact-section {
+                padding: 80px 20px;
+            }
+
+            .contact-title {
+                font-size: 2rem;
+            }
+
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
             }
 
             .hero {
@@ -653,8 +731,13 @@
                 </a>
 
                 <a href="#scripties" class="accomplishment-card">
+                    <h3>Scripties</h3>
+                    <p>Mobile app for mastering <strong>public speaking</strong> with <strong>teleprompter</strong>, real-time feedback, and <strong>WPM tracking</strong>.</p>
+                </a>
+
+                <a href="#swift2025" class="accomplishment-card">
                     <h3>Swift Accelerator 2025</h3>
-                    <p>Built <strong>Scripties</strong> and deployed it to the <strong>App Store</strong> after graduating from the Swift Accelerator Programme.</p>
+                    <p>Graduated from the <strong>Swift Accelerator Programme</strong>, developing professional iOS apps with <strong>Swift</strong> and <strong>SwiftUI</strong>.</p>
                 </a>
 
                 <a href="#signlanguage" class="accomplishment-card">
@@ -739,6 +822,34 @@
                 </div>
             </div>
 
+            <!-- Swift Accelerator 2025 -->
+            <div class="project" id="swift2025">
+                <div class="project-header">
+                    <div class="project-meta">
+                        <div class="project-label">Programme • 2025</div>
+                        <h2 class="project-title">Swift Accelerator 2025</h2>
+                    </div>
+                    <div class="project-actions">
+                        <div class="project-badge">Graduate</div>
+                    </div>
+                </div>
+
+                <div class="two-col">
+                    <div class="content-card">
+                        <h3>The Programme</h3>
+                        <p>I graduated from the <strong>Swift Accelerator Programme 2025</strong>, an intensive program focused on developing professional-grade iOS applications using Swift and SwiftUI.</p>
+                    </div>
+                    <div class="content-card">
+                        <h3>The Journey</h3>
+                        <p>The app provides <strong>real-time word counts</strong> and estimated times, featuring a <strong>teleprompter</strong> and a review system for actionable feedback.</p>
+                    </div>
+                </div>
+
+                <div class="full-card">
+                    <p>We overcame <strong>repeated design rejections</strong> and a grueling <strong>two-week coding sprint</strong>, navigating <strong>SwiftUI errors</strong> to successfully launch Scripties on the <strong>App Store</strong>. This experience taught valuable lessons about perseverance, iterative design, and the importance of user feedback in creating meaningful applications.</p>
+                </div>
+            </div>
+
             <!-- Sign Language AI -->
             <div class="project" id="signlanguage">
                 <div class="project-header">
@@ -814,8 +925,24 @@
         </section>
     </main>
 
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <h2 class="contact-title">Let's Connect</h2>
+        <p class="contact-subtitle">
+            Interested in collaborating or just want to say hi? Feel free to reach out through any of these platforms.
+        </p>
+        <div class="contact-buttons">
+            <a href="https://www.linkedin.com/in/ethan-soh-9548863a9/" class="contact-btn primary" target="_blank">
+                LinkedIn ↗
+            </a>
+            <a href="https://github.com/quantamShade0337" class="contact-btn" target="_blank">
+                GitHub ↗
+            </a>
+        </div>
+    </section>
+
     <!-- Footer -->
-    <footer class="footer" id="contact">
+    <footer class="footer">
         © 2026 <strong>Ethan Soh</strong> | BPGHS. Built with <strong>HTML</strong> & <strong>Emerald Light</strong>.
     </footer>
 
