@@ -115,10 +115,12 @@
 
         .scroll-indicator {
             position: absolute;
-            bottom: 40px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
             animation: bounce 2s infinite;
+            opacity: 1;
+            transition: opacity 0.3s;
         }
 
         @keyframes bounce {
@@ -599,12 +601,17 @@
         });
 
         // Scroll indicator fade
+        let lastScrollY = window.scrollY;
         window.addEventListener('scroll', () => {
             const indicator = document.querySelector('.scroll-indicator');
-            if (window.scrollY > 100) {
-                indicator.style.opacity = '0';
-            } else {
-                indicator.style.opacity = '1';
+            if (indicator) {
+                if (window.scrollY > 50) {
+                    indicator.style.opacity = '0';
+                    indicator.style.pointerEvents = 'none';
+                } else {
+                    indicator.style.opacity = '1';
+                    indicator.style.pointerEvents = 'auto';
+                }
             }
         });
 
