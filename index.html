@@ -6,7 +6,7 @@
     <title>Ethan Soh — Developer & Creator</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -16,45 +16,137 @@
         }
 
         :root {
-            --bg: #0a0e27;
-            --surface: #1a1f3a;
+            --bg-dark: #0a0b1e;
+            --bg-card: rgba(30, 32, 60, 0.4);
+            --border: rgba(255, 255, 255, 0.1);
             --accent: #00ff88;
-            --accent-dim: #00cc6a;
             --text: #e8ecfb;
-            --text-dim: #8892b0;
-            --purple: #a78bfa;
-            --blue: #60a5fa;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            --text-dim: rgba(232, 236, 251, 0.6);
+            --purple: #6366f1;
         }
 
         body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--bg);
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-dark);
             color: var(--text);
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* Animated background */
-        body::before {
-            content: '';
+        /* Radial spotlight effect */
+        #spotlight {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
-            z-index: -1;
-            animation: bgPulse 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+            background: radial-gradient(
+                600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(99, 102, 241, 0.15),
+                transparent 40%
+            );
         }
 
-        @keyframes bgPulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 0.8; }
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            background: rgba(10, 11, 30, 0.8);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--purple), var(--accent));
+            border-radius: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-link {
+            padding: 8px 16px;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--text);
+            background: var(--bg-card);
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            padding: 8px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover {
+            background: rgba(30, 32, 60, 0.6);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-btn.primary {
+            background: var(--purple);
+            border-color: var(--purple);
+        }
+
+        .nav-btn.primary:hover {
+            background: #5558e3;
+        }
+
+        /* Main Content */
+        .main {
+            position: relative;
+            z-index: 2;
+            padding-top: 80px;
         }
 
         /* Hero Section */
@@ -63,96 +155,150 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 0 8%;
-            padding-bottom: 0;
-            position: relative;
+            align-items: center;
+            text-align: center;
+            padding: 60px 60px 120px;
         }
 
-        .hero-name {
-            font-family: 'Unbounded', sans-serif;
-            font-size: clamp(3.5rem, 12vw, 9rem);
+        .hero-label {
+            display: inline-block;
+            padding: 8px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 10vw, 7rem);
             font-weight: 800;
-            line-height: 0.9;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dim) 100%);
+            line-height: 1.1;
+            margin-bottom: 30px;
+        }
+
+        .hero-title .accent {
+            font-style: italic;
+            background: linear-gradient(135deg, var(--accent), var(--purple));
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-            margin-bottom: 1.5rem;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(60px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .hero-subtitle {
-            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-size: clamp(1rem, 2vw, 1.3rem);
             color: var(--text-dim);
-            font-weight: 500;
-            animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
-            margin-bottom: 3rem;
+            max-width: 800px;
+            line-height: 1.7;
+            margin-bottom: 40px;
         }
 
-        .hero-bio {
-            max-width: 600px;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: var(--text-dim);
-            animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s backwards;
-        }
-
-        .hero-bio strong {
-            color: var(--accent);
-            font-weight: 700;
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-            opacity: 1;
-            transition: opacity 0.3s;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-10px); }
-        }
-
-        .scroll-indicator svg {
-            width: 24px;
-            height: 24px;
-            stroke: var(--accent);
-        }
-
-        /* Accomplishments Section (Original Style) */
-        .accomplishments-section {
-            padding: 40px 8% 80px 8%;
-            border-top: 1px solid var(--surface);
-        }
-
-        .section-title {
-            font-family: 'Unbounded', sans-serif;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--accent);
-            margin-bottom: 3rem;
+        .hero-subtitle strong {
+            color: var(--text);
             font-weight: 600;
-            opacity: 0;
-            animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
         }
 
-        .cards-grid {
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 60px;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: 1px solid var(--border);
+        }
+
+        .btn-primary {
+            background: var(--purple);
+            color: white;
+            border-color: var(--purple);
+        }
+
+        .btn-primary:hover {
+            background: #5558e3;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(30, 32, 60, 0.6);
+        }
+
+        .hero-note {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-dim);
+            padding: 12px 24px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-card);
+        }
+
+        /* Tech Stack Pills */
+        .tech-pills {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 60px;
+        }
+
+        .pill {
+            padding: 16px 32px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .pill:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(30, 32, 60, 0.6);
+        }
+
+        .pill-title {
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .pill-subtitle {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+        }
+
+        /* Accomplishments Cards Section */
+        .accomplishments-section {
+            padding: 60px 60px 80px 60px;
+            border-top: 1px solid var(--border);
+        }
+
+        .accomplishments-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .cards-scroll {
             display: flex;
             gap: 24px;
             overflow-x: auto;
@@ -160,471 +306,531 @@
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: thin;
-            scrollbar-color: var(--accent) var(--surface);
-            padding: 10px 0 20px 0;
-            margin-bottom: 60px;
+            scrollbar-color: var(--accent) rgba(30, 32, 60, 0.4);
+            padding-bottom: 20px;
         }
 
-        .cards-grid::-webkit-scrollbar {
+        .cards-scroll::-webkit-scrollbar {
             height: 8px;
         }
 
-        .cards-grid::-webkit-scrollbar-track {
-            background: var(--surface);
+        .cards-scroll::-webkit-scrollbar-track {
+            background: rgba(30, 32, 60, 0.4);
             border-radius: 4px;
         }
 
-        .cards-grid::-webkit-scrollbar-thumb {
+        .cards-scroll::-webkit-scrollbar-thumb {
             background: var(--accent);
             border-radius: 4px;
         }
 
-        .cards-grid::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-dim);
+        .cards-scroll::-webkit-scrollbar-thumb:hover {
+            background: var(--purple);
         }
 
-        .card {
-            background: var(--surface);
-            border: 1px solid rgba(0, 255, 136, 0.2);
+        .accomplishment-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: 12px;
             padding: 28px;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            min-width: 320px;
+            flex-shrink: 0;
+            scroll-snap-align: start;
+            transition: all 0.3s;
             cursor: pointer;
             text-decoration: none;
             color: inherit;
             display: block;
-            min-width: 320px;
-            flex-shrink: 0;
-            scroll-snap-align: start;
-            opacity: 0;
-            animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .card:nth-child(1) { animation-delay: 0.7s; }
-        .card:nth-child(2) { animation-delay: 0.8s; }
-        .card:nth-child(3) { animation-delay: 0.9s; }
-        .card:nth-child(4) { animation-delay: 1s; }
-        .card:nth-child(5) { animation-delay: 1.1s; }
-
-        .card:hover {
+        .accomplishment-card:hover {
             border-color: var(--accent);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.15);
-            background: #222847;
+            transform: translateY(-4px);
+            background: rgba(30, 32, 60, 0.6);
         }
 
-        .card h3 {
-            font-family: 'Unbounded', sans-serif;
+        .accomplishment-card h3 {
             color: var(--accent);
             font-size: 1.3rem;
-            margin-bottom: 1rem;
+            margin-bottom: 12px;
             font-weight: 700;
         }
 
-        .card p {
+        .accomplishment-card p {
             color: var(--text-dim);
             line-height: 1.7;
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
-        .card strong {
-            color: var(--accent);
+        .accomplishment-card strong {
+            color: var(--text);
+        }
+
+        /* Section */
+        .section {
+            padding: 80px 60px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dim);
             font-weight: 600;
         }
 
-        /* Detailed Sections */
-        .details-section {
-            padding: 80px 8%;
-            border-top: 1px solid var(--surface);
+        .section-note {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-dim);
         }
 
-        .detail-block {
-            max-width: 900px;
-            margin: 0 auto 100px;
+        /* Project Card */
+        .project {
+            margin-bottom: 100px;
         }
 
-        .detail-block h2 {
-            font-family: 'Unbounded', sans-serif;
-            color: var(--accent);
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 40px;
+        }
+
+        .project-meta {
+            flex: 1;
+        }
+
+        .project-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-dim);
+            margin-bottom: 12px;
+        }
+
+        .project-title {
             font-size: 2.5rem;
-            margin-bottom: 2rem;
             font-weight: 800;
-            opacity: 0;
-            animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+            margin-bottom: 0;
         }
 
-        .detail-block p {
-            color: var(--text-dim);
-            font-size: 1.15rem;
-            line-height: 1.9;
-            margin-bottom: 1.5rem;
-            opacity: 0;
-            animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+        .project-actions {
+            display: flex;
+            gap: 12px;
         }
 
-        .detail-block strong {
-            color: var(--accent);
-            font-weight: 700;
-        }
-
-        .back-link {
-            display: inline-block;
-            color: var(--accent);
-            text-decoration: none;
-            font-size: 0.95rem;
-            border: 1px solid var(--accent);
-            padding: 10px 20px;
+        .project-badge {
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: 8px;
-            transition: 0.3s;
-            margin-top: 1rem;
-        }
-
-        .back-link:hover {
-            background: var(--accent);
-            color: var(--bg);
-        }
-
-        /* Flowday Product Section */
-        .flowday-product-section {
-            padding: 100px 8%;
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.03) 0%, rgba(0, 204, 106, 0.05) 100%);
-            border-top: 1px solid var(--surface);
-        }
-
-        .product-header {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 80px;
-        }
-
-        .product-header h2 {
-            font-family: 'Unbounded', sans-serif;
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dim) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1.5rem;
-            font-weight: 800;
-            opacity: 0;
-            animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
-        }
-
-        .product-header p {
-            font-size: 1.4rem;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             color: var(--text-dim);
-            line-height: 1.7;
-            opacity: 0;
-            animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
         }
 
-        .product-tagline {
-            font-size: 1.1rem !important;
-            margin-top: 1rem;
-            opacity: 0;
-            animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
-        }
-
-        .product-cta {
-            display: inline-block;
-            background: var(--accent);
-            color: var(--bg);
-            padding: 16px 40px;
+        .project-link {
+            padding: 8px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: 8px;
+            color: var(--text);
             text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            margin-top: 2rem;
-            opacity: 0;
-            animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
         }
 
-        .product-cta:hover {
-            background: var(--accent-dim);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+        .project-link:hover {
+            background: rgba(30, 32, 60, 0.6);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
-        .features-grid {
+        /* Two Column Layout */
+        .two-col {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 32px;
-            margin-top: 60px;
-        }
-
-        .feature-card {
-            background: var(--surface);
-            border: 1px solid rgba(0, 255, 136, 0.3);
-            border-radius: 16px;
-            padding: 36px;
-            transition: all 0.3s;
-            opacity: 0;
-            animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .feature-card:nth-child(1) { animation-delay: 0.7s; }
-        .feature-card:nth-child(2) { animation-delay: 0.8s; }
-        .feature-card:nth-child(3) { animation-delay: 0.9s; }
-        .feature-card:nth-child(4) { animation-delay: 1s; }
-        .feature-card:nth-child(5) { animation-delay: 1.1s; }
-        .feature-card:nth-child(6) { animation-delay: 1.2s; }
-
-        .feature-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.2);
-        }
-
-        .feature-card h3 {
-            font-family: 'Unbounded', sans-serif;
-            color: var(--accent);
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        .feature-card p {
-            color: var(--text-dim);
-            line-height: 1.8;
-            font-size: 1.05rem;
-        }
-
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 24px;
-            margin-top: 80px;
-            text-align: center;
+            margin-bottom: 40px;
         }
 
-        .stat-item {
-            background: var(--surface);
+        .content-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
             padding: 32px;
-            border-radius: 12px;
-            border: 1px solid rgba(0, 255, 136, 0.3);
-            opacity: 0;
-            animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            transition: all 0.3s;
         }
 
-        .stat-item:nth-child(1) { animation-delay: 1.3s; }
-        .stat-item:nth-child(2) { animation-delay: 1.4s; }
-        .stat-item:nth-child(3) { animation-delay: 1.5s; }
-        .stat-item:nth-child(4) { animation-delay: 1.6s; }
-
-        .stat-number {
-            font-family: 'Unbounded', sans-serif;
-            font-size: 3rem;
-            color: var(--accent);
-            font-weight: 800;
-            margin-bottom: 0.5rem;
+        .content-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(30, 32, 60, 0.5);
         }
 
-        .stat-label {
+        .content-card h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
             color: var(--text-dim);
-            font-size: 1rem;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .content-card p {
+            color: var(--text);
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .content-card strong {
+            color: var(--accent);
+        }
+
+        /* Full Width Card */
+        .full-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 40px;
+        }
+
+        .full-card p {
+            color: var(--text);
+            line-height: 1.8;
+            font-size: 15px;
         }
 
         /* Footer */
         .footer {
-            padding: 60px 8%;
+            padding: 60px;
             text-align: center;
-            border-top: 1px solid var(--surface);
+            border-top: 1px solid var(--border);
             color: var(--text-dim);
+            font-size: 14px;
         }
 
         .footer strong {
             color: var(--accent);
         }
 
-        /* Mobile Adjustments */
+        /* Mobile */
         @media (max-width: 768px) {
-            .hero {
-                padding: 0 5%;
+            .nav {
+                padding: 16px 20px;
             }
 
-            .accomplishments-section,
-            .details-section,
-            .flowday-product-section {
-                padding: 60px 5%;
+            .nav-links {
+                display: none;
             }
 
-            .card {
+            .section {
+                padding: 60px 20px;
+            }
+
+            .accomplishments-section {
+                padding: 60px 20px 80px 20px;
+            }
+
+            .accomplishment-card {
                 min-width: 280px;
             }
 
-            .features-grid {
+            .hero {
+                padding: 40px 20px 80px;
+            }
+
+            .tech-pills {
+                flex-direction: column;
+            }
+
+            .two-col {
                 grid-template-columns: 1fr;
             }
 
-            .stats-row {
-                grid-template-columns: 1fr 1fr;
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
             }
-        }
 
-        /* Custom Selection */
-        ::selection {
-            background: var(--accent);
-            color: var(--bg);
-        }
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
 
-        /* Smooth scroll offset for anchor links */
-        html {
-            scroll-padding-top: 80px;
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .project-header {
+                flex-direction: column;
+                gap: 20px;
+            }
         }
     </style>
 </head>
-<body id="top">
+<body>
+    <!-- Spotlight Effect -->
+    <div id="spotlight"></div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1 class="hero-name">Ethan Soh</h1>
-        <p class="hero-subtitle">Developer & Creator</p>
-        <div class="hero-bio">
-            Student at <strong>Bukit Panjang Government High School</strong> (BPGHS). Fluent in <strong>Swift</strong> and experienced in <strong>Python</strong> and <strong>HTML/CSS</strong> development.
-        </div>
-        <div class="scroll-indicator">
-            <svg viewBox="0 0 24 24" fill="none">
-                <path d="M7 13l5 5 5-5M7 6l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </div>
-    </section>
-
-    <!-- Accomplishments Cards Section -->
-    <section class="accomplishments-section">
-        <div class="section-title">Core Accomplishments</div>
-        <div class="cards-grid">
-            <a href="#flowday" class="card">
-                <h3>FlowDay</h3>
-                <p>Your smart study companion - an all-in-one platform with <strong>task management</strong>, <strong>Pomodoro timer</strong>, and <strong>progress analytics</strong>.</p>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-left">
+            <a href="#" class="logo">
+                <div class="logo-icon"></div>
+                ethansoh.com
             </a>
-
-            <a href="#Swift2025" class="card">
-                <h3>Swift Accelerator 2025</h3>
-                <p>Click to see how I built <strong>Scripties</strong> and deployed it to the <strong>App Store</strong>.</p>
-            </a>
-
-            <a href="#BuildingBlocs2025" class="card">
-                <h3>BuildingBlocs 2025</h3>
-                <p>How I developed an AI that translates <strong>sign language</strong> into text.</p>
-            </a>
-
-            <a href="#NRC2023" class="card">
-                <h3>NRC 2023</h3>
-                <p>Explore how I ranked in the <strong>top 20 teams</strong> in NRC Singapore.</p>
-            </a>
-
-            <a href="#fll2021" class="card">
-                <h3>Best Presentation FLL 2021</h3>
-                <p>How I received recognition for an outstanding <strong>sustainability</strong> presentation.</p>
-            </a>
-        </div>
-    </section>
-
-    <!-- Detailed Accomplishments Section -->
-    <section class="details-section">
-        <div class="detail-block" id="Swift2025">
-            <h2>Swift Accelerator 2025</h2>
-            <p>I graduated from the <strong>Swift Accelerator Programme 2025</strong>, developing <strong>Scripties</strong>—a mobile application helping students master <strong>public speaking</strong>.</p>
-            <p>The app provides <strong>real-time word counts</strong> and estimated times, featuring a <strong>teleprompter</strong> and a review system for actionable feedback.</p>
-            <p>We overcame <strong>repeated design rejections</strong> and a grueling <strong>two-week coding sprint</strong>, navigating <strong>SwiftUI errors</strong> to launch on the <strong>App Store</strong>.</p>
-            <a href="#top" class="back-link">↑ Back to Top</a>
-        </div>
-
-        <div class="detail-block" id="BuildingBlocs2025">
-            <h2>BuildingBlocs 2025</h2>
-            <p>Following an intensive <strong>machine learning course</strong>, we built an AI that detects <strong>sign language</strong> and translates it into text.</p>
-            <p>We <strong>fine-tuned an untrained model</strong> and integrated it into a web interface using <strong>computer vision</strong> to break communication barriers.</p>
-            <p><strong>Key Result:</strong> Awarded the <strong>Best Innovation Award</strong> for our creative approach to AI solutions.</p>
-            <a href="#top" class="back-link">↑ Back to Top</a>
-        </div>
-
-        <div class="detail-block" id="NRC2023">
-            <h2>National Robotics Competition 2023</h2>
-            <p>My team placed in the <strong>top 20 teams</strong> in NRC Singapore 2023. We spent weeks <strong>prototyping</strong> an agile robot to navigate complex obstacle courses.</p>
-            <p>We adapted to <strong>surprise challenges</strong> by quickly tweaking our code and presented our design with a focus on <strong>Sustainability</strong>.</p>
-            <a href="#top" class="back-link">↑ Back to Top</a>
-        </div>
-
-        <div class="detail-block" id="fll2021">
-            <h2>FIRST LEGO League 2021</h2>
-            <p>Our team won the <strong>Best Presentation Award</strong> at FLL 2021 for an innovative solution focused on <strong>environmental sustainability</strong>.</p>
-            <p>This experience significantly enhanced my <strong>public speaking</strong> and my ability to communicate complex <strong>real-world problems</strong>.</p>
-            <a href="#top" class="back-link">↑ Back to Top</a>
-        </div>
-    </section>
-
-    <!-- FlowDay Product Section -->
-    <section class="flowday-product-section" id="flowday">
-        <div class="product-header">
-            <h2>FlowDay</h2>
-            <p>Your Smart Study Companion</p>
-            <p class="product-tagline">Stay organized, focused, and on track with an all-in-one platform designed for students who want to excel.</p>
-            <a href="https://flowday.ethansoh.com" class="product-cta" target="_blank">Get Started Free</a>
-        </div>
-
-        <div class="features-grid">
-            <div class="feature-card">
-                <h3>Task Management</h3>
-                <p>Organize your assignments, projects, and to-dos in one place. Never miss a deadline again.</p>
-            </div>
-
-            <div class="feature-card">
-                <h3>Pomodoro Timer</h3>
-                <p>Stay focused with built-in study sessions. Track your productivity and build better habits.</p>
-            </div>
-
-            <div class="feature-card">
-                <h3>Exam Tracker</h3>
-                <p>Keep track of upcoming exams and prepare with confidence. Get timely reminders so you're always ready.</p>
-            </div>
-
-            <div class="feature-card">
-                <h3>Goal Setting</h3>
-                <p>Set academic goals and track your progress. Transform your aspirations into achievements.</p>
-            </div>
-
-            <div class="feature-card">
-                <h3>Progress Analytics</h3>
-                <p>Visualize your study time and maintain your streak. Data-driven insights to improve performance.</p>
-            </div>
-
-            <div class="feature-card">
-                <h3>Beautiful Dark UI</h3>
-                <p>Easy on the eyes for those late-night study sessions. A sleek interface that stays out of your way.</p>
+            <div class="nav-links">
+                <a href="#overview" class="nav-link active">Overview</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#contact" class="nav-link">Contact</a>
             </div>
         </div>
-
-        <div class="stats-row">
-            <div class="stat-item">
-                <div class="stat-number">100%</div>
-                <div class="stat-label">Free Forever</div>
-            </div>
-
-            <div class="stat-item">
-                <div class="stat-number">0</div>
-                <div class="stat-label">Ads or Distractions</div>
-            </div>
-
-            <div class="stat-item">
-                <div class="stat-number">24/7</div>
-                <div class="stat-label">Available Offline</div>
-            </div>
-
-            <div class="stat-item">
-                <div class="stat-number">∞</div>
-                <div class="stat-label">Unlimited Tasks</div>
-            </div>
+        <div class="nav-right">
+            <a href="https://github.com" class="nav-btn" target="_blank">GitHub ↗</a>
+            <a href="https://linkedin.com" class="nav-btn" target="_blank">LinkedIn ↗</a>
+            <a href="#contact" class="nav-btn primary">Contact</a>
         </div>
-    </section>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Hero Section -->
+        <section class="hero" id="overview">
+            <div class="hero-label">⚡ Introducing • 2026</div>
+            
+            <h1 class="hero-title">
+                Introducing <span class="accent">Ethan.</span>
+            </h1>
+            
+            <p class="hero-subtitle">
+                Student at <strong>Bukit Panjang Government High School</strong> (BPGHS). Fluent in <strong>Swift</strong> and experienced in <strong>Python</strong> and <strong>HTML/CSS</strong> development. Built for <strong>clarity</strong>, <strong>performance</strong>, and <strong>vibes</strong>.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary">See capabilities</a>
+                <a href="#contact" class="btn btn-secondary">Get in touch</a>
+            </div>
+
+            <div class="hero-note">No shortcuts. Just clean code.</div>
+
+            <div class="tech-pills">
+                <div class="pill">
+                    <div class="pill-title">Swift / SwiftUI</div>
+                    <div class="pill-subtitle">Primary Stack</div>
+                </div>
+                <div class="pill">
+                    <div class="pill-title">Python / ML</div>
+                    <div class="pill-subtitle">AI • Computer Vision</div>
+                </div>
+                <div class="pill">
+                    <div class="pill-title">HTML / CSS</div>
+                    <div class="pill-subtitle">Web Development</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Accomplishments Cards Section -->
+        <section class="accomplishments-section">
+            <div class="accomplishments-title">Core Accomplishments</div>
+            <div class="cards-scroll">
+                <a href="#flowday" class="accomplishment-card">
+                    <h3>FlowDay</h3>
+                    <p>Your smart study companion - an all-in-one platform with <strong>task management</strong>, <strong>Pomodoro timer</strong>, and <strong>progress analytics</strong>.</p>
+                </a>
+
+                <a href="#scripties" class="accomplishment-card">
+                    <h3>Swift Accelerator 2025</h3>
+                    <p>Built <strong>Scripties</strong> and deployed it to the <strong>App Store</strong> after graduating from the Swift Accelerator Programme.</p>
+                </a>
+
+                <a href="#signlanguage" class="accomplishment-card">
+                    <h3>BuildingBlocs 2025</h3>
+                    <p>Developed an AI that translates <strong>sign language</strong> into text using computer vision.</p>
+                </a>
+
+                <a href="#nrc" class="accomplishment-card">
+                    <h3>NRC 2023</h3>
+                    <p>Ranked in the <strong>top 20 teams</strong> in the National Robotics Competition Singapore.</p>
+                </a>
+
+                <a href="#fll" class="accomplishment-card">
+                    <h3>Best Presentation FLL 2021</h3>
+                    <p>Received recognition for an outstanding <strong>sustainability</strong> presentation at FIRST LEGO League.</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="section" id="projects">
+            <div class="section-header">
+                <h2 class="section-title">Projects</h2>
+                <div class="section-note">The best work I've done. Yet.</div>
+            </div>
+
+            <!-- FlowDay -->
+            <div class="project" id="flowday">
+                <div class="project-header">
+                    <div class="project-meta">
+                        <div class="project-label">Featured Project • 2026</div>
+                        <h2 class="project-title">FlowDay</h2>
+                    </div>
+                    <div class="project-actions">
+                        <div class="project-badge">Live Product</div>
+                        <a href="https://flowday.ethansoh.com" class="project-link" target="_blank">Visit FlowDay ↗</a>
+                    </div>
+                </div>
+
+                <div class="two-col">
+                    <div class="content-card">
+                        <h3>The Product</h3>
+                        <p>FlowDay is your <strong>smart study companion</strong>—an all-in-one platform designed for students who want to excel. Features include task management, Pomodoro timer, exam tracker, goal setting, progress analytics, and a beautiful dark UI.</p>
+                    </div>
+                    <div class="content-card">
+                        <h3>The Experience</h3>
+                        <p>Stay organized, focused, and on track with a platform built for <strong>clarity and performance</strong>. FlowDay helps students manage their academic life with <strong>100% free</strong> access, <strong>zero ads</strong>, and <strong>unlimited tasks</strong>.</p>
+                    </div>
+                </div>
+
+                <div class="full-card">
+                    <p>FlowDay combines intuitive design with powerful productivity tools to help students achieve their academic goals. Built with a focus on user experience, the platform offers real-time analytics, offline support, and seamless integration across all devices. Whether you're preparing for exams, managing assignments, or tracking study habits, FlowDay provides the tools you need to succeed.</p>
+                </div>
+            </div>
+
+            <!-- Scripties -->
+            <div class="project" id="scripties">
+                <div class="project-header">
+                    <div class="project-meta">
+                        <div class="project-label">Swift Accelerator • 2025</div>
+                        <h2 class="project-title">Scripties</h2>
+                    </div>
+                    <div class="project-actions">
+                        <div class="project-badge">App Store</div>
+                        <a href="#" class="project-link">Learn more ↗</a>
+                    </div>
+                </div>
+
+                <div class="two-col">
+                    <div class="content-card">
+                        <h3>The Problem</h3>
+                        <p>Many students, presenters, and professionals have a hard time presenting speeches confidently. They face stress due to script writing, last-minute rehearsals, and uncertainty about pacing and clarity.</p>
+                    </div>
+                    <div class="content-card">
+                        <h3>The Solution</h3>
+                        <p>Scripties helps users write, rehearse, and improve their scripts efficiently. The app consolidates script management, <strong>teleprompter-style practice</strong>, recording, playback, and automated feedback on key delivery metrics.</p>
+                    </div>
+                </div>
+
+                <div class="full-card">
+                    <p>Developed as part of the <strong>2025 Swift Accelerator Program</strong>, Scripties is a mobile application helping students master public speaking through real-time feedback and intelligent practice tools. We overcame repeated design rejections and a grueling two-week coding sprint, navigating SwiftUI errors to launch on the App Store. The app tracks speech delivery using Words Per Minute (WPM) metrics, measures pacing consistency, and provides actionable feedback to help users improve their presentation skills.</p>
+                </div>
+            </div>
+
+            <!-- Sign Language AI -->
+            <div class="project" id="signlanguage">
+                <div class="project-header">
+                    <div class="project-meta">
+                        <div class="project-label">BuildingBlocs • 2025</div>
+                        <h2 class="project-title">Sign Language AI</h2>
+                    </div>
+                </div>
+
+                <div class="two-col">
+                    <div class="content-card">
+                        <h3>The Challenge</h3>
+                        <p>Communication barriers exist for the deaf and hard-of-hearing community. Traditional tools for sign language translation are often complex, expensive, or require specialized hardware.</p>
+                    </div>
+                    <div class="content-card">
+                        <h3>The Innovation</h3>
+                        <p>An AI-powered system that detects <strong>sign language gestures</strong> and translates them into text in real-time using computer vision. Built to break down communication barriers with accessible technology.</p>
+                    </div>
+                </div>
+
+                <div class="full-card">
+                    <p>Following an intensive machine learning course, we built an AI that fine-tuned an untrained model and integrated it into a responsive web interface using computer vision techniques. The system achieved high accuracy in gesture recognition across diverse lighting conditions.</p>
+                </div>
+            </div>
+
+            <!-- NRC 2023 -->
+            <div class="project" id="nrc">
+                <div class="project-header">
+                    <div class="project-meta">
+                        <div class="project-label">Competition • 2023</div>
+                        <h2 class="project-title">National Robotics Competition</h2>
+                    </div>
+                    <div class="project-actions">
+                        <div class="project-badge">Top 20 Teams</div>
+                    </div>
+                </div>
+
+                <div class="two-col">
+                    <div class="content-card">
+                        <h3>The Challenge</h3>
+                        <p>Compete among Singapore's best robotics teams by building an agile robot capable of navigating complex obstacle courses while maintaining sustainability principles.</p>
+                    </div>
+                    <div class="content-card">
+                        <h3>The Achievement</h3>
+                        <p>Placed in the <strong>top 20 teams</strong> in NRC Singapore 2023 through innovative design and adaptive problem-solving under pressure. Successfully adapted to surprise challenges with quick code iterations.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FLL 2021 -->
+            <div class="project" id="fll">
+                <div class="project-header">
+                    <div class="project-meta">
+                        <div class="project-label">FIRST LEGO League • 2021</div>
+                        <h2 class="project-title">Best Presentation Award</h2>
+                    </div>
+                    <div class="project-actions">
+                        <div class="project-badge">Award Winner</div>
+                    </div>
+                </div>
+
+                <div class="two-col">
+                    <div class="content-card">
+                        <h3>The Project</h3>
+                        <p>Developed an innovative solution focused on <strong>environmental sustainability</strong> for the FIRST LEGO League competition. Combined technical engineering with effective communication.</p>
+                    </div>
+                    <div class="content-card">
+                        <h3>The Impact</h3>
+                        <p>Won the <strong>Best Presentation Award</strong> at FLL 2021. This experience significantly enhanced public speaking abilities and the capacity to communicate complex real-world problems to diverse audiences.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" id="contact">
         © 2026 <strong>Ethan Soh</strong> | BPGHS. Built with <strong>HTML</strong> & <strong>Emerald Light</strong>.
     </footer>
 
     <script>
-        // Smooth scroll with offset
+        // Mouse spotlight effect
+        const spotlight = document.getElementById('spotlight');
+        
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            
+            spotlight.style.setProperty('--mouse-x', `${x}%`);
+            spotlight.style.setProperty('--mouse-y', `${y}%`);
+        });
+
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -638,29 +844,27 @@
             });
         });
 
-        // Scroll indicator fade
-        let lastScrollY = window.scrollY;
-        window.addEventListener('scroll', () => {
-            const indicator = document.querySelector('.scroll-indicator');
-            if (indicator) {
-                if (window.scrollY > 50) {
-                    indicator.style.opacity = '0';
-                    indicator.style.pointerEvents = 'none';
-                } else {
-                    indicator.style.opacity = '1';
-                    indicator.style.pointerEvents = 'auto';
-                }
-            }
-        });
+        // Active nav link on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
 
-        // Card hover animation enhancement
-        const cards = document.querySelectorAll('.card');
-        cards.forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transition = 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
             });
         });
     </script>
-
 </body>
 </html>
