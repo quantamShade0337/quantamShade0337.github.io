@@ -1,0 +1,65 @@
+# 📤 Upload to GitHub - Simple Instructions
+
+## Files to Upload (All in this folder):
+
+```
+github-upload/
+├── index.html          ← Your portfolio website
+├── README.md           ← Repository description
+├── LICENSE             ← MIT License
+├── .gitignore          ← Git ignore rules
+└── assets/             ← Images folder
+    ├── scripties-logo.png
+    ├── ethan-photo.png
+    └── bpghs-logo.png
+```
+
+## 🚀 Option 1: Upload via GitHub Website (Easiest)
+
+1. **Go to GitHub.com** and sign in
+2. **Click "+" → New repository**
+   - Name: `portfolio`
+   - Public ✓
+   - Don't initialize with README
+3. **Click "uploading an existing file"**
+4. **Drag ALL files from this `github-upload` folder**
+   - Make sure to include the `assets` folder too!
+5. **Click "Commit changes"**
+6. **Go to Settings → Pages**
+   - Source: `main` branch, `/ (root)` folder
+   - Click Save
+7. **Done!** Your site will be live at:
+   `https://YOUR_USERNAME.github.io/portfolio/`
+
+## 💻 Option 2: Upload via Git Command Line
+
+```bash
+# Navigate to the github-upload folder
+cd github-upload
+
+# Initialize git
+git init
+
+# Add all files
+git add .
+
+# Commit
+git commit -m "Initial commit: Portfolio website"
+
+# Add remote (replace YOUR_USERNAME)
+git remote add origin https://github.com/YOUR_USERNAME/portfolio.git
+
+# Push to GitHub
+git branch -M main
+git push -u origin main
+```
+
+Then enable GitHub Pages (step 6 above).
+
+## ⚠️ Important:
+- Upload **ALL** files including the hidden `.gitignore`
+- Make sure the `assets` folder is included with all images
+- FlowDay logo will show a gradient until you add `flowday-logo.png`
+
+## 🎯 After Upload:
+Your portfolio will be live in 1-2 minutes!

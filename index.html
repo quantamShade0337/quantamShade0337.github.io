@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+    GitHub-Ready Portfolio by Ethan Soh
+    
+    All logos are in the assets/ folder.
+    Missing: Add flowday-logo.png to assets/ folder
+    
+    See README.md and DEPLOYMENT.md for setup instructions.
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethan Soh</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #ffffff;
+            --bg-card: #f5f5f7;
+            --text: #1d1d1f;
+            --text-dim: #6e6e73;
+            --accent: #0066cc;
+            --border: #d2d2d7;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 24px 100px;
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-dim);
+        }
+
+        .intro {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 24px;
+            color: var(--text);
+        }
+
+        .intro strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            padding: 10px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .social-link:hover {
+            border-color: var(--accent);
+            background: rgba(10, 132, 255, 0.1);
+        }
+
+        /* Profile Photo */
+        .profile-photo {
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .profile-photo img {
+            width: 200px;
+            height: 200px;
+            border-radius: 20px;
+            object-fit: cover;
+            border: 1px solid var(--border);
+        }
+
+        /* Section */
+        .section {
+            margin-top: 80px;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 32px;
+        }
+
+        /* Project Cards */
+        .projects {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .project-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .project-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 16px;
+            flex-shrink: 0;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+        }
+
+        .project-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-info {
+            flex: 1;
+        }
+
+        .project-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .project-tagline {
+            font-size: 1rem;
+            color: var(--text-dim);
+            margin-bottom: 12px;
+        }
+
+        .project-description {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .project-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(10, 132, 255, 0.15);
+            border: 1px solid rgba(10, 132, 255, 0.3);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-top: 12px;
+            font-weight: 500;
+        }
+
+        /* Accomplishments Grid */
+        .accomplishments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 32px;
+        }
+
+        .accomplishment-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.2s;
+        }
+
+        .accomplishment-card:hover {
+            border-color: var(--accent);
+            background: rgba(26, 26, 26, 0.8);
+        }
+
+        .accomplishment-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--accent);
+        }
+
+        .accomplishment-description {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        /* Experience & Education */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .timeline-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .timeline-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            flex-shrink: 0;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .timeline-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .timeline-org {
+            font-size: 0.95rem;
+            color: var(--text-dim);
+            margin-bottom: 4px;
+        }
+
+        .timeline-date {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 100px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px 60px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.25rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .project-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .project-icon {
+                width: 64px;
+                height: 64px;
+            }
+
+            .accomplishments-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-item {
+                flex-direction: column;
+            }
+        }
+
+        /* Smooth appearance */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>hi, ethan here!</h1>
+            <h2>i like to build things that matter.</h2>
+            
+            <p class="intro">
+                student developer from singapore 🇸🇬, currently at <strong>Bukit Panjang Government High School</strong> (BPGHS). i build apps with <strong>Swift</strong>, tinker with <strong>Python</strong> and <strong>AI</strong>, and sometimes make websites.
+            </p>
+
+            <p class="intro">
+                graduated from the <strong>Swift Accelerator Programme 2025</strong>, built a few apps, won some awards, and learned that the best way to learn is to just build stuff.
+            </p>
+
+            <p class="intro">
+                you can find me coding at odd hours, probably with coffee nearby.
+            </p>
+
+            <div class="social-links">
+                <a href="https://github.com/quantamShade0337" class="social-link" target="_blank">
+                    GitHub ↗
+                </a>
+                <a href="https://www.linkedin.com/in/ethan-soh-9548863a9/" class="social-link" target="_blank">
+                    LinkedIn ↗
+                </a>
+            </div>
+
+            <div class="profile-photo">
+                <img src="assets/ethan-photo.png" alt="A photo of Ethan">
+            </div>
+        </header>
+
+        <!-- Projects Section -->
+        <section class="section">
+            <h2 class="section-title">some of the things i've worked on</h2>
+            <p class="intro">here are some of the apps and projects i've built, that i remember.</p>
+
+            <div class="projects">
+                <!-- FlowDay -->
+                <a href="https://flowday.ethansoh.com" class="project-card" target="_blank">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <!-- Replace assets/flowday-logo.png with your actual FlowDay logo -->
+                            <img src="assets/flowday-logo.png" alt="FlowDay" onerror="this.parentElement.style.background='linear-gradient(135deg, #0a84ff, #00d4ff)'">
+                        </div>
+                        <div class="project-info">
+                            <h3 class="project-name">FlowDay</h3>
+                            <p class="project-tagline">Your smart study companion.</p>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        An all-in-one productivity platform for students. Task management, Pomodoro timer, exam tracker, goal setting, and progress analytics. 100% free, zero ads, unlimited tasks. Built for students who want to excel without the distractions.
+                    </p>
+                    <span class="project-badge">Live Product</span>
+                </a>
+
+                <!-- Scripties -->
+                <a href="https://scripties-4ug0.onrender.com/" class="project-card" target="_blank">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <img src="assets/scripties-logo.png" alt="Scripties">
+                        </div>
+                        <div class="project-info">
+                            <h3 class="project-name">Scripties</h3>
+                            <p class="project-tagline">Master public speaking with confidence.</p>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Mobile app helping students master public speaking through real-time feedback and intelligent practice tools. Built as my capstone project for the Swift Accelerator Programme 2025. Features teleprompter-style practice, WPM tracking, and automated delivery feedback. Overcame design rejections and a grueling two-week coding sprint to launch on the App Store.
+                    </p>
+                    <span class="project-badge">App Store</span>
+                </a>
+
+                <!-- Sign Language AI -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <!-- Placeholder - replace with actual logo -->
+                            <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #30d158, #00c7be);"></div>
+                        </div>
+                        <div class="project-info">
+                            <h3 class="project-name">Sign Language AI</h3>
+                            <p class="project-tagline">Breaking down communication barriers.</p>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        AI-powered system that detects sign language gestures and translates them into text in real-time using computer vision. Built during BuildingBlocs 2025 after an intensive machine learning course. Fine-tuned an untrained model and integrated it into a responsive web interface with high accuracy across diverse lighting conditions.
+                    </p>
+                    <span class="project-badge">BuildingBlocs 2025</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Accomplishments Section -->
+        <section class="section">
+            <h2 class="section-title">some things i've done</h2>
+            
+            <div class="accomplishments-grid">
+                <div class="accomplishment-card">
+                    <h3 class="accomplishment-title">Swift Accelerator 2025</h3>
+                    <p class="accomplishment-description">
+                        Graduated from a rigorous 9-month intensive program developing professional iOS apps with Swift and SwiftUI. Built Scripties as the final capstone project.
+                    </p>
+                </div>
+
+                <div class="accomplishment-card">
+                    <h3 class="accomplishment-title">NRC 2023 - Top 20</h3>
+                    <p class="accomplishment-description">
+                        Ranked in the top 20 teams in the National Robotics Competition Singapore. Built an agile robot and adapted to surprise challenges with quick iterations.
+                    </p>
+                </div>
+
+                <div class="accomplishment-card">
+                    <h3 class="accomplishment-title">FLL 2021 - Best Presentation</h3>
+                    <p class="accomplishment-description">
+                        Won the Best Presentation Award at FIRST LEGO League 2021 for an innovative environmental sustainability project. This really helped my public speaking skills.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience & Certifications -->
+        <section class="section">
+            <h2 class="section-title">i think i know what i'm doing? sometimes???</h2>
+            <p class="intro">i have no idea what i'm doing, but i'm pretty sure i'm doing something right, most of the time.</p>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-icon">
+                        <img src="https://framerusercontent.com/images/FhTmenq2kQw48uXIJ6k5aaEEwc.webp?width=512&height=512" alt="Swift Accelerator" onerror="this.parentElement.style.background='linear-gradient(135deg, #ff9500, #ff375f)'">
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Swift Accelerator Programme</h3>
+                        <p class="timeline-org">Apple / IMDA / SwiftInSG</p>
+                        <p class="timeline-date">2025</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon">
+                        <img src="assets/bpghs-logo.png" alt="BPGHS">
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Student</h3>
+                        <p class="timeline-org">Bukit Panjang Government High School</p>
+                        <p class="timeline-date">Present</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>congrats you've reached the end of this page! built with html, css, and way too much coffee.</p>
+            <p style="margin-top: 12px;">© 2026 ethan soh</p>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scroll for any internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
