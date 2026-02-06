@@ -51,6 +51,29 @@
             margin-bottom: 60px;
         }
 
+        .header-top {
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .header-text {
+            flex: 1;
+        }
+
+        .header-photo {
+            flex-shrink: 0;
+        }
+
+        .header-photo img {
+            width: 180px;
+            height: 180px;
+            border-radius: 16px;
+            object-fit: cover;
+            border: 1px solid var(--border);
+        }
+
         h1 {
             font-size: 2.5rem;
             font-weight: 700;
@@ -101,20 +124,6 @@
         .social-link:hover {
             border-color: var(--accent);
             background: rgba(10, 132, 255, 0.1);
-        }
-
-        /* Profile Photo */
-        .profile-photo {
-            margin-top: 40px;
-            margin-bottom: 20px;
-        }
-
-        .profile-photo img {
-            width: 200px;
-            height: 200px;
-            border-radius: 20px;
-            object-fit: cover;
-            border: 1px solid var(--border);
         }
 
         /* Section */
@@ -310,6 +319,16 @@
                 padding: 40px 20px 60px;
             }
 
+            .header-top {
+                flex-direction: column-reverse;
+                gap: 24px;
+            }
+
+            .header-photo img {
+                width: 120px;
+                height: 120px;
+            }
+
             h1 {
                 font-size: 2rem;
             }
@@ -362,8 +381,15 @@
     <div class="container">
         <!-- Header -->
         <header class="header">
-            <h1>hi, ethan here!</h1>
-            <h2>i like to build things that matter.</h2>
+            <div class="header-top">
+                <div class="header-text">
+                    <h1>hi, ethan here!</h1>
+                    <h2>i like to build things that matter.</h2>
+                </div>
+                <div class="header-photo">
+                    <img src="assets/ethan-photo.png" alt="A photo of Ethan">
+                </div>
+            </div>
             
             <p class="intro">
                 student developer from singapore 🇸🇬, currently at <strong>Bukit Panjang Government High School</strong> (BPGHS). i build apps with <strong>Swift</strong>, tinker with <strong>Python</strong> and <strong>AI</strong>, and sometimes make websites.
@@ -384,10 +410,6 @@
                 <a href="https://www.linkedin.com/in/ethan-soh-9548863a9/" class="social-link" target="_blank">
                     LinkedIn ↗
                 </a>
-            </div>
-
-            <div class="profile-photo">
-                <img src="assets/ethan-photo.png" alt="A photo of Ethan">
             </div>
         </header>
 
@@ -488,7 +510,7 @@
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-icon">
-                        <img src="https://framerusercontent.com/images/FhTmenq2kQw48uXIJ6k5aaEEwc.webp?width=512&height=512" alt="Swift Accelerator" onerror="this.parentElement.style.background='linear-gradient(135deg, #ff9500, #ff375f)'">
+                        <img src="assets/swift-logo.png" alt="Swift Accelerator">
                     </div>
                     <div class="timeline-content">
                         <h3>Swift Accelerator Programme</h3>
