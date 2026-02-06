@@ -125,8 +125,6 @@ This project is open source and available under the [MIT License](LICENSE).
 - **LinkedIn**: [Ethan Soh](https://www.linkedin.com/in/ethan-soh-9548863a9/)
 
 ## 🙏 Acknowledgments
-
-- Design inspired by [jiachenyee.com](https://jiachenyee.com)
 - Swift Accelerator Programme by Apple, IMDA, and SwiftInSG
 - Bukit Panjang Government High School
 
