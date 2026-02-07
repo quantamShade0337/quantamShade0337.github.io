@@ -2,29 +2,31 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Ethan Soh</title>
 
-<!-- Fonts: distinctive, editorial -->
+<!-- Stronger, bolder fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 /* ===================== THEME ===================== */
 :root {
-  --bg: #f4f3ef;
-  --ink: #0f0f0f;
-  --muted: #6a6a6a;
-  --accent: #111111;
+  --bg: #f2f2ef;
+  --panel: #ffffff;
+  --ink: #0e0e0e;
+  --muted: #6e6e6e;
+  --border: rgba(0,0,0,.08);
   --ease: cubic-bezier(.22,.61,.36,1);
 }
 
 body.dark {
   --bg: #0b0b0b;
-  --ink: #f1f1f1;
+  --panel: #121212;
+  --ink: #f5f5f5;
   --muted: #9a9a9a;
-  --accent: #ffffff;
+  --border: rgba(255,255,255,.08);
 }
 
 * {
@@ -36,50 +38,7 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: "IBM Plex Sans", sans-serif;
-  transition: background .8s var(--ease), color .8s var(--ease);
-  overflow-x: hidden;
-}
-
-/* ===================== GLOBAL ===================== */
-main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 10rem 2.5rem 14rem;
-}
-
-section {
-  margin-bottom: 14rem;
-  opacity: 0;
-  transform: translateY(80px);
-  transition: 1.2s var(--ease);
-}
-
-section.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-h1, h2 {
-  font-family: "Fraunces", serif;
-  letter-spacing: -0.02em;
-}
-
-h1 {
-  font-size: clamp(3.8rem, 7vw, 6rem);
-  line-height: 1.05;
-  max-width: 14ch;
-}
-
-h2 {
-  font-size: 3rem;
-  margin-bottom: 2rem;
-}
-
-p {
-  max-width: 60ch;
-  line-height: 1.9;
-  color: var(--muted);
-  font-size: 1.05rem;
+  transition: background .6s var(--ease), color .6s var(--ease);
 }
 
 /* ===================== NAV ===================== */
@@ -87,98 +46,142 @@ nav {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 1.5rem 2.5rem;
+  padding: 1.2rem 2rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   z-index: 10;
-  pointer-events: none;
 }
 
 nav button {
-  pointer-events: auto;
+  background: none;
   border: none;
-  background: transparent;
-  font-family: inherit;
-  font-size: .9rem;
+  font-weight: 600;
   cursor: pointer;
   color: var(--muted);
 }
 
-/* ===================== HERO ===================== */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 3rem;
+/* ===================== GRID ===================== */
+main {
+  padding: 6rem 2rem 4rem;
+  max-width: 1400px;
+  margin: auto;
 }
 
-.hero span {
-  font-size: .85rem;
-  text-transform: uppercase;
-  letter-spacing: .15em;
-  color: var(--muted);
-}
-
-/* ===================== ACCOMPLISHMENTS ===================== */
-.timeline {
+.grid {
   display: grid;
-  grid-template-columns: 1fr 3fr;
-  gap: 4rem;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: minmax(120px, auto);
+  gap: 1.25rem;
 }
 
-.year {
-  font-family: "Fraunces", serif;
-  font-size: 2.5rem;
+/* ===================== BENTO TILE ===================== */
+.tile {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transform: translateY(30px);
+  opacity: 0;
+  transition: 1s var(--ease);
 }
 
-.entry {
-  margin-bottom: 4rem;
+.tile.visible {
+  transform: translateY(0);
+  opacity: 1;
 }
 
-.entry h3 {
-  margin: 0 0 .6rem;
-  font-size: 1.3rem;
+.tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(0,0,0,.03),
+    transparent
+  );
+  opacity: 0;
+  transition: .6s;
 }
 
-.entry p {
+.tile:hover::after {
+  opacity: 1;
+}
+
+/* ===================== TYPE ===================== */
+h1, h2, h3 {
+  font-family: "Archivo Black", sans-serif;
+  letter-spacing: -0.02em;
   margin: 0;
 }
 
-/* ===================== STATEMENT ===================== */
+h1 {
+  font-size: clamp(3rem, 4vw, 4.5rem);
+  line-height: 1.05;
+}
+
+h2 {
+  font-size: 1.8rem;
+}
+
+h3 {
+  font-size: 1.1rem;
+}
+
+p {
+  margin-top: .8rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ===================== LAYOUT ===================== */
+.hero {
+  grid-column: span 8;
+}
+
 .statement {
-  font-size: 2rem;
-  font-family: "Fraunces", serif;
-  line-height: 1.4;
-  max-width: 28ch;
+  grid-column: span 4;
+  display: flex;
+  align-items: center;
 }
 
-/* ===================== FOOTER ===================== */
-footer {
-  border-top: 1px solid rgba(0,0,0,.08);
-  padding-top: 6rem;
+.accomplishment {
+  grid-column: span 4;
 }
 
-footer a {
+.wide {
+  grid-column: span 6;
+}
+
+.links {
+  grid-column: span 12;
+  display: flex;
+  gap: 2rem;
+}
+
+/* ===================== LINKS ===================== */
+.links a {
   text-decoration: none;
+  font-weight: 600;
   color: var(--ink);
-  margin-right: 2rem;
-  font-size: .95rem;
+  position: relative;
 }
 
-/* ===================== ANIM EXTRAS ===================== */
-.reveal-word span {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(40px);
-  animation: wordReveal .9s var(--ease) forwards;
+.links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: var(--ink);
+  transition: .4s var(--ease);
 }
 
-@keyframes wordReveal {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.links a:hover::after {
+  width: 100%;
 }
 </style>
 </head>
@@ -190,116 +193,83 @@ footer a {
 </nav>
 
 <main>
+  <div class="grid">
 
-<!-- HERO -->
-<section class="hero">
-  <span>Personal Bio</span>
-  <h1 class="reveal-word"></h1>
-  <p>
-    I build things carefully. I care about how ideas land, how interfaces
-    feel over time, and how decisions compound.
-  </p>
-</section>
+    <!-- HERO -->
+    <div class="tile hero">
+      <h1>Designing with intention,<br>not excess.</h1>
+      <p>
+        I care deeply about how interfaces feel over time —
+        how decisions compound, and how clarity beats noise.
+      </p>
+    </div>
 
-<!-- PHILOSOPHY -->
-<section>
-  <h2>Intent over noise</h2>
-  <p>
-    I’m drawn to work that rewards attention. Interfaces that slow you down
-    just enough to think. Systems that respect the person using them.
-  </p>
-</section>
+    <!-- STATEMENT -->
+    <div class="tile statement">
+      <p>
+        I’m interested in building systems that slow people
+        down just enough to think.
+      </p>
+    </div>
 
-<!-- ACCOMPLISHMENTS -->
-<section>
-  <h2>Selected trajectory</h2>
-
-  <div class="timeline">
-    <div class="year">2025</div>
-    <div class="entry">
+    <!-- ACCOMPLISHMENTS -->
+    <div class="tile accomplishment">
+      <h2>2025</h2>
       <h3>BuildingBlocs</h3>
       <p>
-        A project focused on modular thinking — breaking complexity into
-        pieces people can reason about.
+        Modular thinking applied to real problems — breaking
+        complexity into understandable units.
       </p>
     </div>
 
-    <div class="year">2024</div>
-    <div class="entry">
+    <div class="tile accomplishment">
+      <h2>2024</h2>
       <h3>Flowday</h3>
       <p>
-        A reflection-first productivity system designed around momentum
-        rather than pressure.
+        A reflection-first productivity system designed
+        around momentum, not pressure.
       </p>
     </div>
 
-    <div class="year">2024</div>
-    <div class="entry">
+    <div class="tile accomplishment">
+      <h2>2024</h2>
       <h3>Scripties</h3>
       <p>
-        A writing environment built to reduce friction and make starting
-        feel easier than hesitating.
+        A writing environment focused on removing friction
+        and lowering the cost of starting.
       </p>
     </div>
 
-    <div class="year">2022</div>
-    <div class="entry">
-      <h3>NRC · Top 20</h3>
+    <div class="tile wide">
+      <h2>Earlier</h2>
       <p>
-        Recognized for technical creativity and problem framing.
+        NRC Top 20 (2022) for technical creativity and framing.
+        FLL Best Presentation (2021) for clarity and narrative.
       </p>
     </div>
 
-    <div class="year">2021</div>
-    <div class="entry">
-      <h3>FLL · Best Presentation</h3>
-      <p>
-        Awarded for clarity, narrative structure, and delivery.
-      </p>
+    <!-- LINKS -->
+    <div class="tile links">
+      <a href="https://ethansoh.com">Website</a>
+      <a href="https://github.com/quantamShade0337">GitHub</a>
+      <a href="https://www.linkedin.com/in/ethan-soh-9548863a9/">LinkedIn</a>
     </div>
+
   </div>
-</section>
-
-<!-- CLOSING -->
-<section>
-  <p class="statement">
-    I’m interested in what happens when technology feels less like a tool
-    and more like a collaborator.
-  </p>
-</section>
-
-<footer>
-  <a href="https://ethansoh.com">Website</a>
-  <a href="https://github.com/quantamShade0337">GitHub</a>
-  <a href="https://www.linkedin.com/in/ethan-soh-9548863a9/">LinkedIn</a>
-</footer>
-
 </main>
 
 <script>
-/* Theme toggle */
 function toggleTheme() {
   document.body.classList.toggle("dark");
 }
 
-/* Intersection reveal */
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) e.target.classList.add("visible");
   });
 }, { threshold: 0.2 });
 
-document.querySelectorAll("section").forEach(s => observer.observe(s));
-
-/* Hero word animation */
-const heroText = "Designing with intention, not excess.";
-const heroEl = document.querySelector(".reveal-word");
-heroText.split(" ").forEach((word, i) => {
-  const span = document.createElement("span");
-  span.textContent = word + " ";
-  span.style.animationDelay = `${i * 0.12}s`;
-  heroEl.appendChild(span);
-});
+document.querySelectorAll(".tile").forEach(t => observer.observe(t));
 </script>
 
 </body>
