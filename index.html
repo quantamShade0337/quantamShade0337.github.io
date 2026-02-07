@@ -1,275 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ethan Soh</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ethan Soh</title>
 
-  <!-- Fonts: characterful, editorial -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Nunito:wght@400;500&display=swap" rel="stylesheet">
 
-  <style>
-    :root {
-      --bg: #0f0f10;
-      --fg: #f2f2f2;
-      --muted: #9a9a9a;
-      --accent: #ffffff;
-      --line: rgba(255,255,255,0.08);
-    }
+<style>
+:root {
+  --bg: #f7f3ee;
+  --panel: #ffffff;
+  --ink: #1e1e1e;
+  --muted: #6b6b6b;
+  --accent: #2a6df4;
+  --shadow: 0 30px 60px rgba(0,0,0,0.08);
+  --ease: cubic-bezier(.25,.9,.3,1);
+}
 
-    [data-theme="light"] {
-      --bg: #fafafa;
-      --fg: #111111;
-      --muted: #666666;
-      --accent: #000000;
-      --line: rgba(0,0,0,0.1);
-    }
+[data-theme="dark"] {
+  --bg: #0f1115;
+  --panel: #181b21;
+  --ink: #f5f5f5;
+  --muted: #9ca3af;
+  --accent: #7aa2ff;
+  --shadow: 0 30px 60px rgba(0,0,0,0.4);
+}
 
-    * {
-      box-sizing: border-box;
-    }
+* { box-sizing: border-box; }
 
-    html, body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--fg);
-      font-family: "EB Garamond", serif;
-      transition: background 0.4s ease, color 0.4s ease;
-    }
+html, body {
+  margin: 0;
+  font-family: "Nunito", sans-serif;
+  background: radial-gradient(circle at top, #ffffff55, transparent 60%), var(--bg);
+  color: var(--ink);
+  transition: background 0.6s var(--ease), color 0.6s var(--ease);
+}
 
-    body {
-      min-height: 100vh;
-    }
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
 
-    header {
-      position: fixed;
-      top: 0;
-      right: 0;
-      padding: 2rem;
-      font-size: 0.85rem;
-    }
+.nav {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.2rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    button {
-      background: none;
-      border: none;
-      color: var(--muted);
-      cursor: pointer;
-      font-family: inherit;
-    }
+.nav strong {
+  font-weight: 600;
+}
 
-    button:hover {
-      color: var(--fg);
-    }
+.toggle {
+  border: none;
+  background: var(--panel);
+  color: var(--ink);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 0.4s var(--ease);
+}
 
-    main {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 8rem 2rem 6rem;
-      animation: fadeIn 0.8s ease forwards;
-    }
+.toggle:hover {
+  transform: translateY(-3px);
+}
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 5rem 2rem 6rem;
+}
 
-    h1 {
-      font-family: "Fraunces", serif;
-      font-size: clamp(3rem, 6vw, 4rem);
-      margin: 0;
-      letter-spacing: -0.02em;
-    }
+/* ---------- HERO ---------- */
+.hero {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 4rem;
+  align-items: center;
+  margin-bottom: 8rem;
+}
 
-    .subtitle {
-      margin-top: 0.75rem;
-      font-style: italic;
-      color: var(--muted);
-      max-width: 38ch;
-    }
+.hero img {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: var(--shadow);
+  animation: float 7s ease-in-out infinite;
+}
 
-    .portrait {
-      margin: 4rem 0;
-      display: flex;
-      justify-content: center;
-    }
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
 
-    .portrait img {
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      object-fit: cover;
-      filter: grayscale(100%);
-      border: 1px solid var(--line);
-    }
+.hero h1 {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(3rem, 5vw, 3.8rem);
+  margin: 0 0 1rem;
+}
 
-    .bio {
-      font-size: 1.1rem;
-      line-height: 1.7;
-      max-width: 60ch;
-    }
+.hero p {
+  max-width: 55ch;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
 
-    .links {
-      margin-top: 3rem;
-      display: flex;
-      gap: 2rem;
-      font-size: 0.95rem;
-    }
+.links {
+  margin-top: 1.8rem;
+  display: flex;
+  gap: 1.4rem;
+}
 
-    .links a {
-      color: var(--fg);
-      text-decoration: none;
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 0.15rem;
-    }
+.links a {
+  text-decoration: none;
+  color: var(--ink);
+  background: var(--panel);
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  transition: transform 0.4s var(--ease);
+}
 
-    .links a:hover {
-      border-color: var(--fg);
-    }
+.links a:hover {
+  transform: translateY(-4px) rotate(-1deg);
+}
 
-    .section {
-      margin-top: 6rem;
-    }
+/* ---------- SECTIONS ---------- */
+.section {
+  margin-bottom: 7rem;
+}
 
-    .section h2 {
-      font-family: "Fraunces", serif;
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-      letter-spacing: 0.02em;
-    }
+.section h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  margin-bottom: 2.5rem;
+}
 
-    .entry {
-      margin-bottom: 2.5rem;
-    }
+/* ---------- CARDS ---------- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+  gap: 2rem;
+}
 
-    .entry h3 {
-      margin: 0;
-      font-size: 1rem;
-      font-weight: normal;
-    }
+.card {
+  background: var(--panel);
+  border-radius: 26px;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.5s var(--ease);
+}
 
-    .entry span {
-      display: block;
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-top: 0.2rem;
-    }
+.card:hover {
+  transform: translateY(-12px) rotate(-0.5deg);
+}
 
-    .entry p {
-      margin-top: 0.6rem;
-      max-width: 55ch;
-      line-height: 1.6;
-    }
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
 
-    .logos {
-      margin-top: 5rem;
-      display: flex;
-      gap: 1.5rem;
-      align-items: center;
-      opacity: 0.7;
-    }
+.card-header img {
+  width: 34px;
+}
 
-    .logos img {
-      height: 26px;
-      filter: grayscale(100%);
-    }
-  </style>
+.card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.card span {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.card p {
+  margin-top: 1rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* ---------- LOGOS ---------- */
+.logos {
+  display: flex;
+  justify-content: center;
+  gap: 3.5rem;
+  opacity: 0.8;
+}
+
+.logos img {
+  height: 34px;
+  animation: drift 9s ease-in-out infinite;
+}
+
+.logos img:nth-child(2) { animation-delay: -3s; }
+.logos img:nth-child(3) { animation-delay: -6s; }
+
+@keyframes drift {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+</style>
 </head>
 
-<body data-theme="dark">
+<body>
 
 <header>
-  <button onclick="toggleTheme()">Toggle theme</button>
+  <div class="nav">
+    <strong>Ethan Soh</strong>
+    <button class="toggle" onclick="toggleTheme()">Light / Dark</button>
+  </div>
 </header>
 
 <main>
-  <h1>Ethan Soh</h1>
-  <p class="subtitle">
-    Building things carefully. Thinking about why they work.
-  </p>
 
-  <div class="portrait">
-    <img src="ethan-photo.png" alt="Ethan Soh">
+<section class="hero">
+  <img src="ethan-photo.png" alt="Ethan Soh">
+  <div>
+    <h1>Hi, I’m Ethan.</h1>
+    <p>
+      I like building things that feel human — calm, curious,
+      and quietly thoughtful. Sometimes playful. Always intentional.
+    </p>
+    <div class="links">
+      <a href="https://ethansoh.com" target="_blank">Website</a>
+      <a href="https://github.com/quantamShade0337" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/ethan-soh-9548863a9/" target="_blank">LinkedIn</a>
+    </div>
   </div>
+</section>
 
-  <p class="bio">
-    I design and build projects that prioritize clarity, intention, and calm.
-    I enjoy systems that feel obvious in hindsight and interfaces that stay
-    out of the way.
-  </p>
-
-  <div class="links">
-    <a href="https://ethansoh.com" target="_blank">Website</a>
-    <a href="https://github.com/quantamShade0337" target="_blank">GitHub</a>
-    <a href="https://www.linkedin.com/in/ethan-soh-9548863a9/" target="_blank">LinkedIn</a>
-  </div>
-
-  <section class="section">
-    <h2>Selected work & achievements</h2>
-
-    <div class="entry">
-      <h3>Flowday</h3>
+<section class="section">
+  <h2>Projects</h2>
+  <div class="cards">
+    <div class="card">
+      <div class="card-header">
+        <img src="swift-logo.png">
+        <h3>Flowday</h3>
+      </div>
       <span>2024</span>
       <p>
-        A focused exploration into intentional productivity and sustainable
-        work rhythms.
-        <a href="https://flowday.ethansoh.com" target="_blank">View</a>
+        A gentle productivity space designed around rhythm,
+        not pressure.
       </p>
     </div>
 
-    <div class="entry">
-      <h3>Scripties</h3>
+    <div class="card">
+      <div class="card-header">
+        <img src="scripties-logo.png">
+        <h3>Scripties</h3>
+      </div>
       <span>2024</span>
       <p>
-        An app built to make scripting feel approachable rather than intimidating.
-        <a href="https://scripties.oneapp.dev/" target="_blank">Learn more</a>
+        Helping people approach scripting with confidence
+        and clarity.
       </p>
     </div>
+  </div>
+</section>
 
-    <div class="entry">
-      <h3>BuildingBlocs</h3>
-      <span>2025</span>
-      <p>
-        Collaborative problem-solving through structured creativity.
-      </p>
-    </div>
+<section class="section">
+  <h2>Milestones</h2>
+  <div class="cards">
+    <div class="card"><h3>BuildingBlocs</h3><span>2025</span></div>
+    <div class="card"><h3>NRC</h3><span>Top 20 · 2022</span></div>
+    <div class="card"><h3>FLL</h3><span>Best Presentation · 2021</span></div>
+  </div>
+</section>
 
-    <div class="entry">
-      <h3>National Robotics Competition</h3>
-      <span>2022</span>
-      <p>
-        Placed Top 20 nationally.
-      </p>
-    </div>
-
-    <div class="entry">
-      <h3>FIRST LEGO League</h3>
-      <span>2021</span>
-      <p>
-        Awarded Best Presentation.
-      </p>
-    </div>
-  </section>
-
+<section class="section">
   <div class="logos">
-    <img src="swift-logo.png" alt="Swift">
-    <img src="scripties-logo.png" alt="Scripties">
-    <img src="bpghs-logo.png" alt="School">
+    <img src="swift-logo.png">
+    <img src="scripties-logo.png">
+    <img src="bpghs-logo.png">
   </div>
+</section>
+
 </main>
 
 <script>
-  function toggleTheme() {
-    document.body.dataset.theme =
-      document.body.dataset.theme === "dark" ? "light" : "dark";
-  }
+function toggleTheme() {
+  document.body.dataset.theme =
+    document.body.dataset.theme === "dark" ? "" : "dark";
+}
 </script>
 
 </body>
