@@ -1,81 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ethan Soh</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Nunito:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 /* ================= THEME ================= */
 :root {
-  --bg: #f6f2ec;
+  --bg: radial-gradient(circle at top, #fff5e8, #f3e8dc);
   --panel: #ffffff;
-  --ink: #1e1e1e;
+  --ink: #1b1b1b;
   --muted: #6a6a6a;
-  --accent: #2b5cff;
-  --shadow: 0 30px 70px rgba(0,0,0,0.08);
-  --ease: cubic-bezier(.25,.9,.3,1);
+  --accent: #ff7a18;
+  --accent2: #2b5cff;
+  --shadow: 0 30px 80px rgba(0,0,0,.15);
+  --ease: cubic-bezier(.2,.9,.3,1);
 }
 
 [data-theme="dark"] {
-  --bg: #0e1116;
-  --panel: #161a20;
+  --bg: radial-gradient(circle at top, #1c2130, #0e1116);
+  --panel: #1a1f2b;
   --ink: #f4f4f4;
   --muted: #9aa0aa;
-  --accent: #7fa2ff;
-  --shadow: 0 40px 90px rgba(0,0,0,0.5);
+  --accent: #ffb347;
+  --accent2: #7fa2ff;
+  --shadow: 0 40px 90px rgba(0,0,0,.6);
 }
 
 * { box-sizing: border-box; }
 
-html, body {
+body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
   font-family: "Nunito", sans-serif;
-  overflow-x: hidden;
-  transition: background .6s var(--ease), color .6s var(--ease);
+  transition: background .8s var(--ease), color .6s var(--ease);
 }
 
-/* ================= MAGIC GRAIN ================= */
-body::after {
-  content: "";
+/* ================= FLOATING MAGIC ================= */
+.magic {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
-  animation: grain 8s steps(10) infinite;
 }
 
-@keyframes grain {
-  0%,100% { transform: translate(0,0); }
-  50% { transform: translate(-2%,2%); }
+.magic span {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: var(--accent);
+  border-radius: 50%;
+  opacity: .15;
+  animation: drift 12s infinite ease-in-out;
+}
+
+@keyframes drift {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-80px); }
 }
 
 /* ================= HEADER ================= */
 header {
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 10;
+  backdrop-filter: blur(12px);
 }
 
 .nav {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: auto;
-  padding: 1.4rem 2rem;
+  padding: 1.5rem 2rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .toggle {
-  background: var(--panel);
   border: none;
-  padding: .5rem 1.2rem;
+  background: var(--panel);
+  padding: .6rem 1.4rem;
   border-radius: 999px;
   box-shadow: var(--shadow);
   cursor: pointer;
@@ -83,90 +91,73 @@ header {
 
 /* ================= HERO ================= */
 main {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: auto;
-  padding: 6rem 2rem 8rem;
+  padding: 6rem 2rem 10rem;
 }
 
 .hero {
   text-align: center;
-  opacity: 0;
-  transform: translateY(30px);
-  animation: intro 1.6s var(--ease) forwards;
+  animation: intro 1.4s var(--ease) forwards;
 }
 
 @keyframes intro {
+  from { opacity: 0; transform: translateY(40px); }
   to { opacity: 1; transform: none; }
 }
 
 .hero img {
-  width: 220px;
-  height: 220px;
+  width: 240px;
+  height: 240px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 2.6rem;
+  margin-bottom: 3rem;
   box-shadow: var(--shadow);
-  animation: float 7s ease-in-out infinite;
+  animation: float 8s ease-in-out infinite;
 }
 
 @keyframes float {
   0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-14px); }
+  50% { transform: translateY(-18px); }
 }
 
 .hero h1 {
   font-family: "Playfair Display", serif;
-  font-size: clamp(3rem, 5vw, 3.8rem);
-  margin: 0 0 1rem;
+  font-size: clamp(3.2rem, 6vw, 4.2rem);
 }
 
 .hero p {
-  max-width: 60ch;
-  margin: auto;
-  line-height: 1.7;
+  max-width: 65ch;
+  margin: 1.6rem auto 0;
   color: var(--muted);
+  line-height: 1.8;
 }
 
 .links {
-  margin-top: 2.2rem;
+  margin-top: 3rem;
   display: flex;
-  gap: 1.2rem;
+  gap: 1.4rem;
   justify-content: center;
 }
 
 .links a {
-  background: var(--panel);
-  padding: .6rem 1.4rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: white;
+  padding: .7rem 1.8rem;
   border-radius: 999px;
-  box-shadow: var(--shadow);
   text-decoration: none;
-  color: var(--ink);
+  box-shadow: var(--shadow);
   transition: transform .4s var(--ease);
 }
 
-.links a:hover { transform: translateY(-4px); }
+.links a:hover { transform: translateY(-6px) scale(1.05); }
 
-/* ================= DIVIDER ================= */
-.divider {
-  margin: 7rem auto;
-  width: 120px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  animation: shimmer 4s linear infinite;
-}
-
-@keyframes shimmer {
-  0% { opacity: .3; }
-  50% { opacity: 1; }
-  100% { opacity: .3; }
-}
-
-/* ================= SECTIONS ================= */
+/* ================= SECTION ================= */
 .section {
-  margin-bottom: 8rem;
+  margin-top: 9rem;
   opacity: 0;
-  transform: translateY(40px);
-  transition: 1s var(--ease);
+  transform: translateY(60px);
+  transition: 1.2s var(--ease);
 }
 
 .section.visible {
@@ -176,57 +167,63 @@ main {
 
 .section h2 {
   font-family: "Playfair Display", serif;
-  font-size: 2rem;
-  margin-bottom: 2.8rem;
+  font-size: 2.6rem;
+  margin-bottom: 3rem;
 }
 
 /* ================= BENTO ================= */
 .bento {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-auto-rows: 180px;
-  gap: 1.6rem;
+  gap: 2rem;
 }
 
 .tile {
   background: var(--panel);
-  border-radius: 28px;
-  padding: 2rem;
+  border-radius: 32px;
+  padding: 2.6rem;
   box-shadow: var(--shadow);
-  transition: transform .5s var(--ease);
+  transition: transform .6s var(--ease);
+  position: relative;
+  overflow: hidden;
 }
 
-.tile:hover { transform: translateY(-10px); }
+.tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(255,255,255,.25), transparent);
+  opacity: 0;
+  transition: opacity .6s;
+}
 
-.large { grid-column: span 4; grid-row: span 2; }
+.tile:hover::after { opacity: 1; }
+.tile:hover { transform: translateY(-12px) rotate(-.3deg); }
+
+.tile img {
+  height: 40px;
+  margin-bottom: 1.4rem;
+}
+
+.large { grid-column: span 4; }
 .medium { grid-column: span 3; }
 .small { grid-column: span 2; }
 
-.tile h3 { margin: 0; }
+.tile h3 { margin: .4rem 0; }
 .tile span { font-size: .85rem; color: var(--muted); }
-.tile p { color: var(--muted); line-height: 1.6; }
+.tile p { margin-top: .8rem; color: var(--muted); line-height: 1.6; }
 
-/* ================= LOGOS ================= */
-.logos {
-  display: flex;
-  justify-content: center;
-  gap: 3.6rem;
-}
-
-.logos img {
-  height: 36px;
-  opacity: .85;
-  animation: drift 8s ease-in-out infinite;
-}
-
-@keyframes drift {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
+/* ================= SCRIPT ================= */
 </style>
 </head>
 
 <body>
+
+<div class="magic">
+  <span style="top:20%;left:10%"></span>
+  <span style="top:60%;left:80%"></span>
+  <span style="top:40%;left:50%"></span>
+</div>
 
 <header>
   <div class="nav">
@@ -239,11 +236,12 @@ main {
 
 <section class="hero">
   <img src="ethan-photo.png">
-  <h1>Hi, I’m Ethan.</h1>
+  <h1>Hey, I’m Ethan.</h1>
   <p>
-    I design calm, thoughtful digital experiences —
-    things that feel gentle, human, and quietly magical.
+    I build playful, human-centered digital experiences —
+    thoughtful by default, magical when you least expect it.
   </p>
+
   <div class="links">
     <a href="https://ethansoh.com">Website</a>
     <a href="https://github.com/quantamShade0337">GitHub</a>
@@ -251,52 +249,42 @@ main {
   </div>
 </section>
 
-<div class="divider"></div>
-
 <section class="section">
-  <h2>What I’ve Built</h2>
+  <h2>My Journey</h2>
   <div class="bento">
     <div class="tile large">
+      <img src="swift-logo.png">
       <h3>Flowday</h3><span>2024</span>
       <p>
-        Flowday explores productivity without pressure —
-        designed around rhythm, reflection, and breathing room
-        instead of urgency.
+        A calm-first productivity experience designed around rhythm,
+        reflection, and mental breathing room.
       </p>
     </div>
 
     <div class="tile medium">
+      <img src="scripties-logo.png">
       <h3>Scripties</h3><span>2024</span>
       <p>
-        A scripting tool focused on clarity and confidence,
-        removing friction from creative thinking.
+        A confidence-driven scripting tool that helps creators
+        speak with clarity and intention.
       </p>
     </div>
 
     <div class="tile small">
+      <img src="bpghs-logo.png">
       <h3>BuildingBlocs</h3><span>2025</span>
-      <p>Structured creativity through collaboration.</p>
+      <p>Collaborative learning through structured creativity.</p>
     </div>
 
     <div class="tile small">
       <h3>NRC</h3><span>Top 20 · 2022</span>
-      <p>National robotics finalist.</p>
+      <p>National robotics competition finalist.</p>
     </div>
 
     <div class="tile medium">
       <h3>FLL</h3><span>Best Presentation · 2021</span>
-      <p>Storytelling and clarity over raw complexity.</p>
+      <p>Recognized for storytelling, clarity, and delivery.</p>
     </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<section class="section">
-  <div class="logos">
-    <img src="swift-logo.png">
-    <img src="scripties-logo.png">
-    <img src="bpghs-logo.png">
   </div>
 </section>
 
@@ -308,11 +296,10 @@ function toggleTheme() {
     document.body.dataset.theme === "dark" ? "" : "dark";
 }
 
-// Scroll reveal
 const sections = document.querySelectorAll(".section");
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => e.isIntersecting && e.target.classList.add("visible"));
-}, { threshold: 0.2 });
+}, { threshold: .2 });
 
 sections.forEach(s => observer.observe(s));
 </script>
