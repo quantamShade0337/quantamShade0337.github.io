@@ -5,33 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Ethan Soh</title>
 
-<!-- Typography: editorial + warm -->
+<!-- Fonts: distinctive, editorial -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-/* ================= CORE THEME ================= */
+/* ===================== THEME ===================== */
 :root {
-  --bg: #f6f2ea;
-  --ink: #121212;
-  --muted: #6b6b6b;
-  --panel: #ffffff;
-  --accent: #2f5cff;
-  --accent-soft: rgba(47,92,255,0.15);
-  --radius: 28px;
-  --shadow: 0 30px 80px rgba(0,0,0,.12);
+  --bg: #f4f3ef;
+  --ink: #0f0f0f;
+  --muted: #6a6a6a;
+  --accent: #111111;
   --ease: cubic-bezier(.22,.61,.36,1);
 }
 
-[data-theme="dark"] {
-  --bg: #0e1117;
-  --ink: #f5f6fa;
-  --muted: #9aa0aa;
-  --panel: #161b22;
-  --accent: #7fa2ff;
-  --accent-soft: rgba(127,162,255,0.2);
-  --shadow: 0 40px 100px rgba(0,0,0,.6);
+body.dark {
+  --bg: #0b0b0b;
+  --ink: #f1f1f1;
+  --muted: #9a9a9a;
+  --accent: #ffffff;
 }
 
 * {
@@ -42,187 +35,150 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: "Manrope", sans-serif;
-  transition: background .6s var(--ease), color .6s var(--ease);
+  font-family: "IBM Plex Sans", sans-serif;
+  transition: background .8s var(--ease), color .8s var(--ease);
+  overflow-x: hidden;
 }
 
-/* ================= NAV ================= */
+/* ===================== GLOBAL ===================== */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10rem 2.5rem 14rem;
+}
+
+section {
+  margin-bottom: 14rem;
+  opacity: 0;
+  transform: translateY(80px);
+  transition: 1.2s var(--ease);
+}
+
+section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+h1, h2 {
+  font-family: "Fraunces", serif;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: clamp(3.8rem, 7vw, 6rem);
+  line-height: 1.05;
+  max-width: 14ch;
+}
+
+h2 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+
+p {
+  max-width: 60ch;
+  line-height: 1.9;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+/* ===================== NAV ===================== */
 nav {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 1.2rem 2.5rem;
+  padding: 1.5rem 2.5rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  z-index: 20;
-  backdrop-filter: blur(10px);
-}
-
-nav strong {
-  font-family: "DM Serif Display", serif;
-  font-size: 1.4rem;
+  z-index: 10;
+  pointer-events: none;
 }
 
 nav button {
+  pointer-events: auto;
   border: none;
-  background: var(--panel);
-  padding: .5rem 1.2rem;
-  border-radius: 999px;
-  box-shadow: var(--shadow);
+  background: transparent;
+  font-family: inherit;
+  font-size: .9rem;
   cursor: pointer;
+  color: var(--muted);
 }
 
-/* ================= LAYOUT ================= */
-main {
-  max-width: 1200px;
-  margin: auto;
-  padding: 8rem 2.5rem 12rem;
-}
-
-/* ================= HERO ================= */
+/* ===================== HERO ===================== */
 .hero {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 2rem;
+  gap: 3rem;
 }
 
-.hero img {
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  object-fit: cover;
-  align-self: center;
-  box-shadow: var(--shadow);
-  animation: float 8s ease-in-out infinite;
-}
-
-.hero h1 {
-  font-family: "DM Serif Display", serif;
-  font-size: clamp(3.5rem, 7vw, 5.2rem);
-  line-height: 1.05;
-  max-width: 14ch;
-}
-
-.hero p {
-  font-size: 1.1rem;
-  max-width: 60ch;
+.hero span {
+  font-size: .85rem;
+  text-transform: uppercase;
+  letter-spacing: .15em;
   color: var(--muted);
 }
 
-.hero-links {
-  display: flex;
-  gap: 1.5rem;
-  margin-top: 1.5rem;
+/* ===================== ACCOMPLISHMENTS ===================== */
+.timeline {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 4rem;
 }
 
-.hero-links a {
+.year {
+  font-family: "Fraunces", serif;
+  font-size: 2.5rem;
+}
+
+.entry {
+  margin-bottom: 4rem;
+}
+
+.entry h3 {
+  margin: 0 0 .6rem;
+  font-size: 1.3rem;
+}
+
+.entry p {
+  margin: 0;
+}
+
+/* ===================== STATEMENT ===================== */
+.statement {
+  font-size: 2rem;
+  font-family: "Fraunces", serif;
+  line-height: 1.4;
+  max-width: 28ch;
+}
+
+/* ===================== FOOTER ===================== */
+footer {
+  border-top: 1px solid rgba(0,0,0,.08);
+  padding-top: 6rem;
+}
+
+footer a {
   text-decoration: none;
   color: var(--ink);
-  border-bottom: 2px solid var(--accent);
-  padding-bottom: .2rem;
-}
-
-/* ================= SECTION ================= */
-.section {
-  margin-top: 10rem;
-  opacity: 0;
-  transform: translateY(60px);
-  transition: 1.2s var(--ease);
-}
-
-.section.visible {
-  opacity: 1;
-  transform: none;
-}
-
-.section h2 {
-  font-family: "DM Serif Display", serif;
-  font-size: 3rem;
-  margin-bottom: 2rem;
-}
-
-.section p {
-  max-width: 65ch;
-  color: var(--muted);
-  line-height: 1.8;
-}
-
-/* ================= BENTO ================= */
-.bento {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 2rem;
-  margin-top: 3rem;
-}
-
-.tile {
-  background: var(--panel);
-  border-radius: var(--radius);
-  padding: 2.4rem;
-  box-shadow: var(--shadow);
-  transition: transform .6s var(--ease);
-}
-
-.tile:hover {
-  transform: translateY(-14px);
-}
-
-.tile img {
-  height: 38px;
-  margin-bottom: 1.2rem;
-}
-
-.tile h3 {
-  margin: 0;
-  font-size: 1.2rem;
-}
-
-.tile span {
-  font-size: .85rem;
-  color: var(--muted);
-}
-
-.tile p {
-  margin-top: .8rem;
+  margin-right: 2rem;
   font-size: .95rem;
 }
 
-.large { grid-column: span 4; }
-.medium { grid-column: span 3; }
-.small { grid-column: span 2; }
-
-/* ================= PROCESS ================= */
-.process {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  margin-top: 4rem;
+/* ===================== ANIM EXTRAS ===================== */
+.reveal-word span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(40px);
+  animation: wordReveal .9s var(--ease) forwards;
 }
 
-/* ================= FOOTER ================= */
-footer {
-  margin-top: 12rem;
-  padding-top: 6rem;
-  border-top: 1px solid var(--accent-soft);
-}
-
-footer p {
-  color: var(--muted);
-}
-
-/* ================= ANIM ================= */
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-18px); }
-}
-
-@media (max-width: 900px) {
-  .bento { grid-template-columns: repeat(2, 1fr); }
-  .large, .medium, .small { grid-column: span 2; }
-  .process { grid-template-columns: 1fr; }
+@keyframes wordReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>
 </head>
@@ -230,125 +186,120 @@ footer p {
 <body>
 
 <nav>
-  <strong>Ethan Soh</strong>
   <button onclick="toggleTheme()">Light / Dark</button>
 </nav>
 
 <main>
 
 <!-- HERO -->
-<section class="hero section">
-  <img src="ethan-photo.png" alt="Ethan Soh" />
-  <h1>Designing things that feel human.</h1>
+<section class="hero">
+  <span>Personal Bio</span>
+  <h1 class="reveal-word"></h1>
   <p>
-    I build digital products with personality, warmth, and intent.
-    Things that move, breathe, and invite curiosity.
-  </p>
-  <div class="hero-links">
-    <a href="https://ethansoh.com">Site</a>
-    <a href="https://github.com/quantamShade0337">GitHub</a>
-    <a href="https://www.linkedin.com/in/ethan-soh-9548863a9/">LinkedIn</a>
-  </div>
-</section>
-
-<!-- STORY -->
-<section class="section">
-  <h2>The throughline</h2>
-  <p>
-    I’m interested in how people think, how they hesitate, and what makes
-    something quietly delightful. My work sits at the intersection of
-    storytelling, engineering, and design restraint.
+    I build things carefully. I care about how ideas land, how interfaces
+    feel over time, and how decisions compound.
   </p>
 </section>
 
-<!-- WORK -->
-<section class="section">
-  <h2>Selected work</h2>
+<!-- PHILOSOPHY -->
+<section>
+  <h2>Intent over noise</h2>
+  <p>
+    I’m drawn to work that rewards attention. Interfaces that slow you down
+    just enough to think. Systems that respect the person using them.
+  </p>
+</section>
 
-  <div class="bento">
-    <div class="tile large">
-      <img src="swift-logo.png">
-      <h3>Flowday</h3>
-      <span>2024</span>
-      <p>
-        A reflective productivity system focused on momentum over pressure.
-        Designed to work with how people actually think.
-      </p>
-    </div>
+<!-- ACCOMPLISHMENTS -->
+<section>
+  <h2>Selected trajectory</h2>
 
-    <div class="tile medium">
-      <img src="scripties-logo.png">
-      <h3>Scripties</h3>
-      <span>2024</span>
-      <p>
-        A writing tool built to reduce friction and build confidence
-        in expression.
-      </p>
-    </div>
-
-    <div class="tile small">
-      <img src="bpghs-logo.png">
+  <div class="timeline">
+    <div class="year">2025</div>
+    <div class="entry">
       <h3>BuildingBlocs</h3>
-      <span>2025</span>
       <p>
-        Collaborative problem-solving through modular thinking.
+        A project focused on modular thinking — breaking complexity into
+        pieces people can reason about.
       </p>
     </div>
 
-    <div class="tile small">
-      <h3>NRC</h3>
-      <span>Top 20 · 2022</span>
+    <div class="year">2024</div>
+    <div class="entry">
+      <h3>Flowday</h3>
       <p>
-        National recognition for technical creativity.
+        A reflection-first productivity system designed around momentum
+        rather than pressure.
       </p>
     </div>
 
-    <div class="tile medium">
-      <h3>FLL</h3>
-      <span>Best Presentation · 2021</span>
+    <div class="year">2024</div>
+    <div class="entry">
+      <h3>Scripties</h3>
       <p>
-        Awarded for clarity, narrative, and delivery.
+        A writing environment built to reduce friction and make starting
+        feel easier than hesitating.
+      </p>
+    </div>
+
+    <div class="year">2022</div>
+    <div class="entry">
+      <h3>NRC · Top 20</h3>
+      <p>
+        Recognized for technical creativity and problem framing.
+      </p>
+    </div>
+
+    <div class="year">2021</div>
+    <div class="entry">
+      <h3>FLL · Best Presentation</h3>
+      <p>
+        Awarded for clarity, narrative structure, and delivery.
       </p>
     </div>
   </div>
 </section>
 
-<!-- PROCESS -->
-<section class="section">
-  <h2>How I work</h2>
-
-  <div class="process">
-    <p>
-      I start with people, not features. I map emotional friction,
-      notice hesitation, and design around moments — not screens.
-    </p>
-    <p>
-      Motion is intentional. Typography carries tone. Space matters.
-      If something feels obvious, I question it.
-    </p>
-  </div>
-</section>
-
-<footer class="section">
-  <p>
-    Interested in collaborating or just chatting?
-    Reach out anytime.
+<!-- CLOSING -->
+<section>
+  <p class="statement">
+    I’m interested in what happens when technology feels less like a tool
+    and more like a collaborator.
   </p>
+</section>
+
+<footer>
+  <a href="https://ethansoh.com">Website</a>
+  <a href="https://github.com/quantamShade0337">GitHub</a>
+  <a href="https://www.linkedin.com/in/ethan-soh-9548863a9/">LinkedIn</a>
 </footer>
 
 </main>
 
 <script>
+/* Theme toggle */
 function toggleTheme() {
-  document.body.dataset.theme =
-    document.body.dataset.theme === "dark" ? "" : "dark";
+  document.body.classList.toggle("dark");
 }
 
+/* Intersection reveal */
 const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => e.isIntersecting && e.target.classList.add("visible"));
-}, { threshold: 0.25 });
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add("visible");
+  });
+}, { threshold: 0.2 });
 
-document.querySelectorAll(".section").forEach(s => observer.observe(s));
+document.querySelectorAll("section").forEach(s => observer.observe(s));
+
+/* Hero word animation */
+const heroText = "Designing with intention, not excess.";
+const heroEl = document.querySelector(".reveal-word");
+heroText.split(" ").forEach((word, i) => {
+  const span = document.createElement("span");
+  span.textContent = word + " ";
+  span.style.animationDelay = `${i * 0.12}s`;
+  heroEl.appendChild(span);
+});
 </script>
 
 </body>
