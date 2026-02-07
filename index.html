@@ -1,38 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Ethan Soh</title>
 
+<!-- Typography: editorial + warm -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* ================= GLOBAL THEME ================= */
+/* ================= CORE THEME ================= */
 :root {
-  --bg: #f4efe8;
-  --panel: #fff;
-  --ink: #1b1b1b;
-  --muted: #6e6e6e;
-  --accent: #2b5cff;
-  --accent2: #ff7a18;
-  --shadow: 0 30px 70px rgba(0,0,0,.12);
-  --ease: cubic-bezier(.2,.9,.3,1);
+  --bg: #f6f2ea;
+  --ink: #121212;
+  --muted: #6b6b6b;
+  --panel: #ffffff;
+  --accent: #2f5cff;
+  --accent-soft: rgba(47,92,255,0.15);
+  --radius: 28px;
+  --shadow: 0 30px 80px rgba(0,0,0,.12);
+  --ease: cubic-bezier(.22,.61,.36,1);
 }
 
 [data-theme="dark"] {
-  --bg: #12151d;
-  --panel: #1a1f2c;
-  --ink: #f5f5f5;
-  --muted: #9aa0ab;
+  --bg: #0e1117;
+  --ink: #f5f6fa;
+  --muted: #9aa0aa;
+  --panel: #161b22;
   --accent: #7fa2ff;
-  --accent2: #ffb348;
-  --shadow: 0 40px 90px rgba(0,0,0,.55);
+  --accent-soft: rgba(127,162,255,0.2);
+  --shadow: 0 40px 100px rgba(0,0,0,.6);
 }
 
-*, *::before, *::after {
+* {
   box-sizing: border-box;
 }
 
@@ -40,73 +42,95 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: "Nunito", sans-serif;
-  scroll-behavior: smooth;
+  font-family: "Manrope", sans-serif;
   transition: background .6s var(--ease), color .6s var(--ease);
 }
 
-/* ================= HEADER & NAV ================= */
-header {
-  position: sticky;
+/* ================= NAV ================= */
+nav {
+  position: fixed;
   top: 0;
-  backdrop-filter: blur(12px);
-  z-index: 20;
-  padding: .9rem 2rem;
+  width: 100%;
+  padding: 1.2rem 2.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 20;
+  backdrop-filter: blur(10px);
 }
 
-header strong {
-  font-family: "Playfair Display", serif;
+nav strong {
+  font-family: "DM Serif Display", serif;
   font-size: 1.4rem;
 }
 
-.toggle {
-  background: var(--panel);
+nav button {
   border: none;
-  padding: .6rem 1.4rem;
+  background: var(--panel);
+  padding: .5rem 1.2rem;
   border-radius: 999px;
   box-shadow: var(--shadow);
   cursor: pointer;
 }
 
-/* ================= FLOATING ACCENTS ================= */
-.magic {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.magic span {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  background: var(--accent2);
-  border-radius: 50%;
-  opacity: .12;
-  animation: drift 10s infinite ease-in-out;
-}
-
-@keyframes drift {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-60px); }
-}
-
-/* ================= MAIN LAYOUT ================= */
+/* ================= LAYOUT ================= */
 main {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: auto;
-  padding: 6rem 2rem 10rem;
+  padding: 8rem 2.5rem 12rem;
 }
 
-/* ================= SECTION HELPER ================= */
+/* ================= HERO ================= */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.hero img {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  object-fit: cover;
+  align-self: center;
+  box-shadow: var(--shadow);
+  animation: float 8s ease-in-out infinite;
+}
+
+.hero h1 {
+  font-family: "DM Serif Display", serif;
+  font-size: clamp(3.5rem, 7vw, 5.2rem);
+  line-height: 1.05;
+  max-width: 14ch;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  max-width: 60ch;
+  color: var(--muted);
+}
+
+.hero-links {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.hero-links a {
+  text-decoration: none;
+  color: var(--ink);
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: .2rem;
+}
+
+/* ================= SECTION ================= */
 .section {
-  margin: 9rem 0;
+  margin-top: 10rem;
   opacity: 0;
-  transform: translateY(50px);
-  transition: 1s var(--ease);
+  transform: translateY(60px);
+  transition: 1.2s var(--ease);
 }
 
 .section.visible {
@@ -114,216 +138,203 @@ main {
   transform: none;
 }
 
-h2.section-title {
-  font-family: "Playfair Display", serif;
-  font-size: 2.6rem;
-  margin-bottom: 2.5rem;
+.section h2 {
+  font-family: "DM Serif Display", serif;
+  font-size: 3rem;
+  margin-bottom: 2rem;
 }
 
-/* ================= HERO ================= */
-.hero {
-  text-align: center;
-  opacity: 0;
-  animation: heroIntro 1.6s var(--ease) forwards;
-}
-
-@keyframes heroIntro {
-  to { opacity: 1; }
-}
-
-.hero img {
-  width: 240px;
-  height: 240px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid var(--accent);
-  box-shadow: var(--shadow);
-  animation: float 8s ease-in-out infinite;
-}
-
-.hero h1 {
-  font-family: "Playfair Display", serif;
-  font-size: clamp(3rem, 6vw, 4.2rem);
-  margin: .8rem 0;
-}
-
-.hero p {
-  max-width: 62ch;
-  margin: 1rem auto;
+.section p {
+  max-width: 65ch;
   color: var(--muted);
-  line-height: 1.7;
+  line-height: 1.8;
 }
 
-.links {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-top: 2.2rem;
-}
-
-.links a {
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  padding: .7rem 1.8rem;
-  border-radius: 999px;
-  color: white;
-  text-decoration: none;
-  box-shadow: var(--shadow);
-  transition: transform .4s var(--ease);
-}
-
-.links a:hover { transform: translateY(-5px) scale(1.03); }
-
-/* ================= BENTO GRID ================= */
+/* ================= BENTO ================= */
 .bento {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 2rem;
+  margin-top: 3rem;
 }
 
 .tile {
   background: var(--panel);
-  border-radius: 32px;
+  border-radius: var(--radius);
   padding: 2.4rem;
   box-shadow: var(--shadow);
-  transition: transform .5s var(--ease);
+  transition: transform .6s var(--ease);
 }
 
-.tile:hover { transform: translateY(-12px); }
+.tile:hover {
+  transform: translateY(-14px);
+}
 
 .tile img {
-  height: 40px;
+  height: 38px;
   margin-bottom: 1.2rem;
 }
 
-.tile h3 { margin: .3rem 0; font-size: 1.15rem; }
-.tile span { font-size: .85rem; color: var(--muted); }
-.tile p { margin-top: .8rem; color: var(--muted); line-height: 1.6; }
+.tile h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.tile span {
+  font-size: .85rem;
+  color: var(--muted);
+}
+
+.tile p {
+  margin-top: .8rem;
+  font-size: .95rem;
+}
 
 .large { grid-column: span 4; }
 .medium { grid-column: span 3; }
 .small { grid-column: span 2; }
 
-/* ================= CONTACT FORM ================= */
-.contact-form {
-  max-width: 650px;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1.1rem;
+/* ================= PROCESS ================= */
+.process {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  margin-top: 4rem;
 }
 
-.contact-form input,
-.contact-form textarea {
-  padding: .8rem 1rem;
-  border: 1px solid var(--muted);
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 1rem;
-  background: var(--panel);
-  color: var(--ink);
+/* ================= FOOTER ================= */
+footer {
+  margin-top: 12rem;
+  padding-top: 6rem;
+  border-top: 1px solid var(--accent-soft);
 }
 
-.contact-form button {
-  padding: .8rem 1.2rem;
-  border: none;
-  background: var(--accent);
-  color: white;
-  border-radius: 999px;
-  cursor: pointer;
-  font-size: 1rem;
-  margin-top: .8rem;
+footer p {
+  color: var(--muted);
 }
 
+/* ================= ANIM ================= */
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-18px); }
+}
+
+@media (max-width: 900px) {
+  .bento { grid-template-columns: repeat(2, 1fr); }
+  .large, .medium, .small { grid-column: span 2; }
+  .process { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 
 <body>
 
-<div class="magic">
-  <span style="top:15%;left:12%"></span>
-  <span style="top:65%;left:78%"></span>
-  <span style="top:40%;left:47%"></span>
-</div>
-
-<header>
+<nav>
   <strong>Ethan Soh</strong>
-  <button class="toggle" onclick="toggleTheme()">Light / Dark</button>
-</header>
+  <button onclick="toggleTheme()">Light / Dark</button>
+</nav>
 
 <main>
 
+<!-- HERO -->
 <section class="hero section">
-  <img src="ethan-photo.png" alt="Ethan Soh">
-  <h1>Hey, I’m Ethan.</h1>
+  <img src="ethan-photo.png" alt="Ethan Soh" />
+  <h1>Designing things that feel human.</h1>
   <p>
-    I build digital experiences that feel *alive* — thoughtful, playful,
-    and genuinely human.
+    I build digital products with personality, warmth, and intent.
+    Things that move, breathe, and invite curiosity.
   </p>
-  <div class="links">
-    <a href="https://ethansoh.com">Website</a>
+  <div class="hero-links">
+    <a href="https://ethansoh.com">Site</a>
     <a href="https://github.com/quantamShade0337">GitHub</a>
     <a href="https://www.linkedin.com/in/ethan-soh-9548863a9/">LinkedIn</a>
   </div>
 </section>
 
+<!-- STORY -->
 <section class="section">
-  <h2 class="section-title">Feature Showcase</h2>
+  <h2>The throughline</h2>
+  <p>
+    I’m interested in how people think, how they hesitate, and what makes
+    something quietly delightful. My work sits at the intersection of
+    storytelling, engineering, and design restraint.
+  </p>
+</section>
+
+<!-- WORK -->
+<section class="section">
+  <h2>Selected work</h2>
+
   <div class="bento">
     <div class="tile large">
-      <img src="swift-logo.png" alt="">
-      <h3>Flowday</h3><span>2024</span>
+      <img src="swift-logo.png">
+      <h3>Flowday</h3>
+      <span>2024</span>
       <p>
-        A productivity experience built around rhythm and reflection,
-        not pressure — designed for real people.
+        A reflective productivity system focused on momentum over pressure.
+        Designed to work with how people actually think.
       </p>
     </div>
 
     <div class="tile medium">
-      <img src="scripties-logo.png" alt="">
-      <h3>Scripties</h3><span>2024</span>
+      <img src="scripties-logo.png">
+      <h3>Scripties</h3>
+      <span>2024</span>
       <p>
-        A scripting tool focused on confidence, clarity, and
-        expressive flow.
+        A writing tool built to reduce friction and build confidence
+        in expression.
       </p>
     </div>
 
     <div class="tile small">
-      <img src="bpghs-logo.png" alt="">
-      <h3>BuildingBlocs</h3><span>2025</span>
-      <p>An exploratory problem-solving system built collaboratively.</p>
+      <img src="bpghs-logo.png">
+      <h3>BuildingBlocs</h3>
+      <span>2025</span>
+      <p>
+        Collaborative problem-solving through modular thinking.
+      </p>
     </div>
 
     <div class="tile small">
-      <h3>NRC</h3><span>Top 20 · 2022</span>
-      <p>Recognised nationally for engineering strategy and creativity.</p>
+      <h3>NRC</h3>
+      <span>Top 20 · 2022</span>
+      <p>
+        National recognition for technical creativity.
+      </p>
     </div>
 
     <div class="tile medium">
-      <h3>FLL</h3><span>Best Presentation · 2021</span>
-      <p>Awarded for communication, structure, and clarity in delivery.</p>
+      <h3>FLL</h3>
+      <span>Best Presentation · 2021</span>
+      <p>
+        Awarded for clarity, narrative, and delivery.
+      </p>
     </div>
   </div>
 </section>
 
+<!-- PROCESS -->
 <section class="section">
-  <h2 class="section-title">The Process</h2>
-  <p style="max-width:65ch; margin:auto; color:var(--muted); line-height:1.8">
-    Inspired by real human context, design should *feel* before it
-    functions. I approach projects by understanding the people behind
-    the screens, the context of use, and the lived experience of the user —
-    not just the UI they see.
-  </p>
+  <h2>How I work</h2>
+
+  <div class="process">
+    <p>
+      I start with people, not features. I map emotional friction,
+      notice hesitation, and design around moments — not screens.
+    </p>
+    <p>
+      Motion is intentional. Typography carries tone. Space matters.
+      If something feels obvious, I question it.
+    </p>
+  </div>
 </section>
 
-<section class="section">
-  <h2 class="section-title">Contact</h2>
-  <form class="contact-form">
-    <input type="text" placeholder="Your name">
-    <input type="email" placeholder="Your email">
-    <textarea placeholder="Message" rows="4"></textarea>
-    <button>Send</button>
-  </form>
-</section>
+<footer class="section">
+  <p>
+    Interested in collaborating or just chatting?
+    Reach out anytime.
+  </p>
+</footer>
 
 </main>
 
@@ -332,11 +343,12 @@ function toggleTheme() {
   document.body.dataset.theme =
     document.body.dataset.theme === "dark" ? "" : "dark";
 }
-const sections = document.querySelectorAll(".section");
+
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => e.isIntersecting && e.target.classList.add("visible"));
-}, { threshold: 0.3 });
-sections.forEach(s => observer.observe(s));
+}, { threshold: 0.25 });
+
+document.querySelectorAll(".section").forEach(s => observer.observe(s));
 </script>
 
 </body>
