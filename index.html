@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Ethan Soh</title>
 
-<!-- Stronger, bolder fonts -->
+<!-- Bold, intentional fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -13,56 +13,32 @@
 <style>
 /* ===================== THEME ===================== */
 :root {
-  --bg: #f2f2ef;
-  --panel: #ffffff;
-  --ink: #0e0e0e;
-  --muted: #6e6e6e;
-  --border: rgba(0,0,0,.08);
+  --bg: #0a0a0a;
+  --panel: #121212;
+  --ink: #f4f4f4;
+  --muted: #9b9b9b;
+  --border: rgba(255,255,255,.08);
+  --glow: rgba(255,255,255,.06);
   --ease: cubic-bezier(.22,.61,.36,1);
 }
 
-body.dark {
-  --bg: #0b0b0b;
-  --panel: #121212;
-  --ink: #f5f5f5;
-  --muted: #9a9a9a;
-  --border: rgba(255,255,255,.08);
-}
-
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
-  background: var(--bg);
+  background: radial-gradient(
+    circle at top,
+    #111 0%,
+    #0a0a0a 60%
+  );
   color: var(--ink);
   font-family: "IBM Plex Sans", sans-serif;
-  transition: background .6s var(--ease), color .6s var(--ease);
-}
-
-/* ===================== NAV ===================== */
-nav {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  padding: 1.2rem 2rem;
-  display: flex;
-  justify-content: flex-end;
-  z-index: 10;
-}
-
-nav button {
-  background: none;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  color: var(--muted);
+  overflow-x: hidden;
 }
 
 /* ===================== GRID ===================== */
 main {
-  padding: 6rem 2rem 4rem;
+  padding: 5rem 2rem 4rem;
   max-width: 1400px;
   margin: auto;
 }
@@ -71,39 +47,54 @@ main {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-auto-rows: minmax(120px, auto);
-  gap: 1.25rem;
+  gap: 1.3rem;
 }
 
-/* ===================== BENTO TILE ===================== */
+/* ===================== TILE ===================== */
 .tile {
-  background: var(--panel);
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,.04),
+    rgba(255,255,255,.01)
+  );
   border: 1px solid var(--border);
   border-radius: 22px;
   padding: 2rem;
   position: relative;
   overflow: hidden;
-  transform: translateY(30px);
   opacity: 0;
-  transition: 1s var(--ease);
+  transform: translateY(40px);
+  transition: 
+    opacity 1s var(--ease),
+    transform 1s var(--ease),
+    box-shadow .6s var(--ease);
 }
 
 .tile.visible {
-  transform: translateY(0);
   opacity: 1;
+  transform: translateY(0);
 }
 
+.tile:hover {
+  box-shadow:
+    0 0 0 1px var(--border),
+    0 20px 50px rgba(0,0,0,.6),
+    inset 0 0 0 1px var(--glow);
+}
+
+/* soft shimmer */
 .tile::after {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(
     120deg,
-    transparent,
-    rgba(0,0,0,.03),
-    transparent
+    transparent 30%,
+    rgba(255,255,255,.05),
+    transparent 70%
   );
   opacity: 0;
-  transition: .6s;
+  transition: .8s var(--ease);
 }
 
 .tile:hover::after {
@@ -113,12 +104,12 @@ main {
 /* ===================== TYPE ===================== */
 h1, h2, h3 {
   font-family: "Archivo Black", sans-serif;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   margin: 0;
 }
 
 h1 {
-  font-size: clamp(3rem, 4vw, 4.5rem);
+  font-size: clamp(3.2rem, 4.5vw, 4.8rem);
   line-height: 1.05;
 }
 
@@ -127,55 +118,45 @@ h2 {
 }
 
 h3 {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
 }
 
 p {
-  margin-top: .8rem;
+  margin-top: .9rem;
   color: var(--muted);
-  line-height: 1.6;
+  line-height: 1.65;
+  max-width: 46ch;
 }
 
 /* ===================== LAYOUT ===================== */
-.hero {
-  grid-column: span 8;
-}
-
-.statement {
-  grid-column: span 4;
-  display: flex;
-  align-items: center;
-}
-
-.accomplishment {
-  grid-column: span 4;
-}
-
-.wide {
-  grid-column: span 6;
-}
+.hero { grid-column: span 8; }
+.statement { grid-column: span 4; display: flex; align-items: center; }
+.accomplishment { grid-column: span 4; }
+.wide { grid-column: span 6; }
 
 .links {
   grid-column: span 12;
   display: flex;
-  gap: 2rem;
+  gap: 2.5rem;
+  align-items: center;
 }
 
 /* ===================== LINKS ===================== */
 .links a {
+  color: var(--ink);
   text-decoration: none;
   font-weight: 600;
-  color: var(--ink);
   position: relative;
+  padding-bottom: 4px;
 }
 
 .links a::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -4px;
-  width: 0;
+  bottom: 0;
   height: 2px;
+  width: 0;
   background: var(--ink);
   transition: .4s var(--ease);
 }
@@ -188,27 +169,23 @@ p {
 
 <body>
 
-<nav>
-  <button onclick="toggleTheme()">Light / Dark</button>
-</nav>
-
 <main>
   <div class="grid">
 
     <!-- HERO -->
     <div class="tile hero">
-      <h1>Designing with intention,<br>not excess.</h1>
+      <h1>Designing clarity<br>in complex systems.</h1>
       <p>
-        I care deeply about how interfaces feel over time —
-        how decisions compound, and how clarity beats noise.
+        I care about how interfaces feel after ten minutes,
+        not ten seconds. Thoughtful pacing beats spectacle.
       </p>
     </div>
 
     <!-- STATEMENT -->
     <div class="tile statement">
       <p>
-        I’m interested in building systems that slow people
-        down just enough to think.
+        My work sits between structure and curiosity —
+        where intention turns into momentum.
       </p>
     </div>
 
@@ -217,8 +194,8 @@ p {
       <h2>2025</h2>
       <h3>BuildingBlocs</h3>
       <p>
-        Modular thinking applied to real problems — breaking
-        complexity into understandable units.
+        A modular approach to problem-solving, focused on
+        clarity, reusability, and composability.
       </p>
     </div>
 
@@ -226,8 +203,8 @@ p {
       <h2>2024</h2>
       <h3>Flowday</h3>
       <p>
-        A reflection-first productivity system designed
-        around momentum, not pressure.
+        A reflection-first productivity system built around
+        rhythm instead of pressure.
       </p>
     </div>
 
@@ -235,22 +212,23 @@ p {
       <h2>2024</h2>
       <h3>Scripties</h3>
       <p>
-        A writing environment focused on removing friction
-        and lowering the cost of starting.
+        A writing environment designed to reduce friction
+        and make starting feel lighter.
       </p>
     </div>
 
     <div class="tile wide">
-      <h2>Earlier</h2>
+      <h2>Earlier Work</h2>
       <p>
-        NRC Top 20 (2022) for technical creativity and framing.
-        FLL Best Presentation (2021) for clarity and narrative.
+        NRC Top 20 (2022) for technical framing and execution.
+        FLL Best Presentation (2021) for narrative clarity
+        and communication.
       </p>
     </div>
 
     <!-- LINKS -->
     <div class="tile links">
-      <a href="https://ethansoh.com">Website</a>
+      <a href="https://ethansoh.com">ethansoh.com</a>
       <a href="https://github.com/quantamShade0337">GitHub</a>
       <a href="https://www.linkedin.com/in/ethan-soh-9548863a9/">LinkedIn</a>
     </div>
@@ -259,17 +237,15 @@ p {
 </main>
 
 <script>
-function toggleTheme() {
-  document.body.classList.toggle("dark");
-}
-
 const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) e.target.classList.add("visible");
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+    }
   });
 }, { threshold: 0.2 });
 
-document.querySelectorAll(".tile").forEach(t => observer.observe(t));
+document.querySelectorAll(".tile").forEach(tile => observer.observe(tile));
 </script>
 
 </body>
