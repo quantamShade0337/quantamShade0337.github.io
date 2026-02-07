@@ -3,25 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>Ethan Soh</title>
 
-  <!-- Fonts -->
+  <!-- Fonts: characterful, editorial -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <!-- Display -->
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600&display=swap" rel="stylesheet">
-  <!-- Body -->
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #0e0f11;
-      --fg: #f4f4f2;
-      --muted: #a7a7a0;
-      --accent: #d8ff3f;
+      --bg: #0f0f10;
+      --fg: #f2f2f2;
+      --muted: #9a9a9a;
+      --accent: #ffffff;
       --line: rgba(255,255,255,0.08);
+    }
+
+    [data-theme="light"] {
+      --bg: #fafafa;
+      --fg: #111111;
+      --muted: #666666;
+      --accent: #000000;
+      --line: rgba(0,0,0,0.1);
     }
 
     * {
@@ -30,167 +33,47 @@
 
     html, body {
       margin: 0;
-      padding: 0;
       background: var(--bg);
       color: var(--fg);
-      font-family: "Libre Baskerville", serif;
+      font-family: "EB Garamond", serif;
+      transition: background 0.4s ease, color 0.4s ease;
     }
 
     body {
       min-height: 100vh;
-      overflow-x: hidden;
     }
 
-    /* Subtle grain */
-    body::after {
-      content: "";
+    header {
       position: fixed;
-      inset: 0;
-      background: url("texture.png");
-      opacity: 0.04;
-      pointer-events: none;
-      z-index: 10;
+      top: 0;
+      right: 0;
+      padding: 2rem;
+      font-size: 0.85rem;
+    }
+
+    button {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    button:hover {
+      color: var(--fg);
     }
 
     main {
-      display: grid;
-      grid-template-columns: 1.15fr 1fr;
-      gap: 4rem;
-      padding: 6rem;
-      max-width: 1400px;
+      max-width: 720px;
       margin: 0 auto;
+      padding: 8rem 2rem 6rem;
+      animation: fadeIn 0.8s ease forwards;
     }
 
-    /* LEFT */
-    .intro {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      animation: fadeUp 1s ease forwards;
-    }
-
-    h1 {
-      font-family: "Fraunces", serif;
-      font-size: clamp(3rem, 6vw, 5rem);
-      font-weight: 600;
-      line-height: 1;
-      margin: 0;
-      letter-spacing: -0.02em;
-    }
-
-    h1 span {
-      color: var(--accent);
-      font-weight: 300;
-    }
-
-    .tagline {
-      font-style: italic;
-      color: var(--muted);
-      max-width: 38ch;
-    }
-
-    .bio {
-      font-size: 1rem;
-      line-height: 1.7;
-      max-width: 50ch;
-    }
-
-    .bio strong {
-      color: var(--accent);
-      font-weight: 400;
-    }
-
-    .logos {
-      display: flex;
-      gap: 1.5rem;
-      margin-top: 1.5rem;
-      align-items: center;
-    }
-
-    .logos img {
-      height: 28px;
-      opacity: 0.7;
-      filter: grayscale(100%);
-      transition: opacity 0.3s ease, filter 0.3s ease;
-    }
-
-    .logos img:hover {
-      opacity: 1;
-      filter: grayscale(0%);
-    }
-
-    .links {
-      display: flex;
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-
-    .links a {
-      text-decoration: none;
-      color: var(--fg);
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 0.2rem;
-      transition: color 0.3s ease, border-color 0.3s ease;
-    }
-
-    .links a:hover {
-      color: var(--accent);
-      border-color: var(--accent);
-    }
-
-    /* RIGHT */
-    .portrait {
-      position: relative;
-      align-self: center;
-      animation: fadeIn 1.2s ease forwards;
-      animation-delay: 0.4s;
-      opacity: 0;
-    }
-
-    .portrait img {
-      width: 100%;
-      max-width: 420px;
-      display: block;
-      filter: grayscale(100%) contrast(1.05);
-    }
-
-    .portrait::before {
-      content: "";
-      position: absolute;
-      inset: -1rem;
-      border: 1px solid var(--line);
-      z-index: -1;
-    }
-
-    .badge {
-      position: absolute;
-      bottom: -1.5rem;
-      right: -1.5rem;
-      background: var(--bg);
-      padding: 0.75rem;
-      border: 1px solid var(--line);
-    }
-
-    .badge img {
-      height: 32px;
-      opacity: 0.8;
-    }
-
-    footer {
-      padding: 2rem 6rem;
-      color: var(--muted);
-      font-size: 0.8rem;
-      border-top: 1px solid var(--line);
-      display: flex;
-      justify-content: space-between;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    @keyframes fadeUp {
+    @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: translateY(24px);
+        transform: translateY(8px);
       }
       to {
         opacity: 1;
@@ -198,68 +81,196 @@
       }
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    h1 {
+      font-family: "Fraunces", serif;
+      font-size: clamp(3rem, 6vw, 4rem);
+      margin: 0;
+      letter-spacing: -0.02em;
     }
 
-    @media (max-width: 900px) {
-      main {
-        grid-template-columns: 1fr;
-        padding: 3rem 2rem;
-      }
+    .subtitle {
+      margin-top: 0.75rem;
+      font-style: italic;
+      color: var(--muted);
+      max-width: 38ch;
+    }
 
-      footer {
-        padding: 2rem;
-        flex-direction: column;
-        gap: 1rem;
-      }
+    .portrait {
+      margin: 4rem 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .portrait img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      filter: grayscale(100%);
+      border: 1px solid var(--line);
+    }
+
+    .bio {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      max-width: 60ch;
+    }
+
+    .links {
+      margin-top: 3rem;
+      display: flex;
+      gap: 2rem;
+      font-size: 0.95rem;
+    }
+
+    .links a {
+      color: var(--fg);
+      text-decoration: none;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 0.15rem;
+    }
+
+    .links a:hover {
+      border-color: var(--fg);
+    }
+
+    .section {
+      margin-top: 6rem;
+    }
+
+    .section h2 {
+      font-family: "Fraunces", serif;
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      letter-spacing: 0.02em;
+    }
+
+    .entry {
+      margin-bottom: 2.5rem;
+    }
+
+    .entry h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: normal;
+    }
+
+    .entry span {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    .entry p {
+      margin-top: 0.6rem;
+      max-width: 55ch;
+      line-height: 1.6;
+    }
+
+    .logos {
+      margin-top: 5rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      opacity: 0.7;
+    }
+
+    .logos img {
+      height: 26px;
+      filter: grayscale(100%);
     }
   </style>
 </head>
 
-<body>
+<body data-theme="dark">
 
-  <main>
-    <section class="intro">
-      <h1>Ethan <span>Soh</span></h1>
+<header>
+  <button onclick="toggleTheme()">Toggle theme</button>
+</header>
 
-      <p class="tagline">
-        I build thoughtful things and occasionally over-engineer them.
+<main>
+  <h1>Ethan Soh</h1>
+  <p class="subtitle">
+    Building things carefully. Thinking about why they work.
+  </p>
+
+  <div class="portrait">
+    <img src="ethan-photo.png" alt="Ethan Soh">
+  </div>
+
+  <p class="bio">
+    I design and build projects that prioritize clarity, intention, and calm.
+    I enjoy systems that feel obvious in hindsight and interfaces that stay
+    out of the way.
+  </p>
+
+  <div class="links">
+    <a href="https://ethansoh.com" target="_blank">Website</a>
+    <a href="https://github.com/quantamShade0337" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/in/ethan-soh-9548863a9/" target="_blank">LinkedIn</a>
+  </div>
+
+  <section class="section">
+    <h2>Selected work & achievements</h2>
+
+    <div class="entry">
+      <h3>Flowday</h3>
+      <span>2024</span>
+      <p>
+        A focused exploration into intentional productivity and sustainable
+        work rhythms.
+        <a href="https://flowday.ethansoh.com" target="_blank">View</a>
       </p>
+    </div>
 
-      <p class="bio">
-        Hi. I’m Ethan — a builder who cares deeply about clarity, restraint,
-        and making software feel human.
-        <br><br>
-        I like clean systems, sharp edges, and projects that respect the
-        intelligence of the people using them. I also enjoy naming things
-        slightly too seriously.
+    <div class="entry">
+      <h3>Scripties</h3>
+      <span>2024</span>
+      <p>
+        An app built to make scripting feel approachable rather than intimidating.
+        <a href="https://scripties.oneapp.dev/" target="_blank">Learn more</a>
       </p>
+    </div>
 
-      <div class="logos">
-        <img src="swift-logo.png" alt="Swift">
-        <img src="scripties-logo.png" alt="Scripties">
-      </div>
+    <div class="entry">
+      <h3>BuildingBlocs</h3>
+      <span>2025</span>
+      <p>
+        Collaborative problem-solving through structured creativity.
+      </p>
+    </div>
 
-      <nav class="links">
-        <a href="https://ethansoh.com" target="_blank">Main site</a>
-        <a href="https://github.com/quantamShade0337" target="_blank">GitHub</a>
-      </nav>
-    </section>
+    <div class="entry">
+      <h3>National Robotics Competition</h3>
+      <span>2022</span>
+      <p>
+        Placed Top 20 nationally.
+      </p>
+    </div>
 
-    <section class="portrait">
-      <img src="ethan-photo.png" alt="Ethan Soh">
-      <div class="badge">
-        <img src="bpghs-logo.png" alt="BPGHS">
-      </div>
-    </section>
-  </main>
+    <div class="entry">
+      <h3>FIRST LEGO League</h3>
+      <span>2021</span>
+      <p>
+        Awarded Best Presentation.
+      </p>
+    </div>
+  </section>
 
-  <footer>
-    <span>Designed deliberately. No templates involved.</span>
-    <span>© Ethan Soh</span>
-  </footer>
+  <div class="logos">
+    <img src="swift-logo.png" alt="Swift">
+    <img src="scripties-logo.png" alt="Scripties">
+    <img src="bpghs-logo.png" alt="School">
+  </div>
+</main>
+
+<script>
+  function toggleTheme() {
+    document.body.dataset.theme =
+      document.body.dataset.theme === "dark" ? "light" : "dark";
+  }
+</script>
 
 </body>
 </html>
