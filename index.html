@@ -8,7 +8,7 @@
 <!-- Bold, intentional fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 /* ===================== THEME ===================== */
@@ -16,49 +16,86 @@
   --bg: #0a0a0a;
   --panel: #121212;
   --ink: #f4f4f4;
-  --muted: #9b9b9b;
+  --muted: #a8a8a8;
   --border: rgba(255,255,255,.08);
   --glow: rgba(255,255,255,.06);
   --ease: cubic-bezier(.22,.61,.36,1);
+  
+  /* High-tech accent palette */
+  --accent-purple: #a78bfa;
+  --accent-blue: #60a5fa;
+  --accent-cyan: #22d3ee;
+  --accent-emerald: #34d399;
+  --accent-amber: #fbbf24;
+  --accent-rose: #fb7185;
+  --accent-neon: #0ff;
 }
 
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
-  background: radial-gradient(
-    circle at top,
-    #111 0%,
-    #0a0a0a 60%
-  );
+  background: #0a0a0a;
   color: var(--ink);
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   overflow-x: hidden;
+  position: relative;
 }
 
-/* ===================== GRID ===================== */
+/* Animated grid background */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(34, 211, 238, .03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, .03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Radial gradient overlay */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    circle at 20% 20%,
+    rgba(167, 139, 250, .08) 0%,
+    transparent 50%
+  ),
+  radial-gradient(
+    circle at 80% 80%,
+    rgba(34, 211, 238, .06) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===================== BENTO GRID ===================== */
 main {
-  padding: 5rem 2rem 4rem;
+  padding: 3rem 2rem;
   max-width: 1400px;
   margin: auto;
+  position: relative;
+  z-index: 1;
 }
 
-.grid {
+.bento {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-auto-rows: minmax(120px, auto);
-  gap: 1.3rem;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: 160px;
+  gap: 1rem;
 }
 
 /* ===================== TILE ===================== */
 .tile {
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,.04),
-    rgba(255,255,255,.01)
-  );
+  background: rgba(18, 18, 18, .8);
+  backdrop-filter: blur(20px);
   border: 1px solid var(--border);
-  border-radius: 22px;
+  border-radius: 20px;
   padding: 2rem;
   position: relative;
   overflow: hidden;
@@ -67,7 +104,12 @@ main {
   transition: 
     opacity 1s var(--ease),
     transform 1s var(--ease),
-    box-shadow .6s var(--ease);
+    box-shadow .6s var(--ease),
+    border-color .6s var(--ease),
+    background .6s var(--ease);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .tile.visible {
@@ -75,177 +117,616 @@ main {
   transform: translateY(0);
 }
 
-.tile:hover {
-  box-shadow:
-    0 0 0 1px var(--border),
-    0 20px 50px rgba(0,0,0,.6),
-    inset 0 0 0 1px var(--glow);
-}
-
-/* soft shimmer */
-.tile::after {
+/* Grid pattern overlay on tiles */
+.tile::before {
   content: "";
   position: absolute;
   inset: 0;
+  background-image: 
+    linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0;
+  transition: opacity .6s var(--ease);
+  pointer-events: none;
+}
+
+.tile:hover::before {
+  opacity: 1;
+}
+
+/* Corner accents */
+.tile::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 80px;
   background: linear-gradient(
-    120deg,
-    transparent 30%,
-    rgba(255,255,255,.05),
-    transparent 70%
+    135deg,
+    transparent 40%,
+    rgba(255,255,255,.03)
   );
   opacity: 0;
-  transition: .8s var(--ease);
+  transition: .6s var(--ease);
+  pointer-events: none;
 }
 
 .tile:hover::after {
   opacity: 1;
 }
 
+/* NAME TILE - HERO */
+.name-hero {
+  grid-column: span 4;
+  grid-row: span 3;
+  background: linear-gradient(
+    135deg,
+    rgba(167, 139, 250, .1),
+    rgba(34, 211, 238, .08)
+  );
+  backdrop-filter: blur(30px);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 2px solid rgba(167, 139, 250, .3);
+  box-shadow: 
+    0 0 60px rgba(167, 139, 250, .15),
+    inset 0 0 60px rgba(167, 139, 250, .05);
+}
+
+.name-hero:hover {
+  border-color: var(--accent-purple);
+  box-shadow:
+    0 0 80px rgba(167, 139, 250, .4),
+    0 30px 60px rgba(0,0,0,.7),
+    inset 0 0 80px rgba(167, 139, 250, .1);
+  background: linear-gradient(
+    135deg,
+    rgba(167, 139, 250, .15),
+    rgba(34, 211, 238, .12)
+  );
+}
+
+.name-hero .name {
+  font-size: clamp(3.5rem, 5.5vw, 6rem);
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  font-family: "Archivo Black", sans-serif;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.name-hero .name::after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
+  box-shadow: 0 0 20px var(--accent-cyan);
+}
+
+.name-hero .tagline {
+  margin-top: 2rem;
+  color: var(--accent-cyan);
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  max-width: none;
+}
+
+/* STATEMENT */
+.statement {
+  grid-column: span 2;
+  grid-row: span 3;
+  background: linear-gradient(
+    135deg,
+    rgba(34, 211, 238, .08),
+    rgba(52, 211, 153, .06)
+  );
+  border-left: 3px solid var(--accent-cyan);
+}
+
+.statement:hover {
+  border-left-color: var(--accent-neon);
+  box-shadow:
+    -5px 0 30px rgba(34, 211, 238, .3),
+    0 20px 50px rgba(0,0,0,.6),
+    inset 0 0 0 1px rgba(34, 211, 238, .1);
+  background: linear-gradient(
+    135deg,
+    rgba(34, 211, 238, .12),
+    rgba(52, 211, 153, .08)
+  );
+}
+
+/* PROJECT TILES */
+.project {
+  grid-column: span 2;
+  grid-row: span 2;
+  border-left: 2px solid transparent;
+  transition: all .6s var(--ease);
+  cursor: pointer;
+}
+
+a.project {
+  cursor: pointer;
+}
+
+a.project:hover {
+  transform: translateY(-4px);
+}
+
+.project-tall {
+  grid-row: span 2;
+}
+
+.project .meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.project .year {
+  font-size: .85rem;
+  font-weight: 700;
+  padding: .4rem .8rem;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.project.emerald {
+  background: linear-gradient(135deg, rgba(52, 211, 153, .08), transparent);
+  border-left-color: var(--accent-emerald);
+}
+
+.project.emerald .year {
+  background: rgba(52, 211, 153, .15);
+  color: var(--accent-emerald);
+  box-shadow: 0 0 20px rgba(52, 211, 153, .2);
+}
+
+.project.emerald:hover {
+  border-left-color: var(--accent-emerald);
+  box-shadow:
+    -5px 0 40px rgba(52, 211, 153, .3),
+    0 20px 50px rgba(0,0,0,.6),
+    inset 0 0 0 1px rgba(52, 211, 153, .1);
+  background: linear-gradient(135deg, rgba(52, 211, 153, .15), transparent);
+}
+
+.project.cyan {
+  background: linear-gradient(135deg, rgba(34, 211, 238, .08), transparent);
+  border-left-color: var(--accent-cyan);
+}
+
+.project.cyan .year {
+  background: rgba(34, 211, 238, .15);
+  color: var(--accent-cyan);
+  box-shadow: 0 0 20px rgba(34, 211, 238, .2);
+}
+
+.project.cyan:hover {
+  border-left-color: var(--accent-neon);
+  box-shadow:
+    -5px 0 40px rgba(34, 211, 238, .3),
+    0 20px 50px rgba(0,0,0,.6),
+    inset 0 0 0 1px rgba(34, 211, 238, .1);
+  background: linear-gradient(135deg, rgba(34, 211, 238, .15), transparent);
+}
+
+.project.blue {
+  background: linear-gradient(135deg, rgba(96, 165, 250, .08), transparent);
+  border-left-color: var(--accent-blue);
+}
+
+.project.blue .year {
+  background: rgba(96, 165, 250, .15);
+  color: var(--accent-blue);
+  box-shadow: 0 0 20px rgba(96, 165, 250, .2);
+}
+
+.project.blue:hover {
+  border-left-color: var(--accent-blue);
+  box-shadow:
+    -5px 0 40px rgba(96, 165, 250, .3),
+    0 20px 50px rgba(0,0,0,.6),
+    inset 0 0 0 1px rgba(96, 165, 250, .1);
+  background: linear-gradient(135deg, rgba(96, 165, 250, .15), transparent);
+}
+
+.project.amber {
+  background: linear-gradient(135deg, rgba(251, 191, 36, .08), transparent);
+  border-left-color: var(--accent-amber);
+}
+
+.project.amber .year {
+  background: rgba(251, 191, 36, .15);
+  color: var(--accent-amber);
+  box-shadow: 0 0 20px rgba(251, 191, 36, .2);
+}
+
+.project.amber:hover {
+  border-left-color: var(--accent-amber);
+  box-shadow:
+    -5px 0 40px rgba(251, 191, 36, .3),
+    0 20px 50px rgba(0,0,0,.6),
+    inset 0 0 0 1px rgba(251, 191, 36, .1);
+  background: linear-gradient(135deg, rgba(251, 191, 36, .15), transparent);
+}
+
+/* AWARD TILES */
+.award {
+  grid-column: span 3;
+  grid-row: span 2;
+  background: linear-gradient(135deg, rgba(251, 113, 133, .08), transparent);
+  border-left: 2px solid var(--accent-rose);
+}
+
+.award .meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.award .year {
+  font-size: .85rem;
+  font-weight: 700;
+  padding: .4rem .8rem;
+  border-radius: 6px;
+  background: rgba(251, 113, 133, .15);
+  color: var(--accent-rose);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  box-shadow: 0 0 20px rgba(251, 113, 133, .2);
+}
+
+.award .badge {
+  font-size: .75rem;
+  font-weight: 600;
+  padding: .3rem .6rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, .05);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.award:hover {
+  border-left-color: var(--accent-rose);
+  box-shadow:
+    -5px 0 40px rgba(251, 113, 133, .3),
+    0 20px 50px rgba(0,0,0,.6),
+    inset 0 0 0 1px rgba(251, 113, 133, .1);
+  background: linear-gradient(135deg, rgba(251, 113, 133, .15), transparent);
+}
+
+/* LINKS */
+.links-tile {
+  grid-column: span 6;
+  padding: 1.5rem 2rem;
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  background: rgba(18, 18, 18, .6);
+  border-top: 1px solid rgba(255, 255, 255, .1);
+}
+
+.links-tile:hover {
+  border-color: rgba(255,255,255,.2);
+  box-shadow:
+    0 -5px 30px rgba(255, 255, 255, .1),
+    0 20px 50px rgba(0,0,0,.6),
+    inset 0 0 0 1px rgba(255, 255, 255, .08);
+}
+
 /* ===================== TYPE ===================== */
 h1, h2, h3 {
   font-family: "Archivo Black", sans-serif;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   margin: 0;
 }
 
-h1 {
-  font-size: clamp(3.2rem, 4.5vw, 4.8rem);
-  line-height: 1.05;
-}
-
-h2 {
-  font-size: 1.8rem;
-}
-
 h3 {
-  font-size: 1.15rem;
+  font-size: 1.3rem;
+  margin-bottom: .8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 p {
-  margin-top: .9rem;
+  margin: 0;
   color: var(--muted);
   line-height: 1.65;
-  max-width: 46ch;
+  font-size: .92rem;
 }
 
-/* ===================== LAYOUT ===================== */
-.hero { grid-column: span 8; }
-.statement { grid-column: span 4; display: flex; align-items: center; }
-.accomplishment { grid-column: span 4; }
-.wide { grid-column: span 6; }
-
-.links {
-  grid-column: span 12;
-  display: flex;
-  gap: 2.5rem;
-  align-items: center;
+.statement p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--ink);
+  font-weight: 500;
 }
 
 /* ===================== LINKS ===================== */
-.links a {
+.links-tile a {
   color: var(--ink);
   text-decoration: none;
   font-weight: 600;
+  font-size: 1rem;
   position: relative;
-  padding-bottom: 4px;
+  padding: .6rem 1.2rem;
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 8px;
+  transition: all .4s var(--ease);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: .9rem;
 }
 
-.links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 2px;
-  width: 0;
-  background: var(--ink);
-  transition: .4s var(--ease);
+.links-tile a:hover {
+  color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 20px rgba(34, 211, 238, .3);
+  background: rgba(34, 211, 238, .05);
 }
 
-.links a:hover::after {
-  width: 100%;
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 1024px) {
+  .bento {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .name-hero {
+    grid-column: span 4;
+    grid-row: span 2;
+  }
+  
+  .statement {
+    grid-column: span 4;
+    grid-row: span 2;
+  }
+  
+  .project {
+    grid-column: span 2;
+  }
+  
+  .award {
+    grid-column: span 4;
+    grid-row: span 2;
+  }
+  
+  .links-tile {
+    grid-column: span 4;
+  }
+}
+
+@media (max-width: 640px) {
+  .bento {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+    gap: 1rem;
+  }
+  
+  .name-hero,
+  .statement,
+  .project,
+  .award,
+  .links-tile {
+    grid-column: span 1;
+    grid-row: span 1;
+    min-height: 180px;
+  }
+  
+  .name-hero {
+    min-height: 300px;
+  }
+  
+  .statement {
+    min-height: 200px;
+  }
+  
+  .links-tile {
+    flex-direction: column;
+    gap: 1rem;
+    min-height: auto;
+    padding: 1.5rem;
+  }
+  
+  main {
+    padding: 2rem 1.5rem;
+  }
+}
+
+/* Cursor glow effect */
+.cursor-glow {
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(34, 211, 238, .15) 0%,
+    rgba(167, 139, 250, .08) 30%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: opacity .3s var(--ease);
+  opacity: 0;
+  mix-blend-mode: screen;
 }
 </style>
 </head>
 
 <body>
 
+<div class="cursor-glow" id="cursorGlow"></div>
+
 <main>
-  <div class="grid">
-
-    <!-- HERO -->
-    <div class="tile hero">
-      <h1>Designing clarity<br>in complex systems.</h1>
-      <p>
-        I care about how interfaces feel after ten minutes,
-        not ten seconds. Thoughtful pacing beats spectacle.
-      </p>
+  <div class="bento">
+  
+    <!-- NAME HERO -->
+    <div class="tile name-hero">
+      <div>
+        <h1 class="name">Ethan Soh</h1>
+        <p class="tagline">System Architect</p>
+      </div>
     </div>
-
+  
     <!-- STATEMENT -->
     <div class="tile statement">
       <p>
-        My work sits between structure and curiosity —
-        where intention turns into momentum.
+I am a creative and curious 14-year-old student with a strong passion for technology and app development. I enjoy building projects with SwiftUI, crafting meaningful storylines, and turning ideas into interactive experiences that make an impact.
       </p>
     </div>
-
-    <!-- ACCOMPLISHMENTS -->
-    <div class="tile accomplishment">
-      <h2>2025</h2>
-      <h3>BuildingBlocs</h3>
+  
+    <!-- 2025 PROJECTS -->
+    <div class="tile project emerald">
+      <div>
+        <div class="meta">
+          <div class="year">2025</div>
+        </div>
+        <h3>BuildingBlocs</h3>
+      </div>
       <p>
-        A modular approach to problem-solving, focused on
-        clarity, reusability, and composability.
+      I made an ML that can translate sign language to letters for communication. This ML is built so that services are made more accessible for more people. 
       </p>
     </div>
-
-    <div class="tile accomplishment">
-      <h2>2024</h2>
-      <h3>Flowday</h3>
+    
+    <a href="https://scripties-4ug0.onrender.com/" target="_blank" rel="noopener noreferrer" class="tile project cyan" style="text-decoration: none; color: inherit;">
+      <div>
+        <div class="meta">
+          <div class="year">2025</div>
+        </div>
+        <h3>Scripties</h3>
+      </div>
       <p>
-        A reflection-first productivity system built around
-        rhythm instead of pressure.
+       Scripties is your pocket speech coach: voice-following teleprompter, pacing analytics, and distraction‑free writing — all on-device.
       </p>
-    </div>
-
-    <div class="tile accomplishment">
-      <h2>2024</h2>
-      <h3>Scripties</h3>
+    </a>
+  
+    <a href="https://flowday.ethansoh.com" target="_blank" rel="noopener noreferrer" class="tile project blue" style="text-decoration: none; color: inherit;">
+      <div>
+        <div class="meta">
+          <div class="year">2025</div>
+        </div>
+        <h3>Flowday</h3>
+      </div>
       <p>
-        A writing environment designed to reduce friction
-        and make starting feel lighter.
+       A system built for students to focus, set goals, exam dates and more, so they can have everything in just 1 website.
       </p>
-    </div>
-
-    <div class="tile wide">
-      <h2>Earlier Work</h2>
+    </a>
+    
+    <div class="tile project amber">
+      <div>
+        <div class="meta">
+          <div class="year">2025</div>
+        </div>
+        <h3>Swift Accelerator</h3>
+      </div>
       <p>
-        NRC Top 20 (2022) for technical framing and execution.
-        FLL Best Presentation (2021) for narrative clarity
-        and communication.
+        Swift Accelerator is an intensive talent development programme for Secondary school students. Over 8 months, students learn to code in Swift using Apple developer technologies, and apply story-telling and design thinking principles to design and build an iOS app to release on the App Store.
       </p>
     </div>
-
+  
+    <!-- AWARDS - SEPARATE TILES -->
+    <div class="tile award">
+      <div>
+        <div class="meta">
+          <div class="year">2022</div>
+          <div class="badge">Recognition</div>
+        </div>
+        <h3>NRC Top 20</h3>
+      </div>
+      <p>
+        I placed top 20 in the National Robotics Competition Singapore by building a robot that can solve different challenges.
+      </p>
+    </div>
+    
+    <div class="tile award">
+      <div>
+        <div class="meta">
+          <div class="year">2021</div>
+          <div class="badge">Award</div>
+        </div>
+        <h3>FLL Best Presentation</h3>
+      </div>
+      <p>
+        Recognised for having the best presentation by using Lego to form a storyline
+        in First Lego League competition.
+      </p>
+    </div>
+  
     <!-- LINKS -->
-    <div class="tile links">
+    <div class="tile links-tile">
       <a href="https://ethansoh.com">ethansoh.com</a>
       <a href="https://github.com/quantamShade0337">GitHub</a>
       <a href="https://www.linkedin.com/in/ethan-soh-9548863a9/">LinkedIn</a>
     </div>
-
+  
   </div>
 </main>
 
 <script>
+// Intersection observer for tile animations
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add("visible");
     }
   });
-}, { threshold: 0.2 });
+}, { threshold: 0.15 });
 
 document.querySelectorAll(".tile").forEach(tile => observer.observe(tile));
+
+// Cursor glow effect
+const cursorGlow = document.getElementById('cursorGlow');
+let mouseX = 0;
+let mouseY = 0;
+let glowX = 0;
+let glowY = 0;
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  cursorGlow.style.opacity = '1';
+});
+
+document.addEventListener('mouseleave', () => {
+  cursorGlow.style.opacity = '0';
+});
+
+// Smooth animation for cursor glow
+function animateGlow() {
+  glowX += (mouseX - glowX) * 0.15;
+  glowY += (mouseY - glowY) * 0.15;
+  
+  cursorGlow.style.left = glowX + 'px';
+  cursorGlow.style.top = glowY + 'px';
+  
+  requestAnimationFrame(animateGlow);
+}
+
+animateGlow();
 </script>
 
 </body>
