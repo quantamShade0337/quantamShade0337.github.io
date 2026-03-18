@@ -2,713 +2,1220 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Ethan Soh</title>
-
-<!-- Distinctive, beautiful fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ethan Soh | Signal Desk</title>
+<meta
+  name="description"
+  content="The signal desk of Ethan Soh, a student developer designing focused products for learning, speaking, and accessibility."
+/>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap"
+  rel="stylesheet"
+/>
 
 <style>
-/* ===================== THEME VARIABLES ===================== */
-:root[data-theme="light"] {
-  --bg-primary: #fef8f0;
-  --bg-secondary: #fff9f2;
-  --surface: #ffffff;
-  --surface-elevated: #fffaf4;
-  
-  --text-primary: #2a2118;
-  --text-secondary: #6b5d4f;
-  --text-tertiary: #8d7f71;
-  
-  /* Warm, creamy palette */
-  --cream: #fff9f2;
-  --sand: #e8dcc8;
-  --terracotta: #d4876e;
-  --sage: #9aae9a;
-  --clay: #b5876d;
-  --ochre: #d9a066;
-  --soft-blue: #a5b8c5;
-  --dusty-rose: #c89f9f;
-  
-  --accent-1: var(--terracotta);
-  --accent-2: var(--sage);
-  --accent-3: var(--ochre);
-  --accent-4: var(--soft-blue);
-  
-  --shadow-sm: 0 2px 8px rgba(42, 33, 24, 0.04);
-  --shadow-md: 0 4px 16px rgba(42, 33, 24, 0.06);
-  --shadow-lg: 0 8px 32px rgba(42, 33, 24, 0.08);
-}
-
-:root[data-theme="dark"] {
-  --bg-primary: #1a1512;
-  --bg-secondary: #221c17;
-  --surface: #2a231d;
-  --surface-elevated: #342d26;
-  
-  --text-primary: #f5f0e8;
-  --text-secondary: #c4b9ad;
-  --text-tertiary: #9a8f83;
-  
-  /* Warm, muted dark palette */
-  --cream: #2a231d;
-  --sand: #3d3429;
-  --terracotta: #c77d66;
-  --sage: #7a9178;
-  --clay: #a67859;
-  --ochre: #c28f5a;
-  --soft-blue: #8ba0ac;
-  --dusty-rose: #b38585;
-  
-  --accent-1: var(--terracotta);
-  --accent-2: var(--sage);
-  --accent-3: var(--ochre);
-  --accent-4: var(--soft-blue);
-  
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
-}
-
-* { 
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: "DM Sans", sans-serif;
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  line-height: 1.6;
-  transition: background-color 0.4s ease, color 0.4s ease;
-  overflow-x: hidden;
-}
-
-/* ===================== THEME TOGGLE ===================== */
-.theme-toggle {
-  position: fixed;
-  top: 2rem;
-  right: 2rem;
-  z-index: 100;
-  background: var(--surface);
-  border-radius: 50px;
-  padding: 0.4rem;
-  display: flex;
-  gap: 0.3rem;
-  box-shadow: var(--shadow-md);
-  transition: all 0.3s ease;
-}
-
-.theme-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  font-size: 1.1rem;
-  color: var(--text-tertiary);
-}
-
-.theme-btn.active {
-  background: var(--accent-1);
-  color: var(--surface);
-}
-
-.theme-btn:not(.active):hover {
-  background: var(--bg-secondary);
-  transform: scale(1.05);
-}
-
-/* ===================== CONTAINER ===================== */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 4rem 2rem;
-}
-
-/* ===================== HERO ===================== */
-.hero {
-  text-align: center;
-  padding: 6rem 0 4rem;
-  position: relative;
-  opacity: 0;
-  animation: fadeInUp 1s ease forwards;
-}
-
-.hero-name {
-  font-family: "Fraunces", serif;
-  font-size: clamp(3.5rem, 8vw, 7rem);
-  font-weight: 700;
-  line-height: 0.95;
-  margin-bottom: 1rem;
-  background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-3) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: -0.02em;
-}
-
-.hero-tagline {
-  font-family: "Playfair Display", serif;
-  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-  color: var(--text-secondary);
-  font-style: italic;
-  font-weight: 600;
-  margin-bottom: 2rem;
-  opacity: 0;
-  animation: fadeInUp 1s ease 0.2s forwards;
-}
-
-.hero-intro {
-  max-width: 680px;
-  margin: 0 auto 3rem;
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  line-height: 1.8;
-  opacity: 0;
-  animation: fadeInUp 1s ease 0.4s forwards;
-}
-
-/* ===================== NAVIGATION CARDS ===================== */
-.nav-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 5rem;
-  opacity: 0;
-  animation: fadeInUp 1s ease 0.6s forwards;
-}
-
-.nav-card {
-  background: var(--surface);
-  padding: 2rem;
-  border-radius: 16px;
-  text-align: center;
-  text-decoration: none;
-  color: var(--text-primary);
-  box-shadow: var(--shadow-sm);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.nav-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--accent-1), var(--accent-3));
-  transform: scaleX(0);
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-origin: left;
-}
-
-.nav-card:hover::before {
-  transform: scaleX(1);
-}
-
-.nav-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-lg);
-}
-
-.nav-label {
-  font-weight: 600;
-  font-size: 1.05rem;
-  letter-spacing: 0.01em;
-}
-
-/* ===================== SECTION ===================== */
-.section {
-  margin-bottom: 5rem;
-  opacity: 0;
-  animation: fadeInUp 1s ease forwards;
-}
-
-.section:nth-child(2) { animation-delay: 0.8s; }
-.section:nth-child(3) { animation-delay: 1s; }
-.section:nth-child(4) { animation-delay: 1.2s; }
-
-.section-header {
-  margin-bottom: 2.5rem;
-  position: relative;
-  padding-bottom: 1rem;
-}
-
-.section-title {
-  font-family: "Fraunces", serif;
-  font-size: clamp(2rem, 4vw, 2.8rem);
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: -0.01em;
-  margin-bottom: 0.5rem;
-}
-
-.section-subtitle {
-  color: var(--text-tertiary);
-  font-size: 1rem;
-}
-
-.section-divider {
-  width: 60px;
-  height: 4px;
-  background: linear-gradient(90deg, var(--accent-1), var(--accent-3));
-  border-radius: 2px;
-  margin-top: 1rem;
-}
-
-/* ===================== PROJECTS GRID ===================== */
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
-}
-
-.project-card {
-  background: var(--surface);
-  border-radius: 20px;
-  padding: 2.5rem;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-  border: 2px solid transparent;
-}
-
-.project-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 20px;
-  padding: 2px;
-  background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.project-card:hover::before {
-  opacity: 1;
-}
-
-.project-card:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: var(--shadow-lg);
-}
-
-.project-meta {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.project-year {
-  font-size: 0.85rem;
-  font-weight: 600;
-  padding: 0.4rem 1rem;
-  border-radius: 20px;
-  background: var(--bg-secondary);
-  color: var(--text-secondary);
-  letter-spacing: 0.05em;
-}
-
-.project-card:nth-child(1) .project-year { background: rgba(156, 174, 154, 0.15); color: var(--sage); }
-.project-card:nth-child(2) .project-year { background: rgba(212, 135, 110, 0.15); color: var(--terracotta); }
-.project-card:nth-child(3) .project-year { background: rgba(165, 184, 197, 0.15); color: var(--soft-blue); }
-.project-card:nth-child(4) .project-year { background: rgba(217, 160, 102, 0.15); color: var(--ochre); }
-
-.project-title {
-  font-family: "Fraunces", serif;
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: var(--text-primary);
-  letter-spacing: -0.01em;
-}
-
-.project-description {
-  color: var(--text-secondary);
-  line-height: 1.7;
-  font-size: 0.98rem;
-}
-
-.project-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 1.5rem;
-  color: var(--accent-1);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: gap 0.3s ease;
-}
-
-.project-link:hover {
-  gap: 0.8rem;
-}
-
-.project-link::after {
-  content: '→';
-  font-size: 1.2rem;
-}
-
-/* ===================== AWARDS ===================== */
-.awards-list {
-  display: grid;
-  gap: 1.5rem;
-}
-
-.award-card {
-  background: var(--surface);
-  border-radius: 16px;
-  padding: 2rem;
-  box-shadow: var(--shadow-sm);
-  display: flex;
-  gap: 2rem;
-  align-items: flex-start;
-  transition: all 0.4s ease;
-  border-left: 4px solid transparent;
-}
-
-.award-card:hover {
-  border-left-color: var(--accent-2);
-  box-shadow: var(--shadow-md);
-  transform: translateX(6px);
-}
-
-.award-year {
-  font-family: "Fraunces", serif;
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--accent-2);
-  line-height: 1;
-  min-width: 80px;
-  opacity: 0.7;
-}
-
-.award-content {
-  flex: 1;
-}
-
-.award-badge {
-  display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 0.3rem 0.8rem;
-  border-radius: 12px;
-  background: rgba(154, 174, 154, 0.15);
-  color: var(--sage);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 0.8rem;
-}
-
-.award-title {
-  font-family: "Fraunces", serif;
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 0.6rem;
-  color: var(--text-primary);
-}
-
-.award-description {
-  color: var(--text-secondary);
-  line-height: 1.7;
-}
-
-/* ===================== FOOTER ===================== */
-.footer {
-  text-align: center;
-  padding: 4rem 0 3rem;
-  border-top: 2px solid var(--bg-secondary);
-  margin-top: 4rem;
-  opacity: 0;
-  animation: fadeInUp 1s ease 1.4s forwards;
-}
-
-.footer-text {
-  color: var(--text-tertiary);
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-}
-
-/* ===================== ANIMATIONS ===================== */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+  :root[data-theme="night"] {
+    --bg: #08111f;
+    --bg-alt: #0f1b30;
+    --surface: rgba(13, 24, 43, 0.72);
+    --surface-strong: rgba(18, 31, 55, 0.92);
+    --line: rgba(153, 184, 230, 0.18);
+    --line-strong: rgba(153, 184, 230, 0.38);
+    --text: #f7f3ec;
+    --muted: #aac1db;
+    --soft: #7794b8;
+    --accent: #ff9a6c;
+    --accent-2: #88d8c0;
+    --accent-3: #f4cf7a;
+    --shadow: 0 22px 60px rgba(0, 0, 0, 0.35);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  :root[data-theme="day"] {
+    --bg: #f7efe2;
+    --bg-alt: #f1e3d1;
+    --surface: rgba(255, 250, 241, 0.78);
+    --surface-strong: rgba(255, 248, 238, 0.95);
+    --line: rgba(90, 66, 42, 0.12);
+    --line-strong: rgba(90, 66, 42, 0.3);
+    --text: #1f1a17;
+    --muted: #61564b;
+    --soft: #8c7e71;
+    --accent: #b85c38;
+    --accent-2: #18786d;
+    --accent-3: #9d6a14;
+    --shadow: 0 22px 60px rgba(98, 67, 38, 0.16);
   }
-}
 
-/* Decorative elements */
-.hero::before {
-  content: '';
-  position: absolute;
-  top: -100px;
-  right: -100px;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, var(--accent-1) 0%, transparent 70%);
-  opacity: 0.1;
-  border-radius: 50%;
-  z-index: -1;
-  animation: float 8s ease-in-out infinite;
-}
-
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: -50px;
-  left: -100px;
-  width: 250px;
-  height: 250px;
-  background: radial-gradient(circle, var(--accent-2) 0%, transparent 70%);
-  opacity: 0.1;
-  border-radius: 50%;
-  z-index: -1;
-  animation: float 10s ease-in-out infinite reverse;
-}
-
-@keyframes float {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(20px, -20px) scale(1.1); }
-}
-
-/* ===================== RESPONSIVE ===================== */
-@media (max-width: 768px) {
-  .container {
-    padding: 3rem 1.5rem;
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
-  
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: "Space Grotesk", sans-serif;
+    background:
+      radial-gradient(circle at top left, rgba(255, 154, 108, 0.12), transparent 28%),
+      radial-gradient(circle at 85% 15%, rgba(136, 216, 192, 0.14), transparent 24%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+    color: var(--text);
+    min-height: 100vh;
+    transition: background-color 0.35s ease, color 0.35s ease;
+    overflow-x: hidden;
+  }
+
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -2;
+  }
+
+  body::before {
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 34px 34px;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.75), transparent 92%);
+  }
+
+  body::after {
+    background:
+      radial-gradient(circle at 20% 20%, rgba(255, 154, 108, 0.2), transparent 22%),
+      radial-gradient(circle at 80% 30%, rgba(136, 216, 192, 0.14), transparent 20%);
+    filter: blur(60px);
+    opacity: 0.9;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  .page {
+    width: min(1180px, calc(100% - 2rem));
+    margin: 0 auto;
+    padding: 1.25rem 0 5rem;
+  }
+
+  .topbar {
+    position: sticky;
+    top: 1rem;
+    z-index: 50;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 1rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--surface-strong) 88%, transparent);
+    backdrop-filter: blur(20px);
+    box-shadow: var(--shadow);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    text-decoration: none;
+  }
+
+  .brand-mark {
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+    display: grid;
+    place-items: center;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.25rem;
+    background:
+      radial-gradient(circle at 35% 30%, rgba(255, 154, 108, 0.5), transparent 40%),
+      var(--surface);
+  }
+
+  .brand-copy {
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .brand-title {
+    font-size: 0.94rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .brand-subtitle {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    color: var(--soft);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .nav {
+    justify-self: center;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .nav a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.92rem;
+    position: relative;
+  }
+
+  .nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.25rem;
+    width: 100%;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .nav a:hover::after,
+  .nav a:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.3rem;
+    background: var(--surface);
+  }
+
+  .theme-btn {
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--soft);
+    padding: 0.55rem 0.8rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  .theme-btn.active {
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  .panel {
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--surface) 86%, transparent);
+    backdrop-filter: blur(20px);
+    box-shadow: var(--shadow);
+  }
+
   .hero {
-    padding: 4rem 0 3rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
   }
-  
-  .projects-grid {
-    grid-template-columns: 1fr;
+
+  .hero-main,
+  .hero-side {
+    border-radius: 34px;
+    overflow: hidden;
   }
-  
-  .award-card {
+
+  .hero-main {
+    position: relative;
+    padding: clamp(2rem, 4vw, 3.5rem);
+    min-height: 42rem;
+    display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    isolation: isolate;
+  }
+
+  .hero-main::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 18%, rgba(255, 154, 108, 0.32), transparent 24%),
+      radial-gradient(circle at 82% 18%, rgba(136, 216, 192, 0.22), transparent 20%),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.02), transparent 45%);
+    z-index: -1;
+  }
+
+  .eyebrow,
+  .label,
+  .meta-label {
+    font-family: "IBM Plex Mono", monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: var(--muted);
+    font-size: 0.78rem;
+    margin-bottom: 1.15rem;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 2.4rem;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-copy {
+    max-width: 40rem;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(3.8rem, 9vw, 7.4rem);
+    line-height: 0.94;
+    letter-spacing: -0.06em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-copy h1 span {
+    display: block;
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-weight: 600;
+    color: var(--accent-3);
+    letter-spacing: -0.03em;
+  }
+
+  .hero-copy p {
+    max-width: 36rem;
+    font-size: 1.08rem;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 2rem;
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.95rem 1.2rem;
+    border-radius: 999px;
+    text-decoration: none;
+    border: 1px solid var(--line-strong);
+    transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+  }
+
+  .button strong {
+    font-size: 0.95rem;
+  }
+
+  .button-primary {
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  .button-secondary {
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .button:hover,
+  .button:focus-visible {
+    transform: translateY(-2px);
+  }
+
+  .hero-foot {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .signal-card {
+    padding: 1rem 1rem 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .signal-card .label {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--soft);
+    margin-bottom: 0.65rem;
+  }
+
+  .signal-card strong {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .signal-card p {
+    color: var(--muted);
+    line-height: 1.6;
+    font-size: 0.92rem;
+  }
+
+  .hero-side {
+    display: grid;
+    grid-template-rows: 1.2fr 0.8fr;
+    gap: 1.5rem;
+  }
+
+  .portrait-panel,
+  .focus-panel {
+    border-radius: 34px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .portrait-panel {
+    min-height: 30rem;
+  }
+
+  .portrait-panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.92) contrast(1.03);
+  }
+
+  .portrait-panel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, transparent 25%, rgba(8, 17, 31, 0.72) 100%),
+      linear-gradient(135deg, rgba(255, 154, 108, 0.2), transparent 45%);
+    pointer-events: none;
+  }
+
+  .portrait-caption {
+    position: absolute;
+    left: 1.4rem;
+    right: 1.4rem;
+    bottom: 1.4rem;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: end;
+  }
+
+  .portrait-caption strong {
+    display: block;
+    font-size: 1.05rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .portrait-caption p,
+  .focus-panel p,
+  .detail-copy p,
+  .recognition-card p,
+  .contact-card p {
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .focus-panel {
+    padding: 1.5rem;
+  }
+
+  .focus-panel::before {
+    content: "";
+    position: absolute;
+    inset: 1rem;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    pointer-events: none;
+  }
+
+  .focus-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.2rem;
+  }
+
+  .focus-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.9rem;
+    align-items: start;
+  }
+
+  .focus-index {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.8rem;
+    line-height: 1;
+    color: var(--accent);
+  }
+
+  .section {
+    margin-top: 1.5rem;
+  }
+
+  .section-frame {
+    border-radius: 34px;
+    padding: clamp(1.5rem, 3vw, 2.4rem);
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .section-head h2 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    letter-spacing: -0.05em;
+  }
+
+  .section-head p {
+    max-width: 32rem;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  .project-stack {
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  .project {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(240px, 0.9fr);
+    gap: 1rem;
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    padding: 1.45rem;
+    background: rgba(255, 255, 255, 0.03);
+    overflow: hidden;
+  }
+
+  .project::before {
+    content: "";
+    position: absolute;
+    inset: auto auto -4rem -4rem;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 154, 108, 0.2), transparent 70%);
+    pointer-events: none;
+  }
+
+  .project-copy {
+    display: grid;
     gap: 1rem;
   }
-  
-  .award-year {
-    font-size: 2rem;
-  }
-  
-  .theme-toggle {
-    top: 1.5rem;
-    right: 1.5rem;
-  }
-  
-  .nav-grid {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  }
-}
 
-/* ===================== LINK STYLES ===================== */
-a.project-card {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
+  .project-number {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.74rem;
+    color: var(--soft);
+    letter-spacing: 0.08em;
+  }
+
+  .project-title-row {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .project-title-row h3 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    letter-spacing: -0.05em;
+    line-height: 0.96;
+  }
+
+  .project-year {
+    padding: 0.45rem 0.8rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  .project-copy p {
+    max-width: 38rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .tag {
+    padding: 0.45rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--line);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  .project-link {
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+    padding: 0.9rem 1.05rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--line);
+  }
+
+  .project-link::after {
+    content: "->";
+    font-family: "IBM Plex Mono", monospace;
+  }
+
+  .project-detail {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .detail-card {
+    border-radius: 22px;
+    border: 1px solid var(--line);
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .meta-label {
+    display: block;
+    font-size: 0.68rem;
+    color: var(--soft);
+    margin-bottom: 0.55rem;
+  }
+
+  .detail-card strong {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .detail-card p {
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+
+  .story-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.84fr);
+    gap: 1rem;
+  }
+
+  .story-panel,
+  .recognition-panel,
+  .contact-panel {
+    border-radius: 32px;
+  }
+
+  .story-panel {
+    padding: 1.75rem;
+  }
+
+  .story-panel h3,
+  .recognition-panel h3,
+  .contact-panel h3 {
+    font-size: 1.7rem;
+    letter-spacing: -0.04em;
+    margin-bottom: 0.8rem;
+  }
+
+  .story-panel p {
+    color: var(--muted);
+    line-height: 1.9;
+    max-width: 38rem;
+  }
+
+  .story-points {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .story-point {
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .story-point strong {
+    display: block;
+    margin-bottom: 0.45rem;
+  }
+
+  .story-point p {
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+
+  .recognition-panel,
+  .contact-panel {
+    padding: 1.5rem;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .recognition-list {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .recognition-card {
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .recognition-year {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 2rem;
+    color: var(--accent-2);
+    line-height: 1;
+    margin-bottom: 0.35rem;
+  }
+
+  .contact-panel {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+  }
+
+  .contact-card {
+    max-width: 34rem;
+  }
+
+  .contact-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .contact-link {
+    min-width: 11rem;
+    text-align: center;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 0.4rem 0.35rem 0;
+    color: var(--soft);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  @media (max-width: 980px) {
+    .topbar {
+      grid-template-columns: 1fr;
+      justify-items: start;
+      border-radius: 28px;
+    }
+
+    .nav {
+      justify-self: start;
+    }
+
+    .hero,
+    .project,
+    .story-grid,
+    .contact-panel {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-main {
+      min-height: auto;
+    }
+
+    .hero-foot,
+    .story-points {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-actions {
+      justify-content: start;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .page {
+      width: min(100% - 1rem, 100%);
+      padding-bottom: 3.5rem;
+    }
+
+    .topbar,
+    .hero-main,
+    .portrait-panel,
+    .focus-panel,
+    .section-frame,
+    .story-panel,
+    .recognition-panel,
+    .contact-panel {
+      border-radius: 24px;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(3rem, 18vw, 4.6rem);
+    }
+
+    .portrait-panel {
+      min-height: 22rem;
+    }
+
+    .project {
+      padding: 1.1rem;
+    }
+
+    .section-head {
+      align-items: start;
+      flex-direction: column;
+    }
+
+    .footer {
+      flex-direction: column;
+    }
+  }
 </style>
 </head>
 
 <body>
-
-<!-- Theme Toggle -->
-<div class="theme-toggle">
-  <button class="theme-btn active" id="lightBtn" aria-label="Light mode">
-    ☀️
-  </button>
-  <button class="theme-btn" id="darkBtn" aria-label="Dark mode">
-    🌙
-  </button>
-</div>
-
-<div class="container">
-  
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1 class="hero-name">Ethan Soh</h1>
-    <p class="hero-tagline">System Architect & Creative Developer</p>
-    <p class="hero-intro">
-      A creative and curious 14-year-old student with a strong passion for technology and app development. 
-      I enjoy building projects with SwiftUI, crafting meaningful storylines, and turning ideas into 
-      interactive experiences that make an impact.
-    </p>
-  </section>
-
-  <!-- Navigation Cards -->
-  <div class="nav-grid">
-    <a href="https://ethansoh.com" class="nav-card">
-      <span class="nav-label">Website</span>
+<div class="page">
+  <header class="topbar">
+    <a class="brand" href="#top" id="top">
+      <span class="brand-mark">E</span>
+      <span class="brand-copy">
+        <span class="brand-title">Ethan Soh</span>
+        <span class="brand-subtitle">Signal Desk / 2026</span>
+      </span>
     </a>
-    <a href="https://github.com/quantamShade0337" class="nav-card">
-      <span class="nav-label">GitHub</span>
-    </a>
-    <a href="https://www.linkedin.com/in/ethan-soh-9548863a9/" class="nav-card">
-      <span class="nav-label">LinkedIn</span>
-    </a>
-  </div>
 
-  <!-- Projects Section -->
-  <section class="section">
-    <div class="section-header">
-      <h2 class="section-title">Featured Projects</h2>
-      <p class="section-subtitle">Building meaningful experiences through code</p>
-      <div class="section-divider"></div>
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="#work">Work</a>
+      <a href="#story">Story</a>
+      <a href="#recognition">Recognition</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="theme-toggle" aria-label="Theme switcher">
+      <button class="theme-btn active" id="nightBtn" type="button">Night</button>
+      <button class="theme-btn" id="dayBtn" type="button">Day</button>
     </div>
-    
-    <div class="projects-grid">
-      
-      <div class="project-card">
-        <div class="project-meta">
-          <span class="project-year">2025</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-main panel">
+        <div class="hero-copy">
+          <span class="eyebrow">Student developer from Singapore</span>
+          <h1>
+            Building products
+            <span>that feel clear under pressure.</span>
+          </h1>
+          <p>
+            I design focused digital tools for learning, speaking, and accessibility.
+            My work sits between product thinking, storytelling, and systems design so
+            the experience feels simpler on the surface and stronger underneath.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#work">
+              <strong>See selected work</strong>
+            </a>
+            <a
+              class="button button-secondary"
+              href="https://www.linkedin.com/in/ethan-soh-9548863a9/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <strong>View LinkedIn</strong>
+            </a>
+          </div>
         </div>
-        <h3 class="project-title">BuildingBlocs</h3>
-        <p class="project-description">
-          I made an ML that can translate sign language to letters for communication. 
-          This ML is built so that services are made more accessible for more people.
-        </p>
+
+        <div class="hero-foot">
+          <article class="signal-card">
+            <span class="label">Current focus</span>
+            <strong>Student-first product systems</strong>
+            <p>Tools that reduce friction and give people a clearer next move.</p>
+          </article>
+          <article class="signal-card">
+            <span class="label">Built with</span>
+            <strong>SwiftUI, web, and experimentation</strong>
+            <p>Fast prototyping paired with a strong eye for interface structure.</p>
+          </article>
+          <article class="signal-card">
+            <span class="label">Working style</span>
+            <strong>Storytelling with technical discipline</strong>
+            <p>Interfaces should guide attention instead of competing for it.</p>
+          </article>
+        </div>
       </div>
-      
-      <a href="https://scripties-4ug0.onrender.com/" target="_blank" rel="noopener noreferrer" class="project-card">
-        <div class="project-meta">
-          <span class="project-year">2025</span>
-        </div>
-        <h3 class="project-title">Scripties</h3>
-        <p class="project-description">
-          Scripties is your pocket speech coach: voice-following teleprompter, pacing analytics, 
-          and distraction‑free writing — all on-device.
-        </p>
-        <span class="project-link">Visit project</span>
-      </a>
-      
-      <a href="https://flowday.ethansoh.com" target="_blank" rel="noopener noreferrer" class="project-card">
-        <div class="project-meta">
-          <span class="project-year">2025</span>
-        </div>
-        <h3 class="project-title">Flowday</h3>
-        <p class="project-description">
-          A system built for students to focus, set goals, exam dates and more, 
-          so they can have everything in just 1 website.
-        </p>
-        <span class="project-link">Visit project</span>
-      </a>
-      
-      <div class="project-card">
-        <div class="project-meta">
-          <span class="project-year">2025</span>
-        </div>
-        <h3 class="project-title">Swift Accelerator</h3>
-        <p class="project-description">
-          Swift Accelerator is an intensive talent development programme for Secondary school students. 
-          Over 8 months, students learn to code in Swift using Apple developer technologies, and apply 
-          story-telling and design thinking principles to design and build an iOS app to release on the App Store.
-        </p>
-      </div>
-      
-    </div>
-  </section>
 
-  <!-- Awards Section -->
-  <section class="section">
-    <div class="section-header">
-      <h2 class="section-title">Recognition & Awards</h2>
-      <p class="section-subtitle">Achievements in robotics and innovation</p>
-      <div class="section-divider"></div>
-    </div>
-    
-    <div class="awards-list">
-      
-      <div class="award-card">
-        <div class="award-year">2022</div>
-        <div class="award-content">
-          <span class="award-badge">Recognition</span>
-          <h3 class="award-title">NRC Top 20</h3>
-          <p class="award-description">
-            I placed top 20 in the National Robotics Competition Singapore by building a robot 
-            that can solve different challenges.
+      <div class="hero-side">
+        <figure class="portrait-panel panel">
+          <img src="ethan-photo.png" alt="Portrait of Ethan Soh" />
+          <figcaption class="portrait-caption">
+            <div>
+              <strong>Ethan Soh</strong>
+              <p>Designing thoughtful tools with a builder's mindset.</p>
+            </div>
+            <span class="tag">Open to meaningful projects</span>
+          </figcaption>
+        </figure>
+
+        <aside class="focus-panel panel">
+          <span class="eyebrow">Three signals</span>
+          <p>
+            The through-line in my work is simple: make the next action easier to see,
+            easier to trust, and easier to take.
+          </p>
+          <div class="focus-grid">
+            <div class="focus-item">
+              <span class="focus-index">01</span>
+              <div class="detail-copy">
+                <strong>Clarity</strong>
+                <p>Interfaces should remove noise before they add personality.</p>
+              </div>
+            </div>
+            <div class="focus-item">
+              <span class="focus-index">02</span>
+              <div class="detail-copy">
+                <strong>Momentum</strong>
+                <p>Good tools keep users moving instead of forcing them to reorient.</p>
+              </div>
+            </div>
+            <div class="focus-item">
+              <span class="focus-index">03</span>
+              <div class="detail-copy">
+                <strong>Access</strong>
+                <p>Technology becomes better when more people can participate in it.</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="work">
+      <div class="section-frame panel">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Selected work</span>
+            <h2>Projects with a clear job to do.</h2>
+          </div>
+          <p>
+            Each project below was shaped around a specific tension: speaking with more
+            confidence, studying with more structure, or making communication more accessible.
           </p>
         </div>
-      </div>
-      
-      <div class="award-card">
-        <div class="award-year">2021</div>
-        <div class="award-content">
-          <span class="award-badge">Award</span>
-          <h3 class="award-title">FLL Best Presentation</h3>
-          <p class="award-description">
-            Recognised for having the best presentation by using Lego to form a storyline 
-            in First Lego League competition.
-          </p>
+
+        <div class="project-stack">
+          <article class="project">
+            <div class="project-copy">
+              <span class="project-number">Case 01</span>
+              <div class="project-title-row">
+                <h3>Scripties</h3>
+                <span class="project-year">2025</span>
+              </div>
+              <p>
+                A speech writing and rehearsal tool built to make public speaking feel
+                measurable instead of vague. Scripties combines structure, pacing awareness,
+                and a calmer writing flow into one focused experience.
+              </p>
+              <div class="tag-list">
+                <span class="tag">Product + UI</span>
+                <span class="tag">Swift Accelerator 2025</span>
+                <span class="tag">Speech practice</span>
+              </div>
+              <a
+                class="project-link"
+                href="https://scripties-4ug0.onrender.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Open project
+              </a>
+            </div>
+
+            <div class="project-detail">
+              <div class="detail-card">
+                <span class="meta-label">What it solves</span>
+                <strong>Rehearsal usually lacks feedback</strong>
+                <p>Scripties turns pacing and delivery into something students can actually inspect and improve.</p>
+              </div>
+              <div class="detail-card">
+                <span class="meta-label">Why it matters</span>
+                <strong>Confidence grows when the process is visible</strong>
+                <p>The product reduces uncertainty by making preparation feel concrete.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="project">
+            <div class="project-copy">
+              <span class="project-number">Case 02</span>
+              <div class="project-title-row">
+                <h3>Flowday</h3>
+                <span class="project-year">2025</span>
+              </div>
+              <p>
+                A student planning system that brings goals, exam dates, and focus sessions
+                into one place. The idea is straightforward: fewer scattered tools, stronger
+                study rhythm.
+              </p>
+              <div class="tag-list">
+                <span class="tag">Student systems</span>
+                <span class="tag">Web product</span>
+                <span class="tag">Focus design</span>
+              </div>
+              <a
+                class="project-link"
+                href="https://flowday.ethansoh.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Open project
+              </a>
+            </div>
+
+            <div class="project-detail">
+              <div class="detail-card">
+                <span class="meta-label">What it solves</span>
+                <strong>Students switch context too often</strong>
+                <p>Flowday creates one control surface for planning, deadlines, and daily focus.</p>
+              </div>
+              <div class="detail-card">
+                <span class="meta-label">Design lens</span>
+                <strong>Keep the interface calmer than the schedule</strong>
+                <p>Structure and visual restraint help students think about the work, not the tool.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="project">
+            <div class="project-copy">
+              <span class="project-number">Case 03</span>
+              <div class="project-title-row">
+                <h3>Kyro</h3>
+                <span class="project-year">2026</span>
+              </div>
+              <p>
+                A marketplace built for developers to succeed by shipping and selling what
+                they actually make: side projects, modifiers, tools, and digital products.
+                Kyro is designed to give builders a clearer path from idea to income.
+              </p>
+              <div class="tag-list">
+                <span class="tag">Developer marketplace</span>
+                <span class="tag">Creator economy</span>
+                <span class="tag">Product launch</span>
+              </div>
+              <a
+                class="project-link"
+                href="https://kyromarket.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Open project
+              </a>
+            </div>
+
+            <div class="project-detail">
+              <div class="detail-card">
+                <span class="meta-label">What it solves</span>
+                <strong>Great side projects often never reach buyers</strong>
+                <p>Kyro gives developers a dedicated place to list and sell their work with less friction.</p>
+              </div>
+              <div class="detail-card">
+                <span class="meta-label">Why it matters</span>
+                <strong>More builders can turn experiments into opportunities</strong>
+                <p>The marketplace model helps independent developers ship and sustain their ideas.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="project">
+            <div class="project-copy">
+              <span class="project-number">Case 04</span>
+              <div class="project-title-row">
+                <h3>BuildingBlocs</h3>
+                <span class="project-year">2025</span>
+              </div>
+              <p>
+                A machine learning project that translates sign language into letters to
+                support more accessible communication. It started from a simple question:
+                how can computer vision lower friction for people who are often overlooked?
+              </p>
+              <div class="tag-list">
+                <span class="tag">Accessibility</span>
+                <span class="tag">Machine learning</span>
+                <span class="tag">Computer vision</span>
+              </div>
+            </div>
+
+            <div class="project-detail">
+              <div class="detail-card">
+                <span class="meta-label">What it solves</span>
+                <strong>Accessibility should not feel like an afterthought</strong>
+                <p>The project explores how vision models can translate intent into a more usable interaction.</p>
+              </div>
+              <div class="detail-card">
+                <span class="meta-label">Build principle</span>
+                <strong>Meaningful tech starts with empathy</strong>
+                <p>The strongest technical decisions came from focusing on real communication barriers.</p>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
-      
-    </div>
-  </section>
+    </section>
 
-  <!-- Footer -->
+    <section class="section" id="story">
+      <div class="story-grid">
+        <div class="story-panel panel">
+          <span class="eyebrow">Story</span>
+          <h3>Still early, already intentional.</h3>
+          <p>
+            I am a student developer who likes building products with clear structure and a
+            strong sense of purpose. My work is influenced by app design, public speaking,
+            storytelling, and the idea that good software earns trust through clarity. I am
+            especially interested in tools that help people learn faster, communicate better,
+            or feel less overwhelmed.
+          </p>
+
+          <div class="story-points">
+            <article class="story-point">
+              <strong>Swift Accelerator</strong>
+              <p>An intensive programme that pushed me to design, build, and ship with more discipline.</p>
+            </article>
+            <article class="story-point">
+              <strong>Public speaking</strong>
+              <p>Story structure and delivery thinking shape how I approach product interfaces too.</p>
+            </article>
+            <article class="story-point">
+              <strong>Systems mindset</strong>
+              <p>I like turning messy workflows into tools that feel composed and dependable.</p>
+            </article>
+          </div>
+        </div>
+
+        <aside class="recognition-panel panel" id="recognition">
+          <span class="eyebrow">Recognition</span>
+          <h3>Signals of progress.</h3>
+          <div class="recognition-list">
+            <article class="recognition-card">
+              <div class="recognition-year">2022</div>
+              <strong>NRC Top 20</strong>
+              <p>Placed in the top 20 at the National Robotics Competition Singapore.</p>
+            </article>
+            <article class="recognition-card">
+              <div class="recognition-year">2021</div>
+              <strong>FLL Best Presentation</strong>
+              <p>Recognised for presentation quality and storytelling in First Lego League.</p>
+            </article>
+            <article class="recognition-card">
+              <div class="recognition-year">2025</div>
+              <strong>Swift Accelerator Programme</strong>
+              <p>Completed an eight-month talent development programme for young iOS builders.</p>
+            </article>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="contact-panel panel section-frame">
+        <div class="contact-card">
+          <span class="eyebrow">Contact</span>
+          <h3>Let the next build mean something.</h3>
+          <p>
+            If you are building something thoughtful in education, communication, or product
+            design, I would love to hear about it.
+          </p>
+        </div>
+
+        <div class="contact-actions">
+          <a class="button button-primary contact-link" href="https://www.linkedin.com/in/ethan-soh-9548863a9/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a class="button button-secondary contact-link" href="https://github.com/quantamShade0337" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a class="button button-secondary contact-link" href="https://ethansoh.com" target="_blank" rel="noopener noreferrer">Website</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
   <footer class="footer">
-    <p class="footer-text">Designed & built with curiosity and code</p>
+    <span>Signal Desk by Ethan Soh</span>
+    <span>Designed for focus, story, and momentum</span>
   </footer>
-
 </div>
 
 <script>
-// Theme management
-const html = document.documentElement;
-const lightBtn = document.getElementById('lightBtn');
-const darkBtn = document.getElementById('darkBtn');
+  const html = document.documentElement;
+  const nightBtn = document.getElementById("nightBtn");
+  const dayBtn = document.getElementById("dayBtn");
+  const savedTheme = localStorage.getItem("theme") || "night";
 
-// Default to light theme
-const currentTheme = localStorage.getItem('theme') || 'light';
-html.setAttribute('data-theme', currentTheme);
-updateActiveButton(currentTheme);
-
-lightBtn.addEventListener('click', () => setTheme('light'));
-darkBtn.addEventListener('click', () => setTheme('dark'));
-
-function setTheme(theme) {
-  html.setAttribute('data-theme', theme);
-  localStorage.setItem('theme', theme);
-  updateActiveButton(theme);
-}
-
-function updateActiveButton(theme) {
-  if (theme === 'light') {
-    lightBtn.classList.add('active');
-    darkBtn.classList.remove('active');
-  } else {
-    darkBtn.classList.add('active');
-    lightBtn.classList.remove('active');
+  function setTheme(theme) {
+    html.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+    nightBtn.classList.toggle("active", theme === "night");
+    dayBtn.classList.toggle("active", theme === "day");
   }
-}
-</script>
 
+  nightBtn.addEventListener("click", () => setTheme("night"));
+  dayBtn.addEventListener("click", () => setTheme("day"));
+  setTheme(savedTheme);
+</script>
 </body>
 </html>
