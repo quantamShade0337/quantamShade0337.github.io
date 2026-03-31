@@ -266,7 +266,7 @@ a{color:inherit;text-decoration:none}
 }
 .photo-cell img{
   width:100%;height:100%;object-fit:cover;
-  object-position:right center;
+  object-position:center center;
   transition:transform .5s ease;
 }
 .photo-cell:hover img{transform:scale(1.04)}
@@ -302,21 +302,30 @@ a{color:inherit;text-decoration:none}
    FUN QUOTE CELL
 ═══════════════════════════════ */
 .quote-cell{
-  grid-column:span 4;padding:1.5rem;
-  display:flex;flex-direction:column;justify-content:space-between;
+  grid-column:span 12;padding:1.8rem 2.5rem;
+  display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:2rem;
   background:var(--acc);color:#fff;
-  overflow:hidden;
+  overflow:hidden;cursor:pointer;
 }
 .quote-cell::before{
   content:'';position:absolute;
-  top:-60px;right:-60px;width:180px;height:180px;
-  border-radius:50%;border:1px solid rgba(255,255,255,.15);pointer-events:none;
+  top:-60px;right:-60px;width:220px;height:220px;
+  border-radius:50%;border:1px solid rgba(255,255,255,.12);pointer-events:none;
+}
+.quote-cell::after{
+  content:'';position:absolute;
+  bottom:-40px;left:30%;width:140px;height:140px;
+  border-radius:50%;border:1px solid rgba(255,255,255,.08);pointer-events:none;
 }
 .quote-text{
   font-family:var(--serif);font-style:italic;
-  font-size:1.3rem;line-height:1.4;color:#fff;
+  font-size:clamp(1.2rem,2.5vw,2rem);line-height:1.35;color:#fff;flex:1;
 }
-.quote-attr{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.55);margin-top:.8rem}
+.quote-attr{
+  font-family:var(--mono);font-size:.6rem;text-transform:uppercase;
+  letter-spacing:.1em;color:rgba(255,255,255,.5);
+  white-space:nowrap;flex-shrink:0;
+}
 
 /* ═══════════════════════════════
    PROJECT CELLS
@@ -439,6 +448,131 @@ a{color:inherit;text-decoration:none}
 .btn-inv:hover{background:rgba(255,255,255,.2);color:#fff;transform:translateY(-1px)}
 .btn-inv-fill{background:var(--acc);color:#fff;border-color:var(--acc)}
 .btn-inv-fill:hover{background:#fff;color:var(--acc);border-color:#fff}
+
+/* ═══════════════════════════════
+   BLOG SECTION
+═══════════════════════════════ */
+.blog-cell{
+  grid-column:span 12;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  overflow:hidden;
+}
+.blog-inner{padding:1.8rem 2rem}
+.blog-list{list-style:none;margin-top:1rem}
+.blog-item{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:1rem 0;
+  border-bottom:1px solid var(--border);
+  cursor:pointer;
+  transition:background .15s;
+  border-radius:8px;
+  margin:0 -.5rem;
+  padding-left:.5rem;padding-right:.5rem;
+}
+.blog-item:last-child{border-bottom:none}
+.blog-item:hover{background:var(--bg2)}
+.blog-item:hover .blog-arrow{transform:translateX(4px);opacity:1}
+.blog-left{flex:1;min-width:0}
+.blog-cat{
+  font-family:var(--mono);font-size:.57rem;
+  text-transform:uppercase;letter-spacing:.12em;
+  color:var(--acc);margin-bottom:.3rem;
+}
+.blog-title{
+  font-size:.95rem;font-weight:700;letter-spacing:-.02em;
+  color:var(--text);line-height:1.3;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  max-width:580px;
+}
+.blog-preview{
+  font-size:.8rem;color:var(--sub);line-height:1.55;
+  margin-top:.25rem;
+  display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;
+}
+.blog-meta{
+  display:flex;align-items:center;gap:.75rem;flex-shrink:0;
+}
+.blog-tags{display:flex;gap:.3rem;flex-wrap:nowrap}
+.blog-tag{
+  padding:.18rem .5rem;border-radius:5px;
+  font-family:var(--mono);font-size:.55rem;
+  text-transform:uppercase;letter-spacing:.07em;
+  color:var(--dim);background:var(--bg2);
+  border:1px solid var(--border);white-space:nowrap;
+}
+.blog-arrow{
+  font-size:1rem;color:var(--acc);
+  transition:transform .2s,opacity .2s;opacity:.4;
+  flex-shrink:0;
+}
+
+/* ── BLOG MODAL ── */
+#blog-modal{
+  position:fixed;inset:0;z-index:800;
+  display:flex;align-items:stretch;justify-content:flex-end;
+  pointer-events:none;
+}
+#blog-modal.open{pointer-events:all}
+#blog-backdrop{
+  position:absolute;inset:0;
+  background:rgba(0,0,0,.4);
+  opacity:0;transition:opacity .35s;
+  backdrop-filter:blur(4px);
+}
+#blog-modal.open #blog-backdrop{opacity:1}
+#blog-panel{
+  position:relative;z-index:1;
+  width:min(680px,100%);
+  background:var(--card);
+  border-left:1px solid var(--border2);
+  display:flex;flex-direction:column;
+  transform:translateX(100%);
+  transition:transform .4s cubic-bezier(.32,1,.4,1);
+  overflow:hidden;
+}
+#blog-modal.open #blog-panel{transform:translateX(0)}
+#blog-panel-header{
+  padding:1.4rem 1.8rem 1rem;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;
+  flex-shrink:0;
+}
+#blog-panel-cat{
+  font-family:var(--mono);font-size:.6rem;text-transform:uppercase;
+  letter-spacing:.12em;color:var(--acc);margin-bottom:.4rem;
+}
+#blog-panel-title{
+  font-size:clamp(1rem,2.5vw,1.4rem);font-weight:800;
+  letter-spacing:-.03em;line-height:1.25;color:var(--text);
+  max-width:480px;
+}
+#blog-close{
+  border:1.5px solid var(--border2);background:var(--bg2);
+  border-radius:8px;padding:.4rem .85rem;
+  font-family:var(--mono);font-size:.65rem;
+  text-transform:uppercase;letter-spacing:.08em;
+  color:var(--sub);cursor:pointer;flex-shrink:0;
+  transition:background .2s,color .2s;
+}
+#blog-close:hover{background:var(--text);color:var(--bg)}
+#blog-panel-tags{display:flex;gap:.35rem;flex-wrap:wrap;padding:.75rem 1.8rem;border-bottom:1px solid var(--border);flex-shrink:0}
+#blog-panel-body{
+  flex:1;overflow-y:auto;padding:1.8rem;
+  font-size:.92rem;line-height:1.9;color:var(--sub);
+  scroll-behavior:smooth;
+}
+#blog-panel-body p{margin-bottom:1.1rem}
+#blog-panel-body p:last-child{margin-bottom:0}
+#blog-panel-body strong{color:var(--text);font-weight:700}
+#blog-panel-body em{font-family:var(--serif);font-style:italic;color:var(--dim)}
+#blog-panel-body a{color:var(--acc);text-decoration:underline;text-underline-offset:3px}
+#blog-panel-footer{
+  padding:1rem 1.8rem;border-top:1px solid var(--border);
+  font-family:var(--mono);font-size:.58rem;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--dim);flex-shrink:0;
+}
 
 /* ═══════════════════════════════
    FOOTER
@@ -597,6 +731,23 @@ footer{
   <button onclick="document.getElementById('konami-overlay').classList.remove('show')">Close &times;</button>
 </div>
 
+<!-- BLOG MODAL -->
+<div id="blog-modal">
+  <div id="blog-backdrop"></div>
+  <div id="blog-panel">
+    <div id="blog-panel-header">
+      <div>
+        <div id="blog-panel-cat"></div>
+        <div id="blog-panel-title"></div>
+      </div>
+      <button id="blog-close">Close &times;</button>
+    </div>
+    <div id="blog-panel-tags"></div>
+    <div id="blog-panel-body"></div>
+    <div id="blog-panel-footer">Written by Ethan Soh &mdash; 2026 &mdash; probably while drinking hot chocolate</div>
+  </div>
+</div>
+
 <div class="ticker" aria-hidden="true">
   <div class="ticker-inner">
     <span>Student Developer</span><span class="sep">&#9673;</span>
@@ -625,6 +776,7 @@ footer{
       <a href="#work">Work</a>
       <a href="#about">About</a>
       <a href="#certs">Certs</a>
+      <a href="#blog">Writing</a>
       <a href="#contact">Contact</a>
     </div>
     <div class="tog">
@@ -705,7 +857,7 @@ footer{
     <!-- QUOTE / FUN CELL -->
     <div class="cell quote-cell reveal" id="quote-egg">
       <div class="quote-text">"Ship it before you're ready."</div>
-      <div class="quote-attr">Ethan, probably at 2am &mdash; click to change</div>
+      <div class="quote-attr">Ethan, 2am &mdash; click to change</div>
     </div>
 
     <!-- ══ WORK ══ -->
@@ -901,6 +1053,15 @@ footer{
         <span>catch marshmallows +1</span>
         <span>avoid ice cubes</span>
         <span>don't let the mug cool down</span>
+      </div>
+    </div>
+
+    <!-- ══ BLOG ══ -->
+    <div class="sec reveal" id="blog"><h2>Writing</h2></div>
+
+    <div class="cell blog-cell reveal">
+      <div class="blog-inner">
+        <ul class="blog-list" id="blog-list"></ul>
       </div>
     </div>
 
@@ -1122,12 +1283,182 @@ document.addEventListener('keypress', e=>{
 });
 
 /* ════════════════════════════════════════
-   HOT CHOCOLATE RUN — GAME ENGINE
+   BLOG DATA + LOGIC
+════════════════════════════════════════ */
+const posts = [
+  {
+    cat:'Project',
+    title:'I Built a Marketplace Because I Was Tired of Watching Other People\'s Dreams Die in a Google Drive Folder',
+    preview:'Developers build incredible things and then zip them up and forget about them. That felt wrong.',
+    tags:['Kyro Market','Marketplace','2026'],
+    body:`<p>It started with a simple, slightly annoying observation: developers build incredible things — tools, templates, scripts, little utilities that save you three hours on a Tuesday — and then they just... zip them up and forget about them. Maybe they post a GitHub link once. Maybe it gets three stars. Maybe it doesn't.</p>
+<p>That felt wrong to me.</p>
+<p>Kyro Market started as a question: what if there was a place built specifically for developers to sell what they actually make? Not courses. Not consulting. The actual thing. The code, the template, the tool.</p>
+<p>The twist — and the part I'm most proud of — is the zero commission model. Sellers keep 100% by using their own payment links. Buyers get verified licence keys. The platform earns trust, not a cut. It's a weird model for a marketplace but it felt honest, and honest felt like the right place to start.</p>
+<p>Building it taught me things no tutorial ever would. I learned what a fake purchase flow looks like (and how to block it). I learned that sequential enumerable product IDs are a gift to bad actors. I learned that "just add Stripe" is never just adding Stripe. I also learned that shipping something imperfect is infinitely better than shipping nothing perfect.</p>
+<p>Kyro isn't finished. It's also not just a marketplace anymore — it's becoming a community. A place for builders who are also buyers. People who ship things and use things and understand that the two are connected.</p>
+<p>Is it scary putting your work on the internet? Yes. Did I do it anyway? Obviously. That's kind of the whole point.</p>
+<p><a href="https://kyromarket.com" target="_blank" rel="noopener">→ kyromarket.com</a></p>`
+  },
+  {
+    cat:'Project',
+    title:'I Made an App to Help People Talk Better. The Irony of Explaining It Is Not Lost on Me.',
+    preview:'The hardest part of public speaking isn\'t the words. It\'s the space between them.',
+    tags:['Scripties','iOS','Swift','2025'],
+    body:`<p>Here's something nobody tells you about public speaking: the hardest part isn't the words. It's the space between them.</p>
+<p>The filler words. The rushed sentences. The moment you realise you've been talking at the speed of anxiety for four minutes straight and the audience has quietly checked out.</p>
+<p>Scripties was built to fix that — or at least make it visible. The app analyses your delivery: pacing, pauses, how you sound when you're nervous versus when you're actually in control. It turns all that invisible stuff into something you can actually look at, reflect on, and improve.</p>
+<p>I built it during the Swift Accelerator Programme in 2025. Eight months. A lot of Xcode. A lot of moments where I asked myself why I was spending a Saturday debugging audio processing when I could be doing literally anything else.</p>
+<p>The answer, every time, was: because this actually matters.</p>
+<p>Scripties grew out of my own experience with public speaking — which, for the record, I both love and find terrifying in equal measure. The best speakers I've watched don't seem nervous. But when I looked closer, they'd just done the work. They'd practised until the nerves became rhythm.</p>
+<p>That's what Scripties is for. Making the practice feel less like guessing.</p>
+<p><a href="https://scripties-4ug0.onrender.com/" target="_blank" rel="noopener">→ Open project</a></p>`
+  },
+  {
+    cat:'Project',
+    title:'A Study App Built by Someone Who Definitely Had His Life Together While Building It (He Did Not)',
+    preview:'I had too many tabs open and too many deadlines. This one\'s for you.',
+    tags:['Flowday','Web','Students','2025'],
+    body:`<p>I built Flowday because I had too many tabs open and too many deadlines and the cognitive load of tracking all of them separately was genuinely affecting my ability to do any of them.</p>
+<p>Sound familiar? Good. This one's for you.</p>
+<p>Flowday is a student planning tool. Goals, exam dates, focus sessions — one place. The idea sounds simple because it is simple. That's the whole point. Students don't need more complexity. They need one clear surface that tells them what matters today and then gets out of the way.</p>
+<p>The design philosophy was: the interface should be calmer than your schedule. If looking at the app makes you more stressed, the app has failed. So I stripped it back. No noise, no dashboard overload, no gamification pressure. Just your stuff, organised, with a clear path forward.</p>
+<p>Did I use Flowday while building Flowday? Yes. Did it help? Also yes. Did I still pull a 2am session and forget to eat dinner? That's between me and my hot chocolate.</p>
+<p><a href="https://flowday.ethansoh.com" target="_blank" rel="noopener">→ flowday.ethansoh.com</a></p>`
+  },
+  {
+    cat:'Project',
+    title:'Learning Mandarin Is Hard. I Made an App About It Anyway. Solidarity.',
+    preview:'I\'m Singaporean. Mandarin is compulsory. You would think that means I had this handled.',
+    tags:['Chinese','iOS','Swift','Unreleased'],
+    body:`<p>I'm Singaporean. Mandarin is compulsory. You would think that means I've had this handled since primary school. You would be optimistic.</p>
+<p>The reality is that learning a language — really learning it, not just surviving exams — is genuinely difficult. Tones are hard. Characters are harder. And most apps treat it like a game where you collect coins for getting things right, which sounds fun until you realise you've been grinding easy vocabulary for two weeks to keep a streak alive.</p>
+<p>Chinese is my attempt at something different. No gamification for its own sake. No streak anxiety. Just vocabulary, tones, and reading practice — organised in a way that actually builds understanding rather than recognition.</p>
+<p>It's unreleased. Still in development. But the reason I'm building it is real, and I think that's enough to start.</p>
+<p><em>In development — coming when it's ready.</em></p>`
+  },
+  {
+    cat:'Project',
+    title:'I Made a Game That\'s Intentionally Hard to Focus In. You\'re Welcome.',
+    preview:'Most people think ADHD means you can\'t focus. That\'s not quite it.',
+    tags:['ADHD','iOS','Game','Empathy','Unreleased'],
+    body:`<p>Most people think ADHD means you can't focus. That's not quite it. ADHD means your brain focuses — just not always on what you tell it to. Something in the corner becomes the most important thing in the room. The task you were supposed to do becomes physically difficult to stay on.</p>
+<p>It's not laziness. It's not a lack of trying. It's something structural, and most people who haven't experienced it genuinely don't understand what that's like.</p>
+<p>So I'm making a game that shows them.</p>
+<p>ADHD is a game where the environment works against you on purpose. Distractions are intentional. Staying on task is hard. Not because the task is hard, but because everything around it is louder. The experience is the point.</p>
+<p>I want people to finish a level and think: oh. That's what it's like.</p>
+<p>If it does that, I'll consider it a success.</p>
+<p><em>In development — because some ideas take time to get right.</em></p>`
+  },
+  {
+    cat:'Project',
+    title:'I Taught a Computer to Read Sign Language. The Computer Was More Patient Than I Was.',
+    preview:'What if a camera could actually understand what your hands are saying?',
+    tags:['BuildingBlocs','ML','Accessibility','2025'],
+    body:`<p>BuildingBlocs started with a question that felt small and turned out not to be: what if a camera could understand you?</p>
+<p>Not read your face or guess your mood. Actually understand what your hands are saying.</p>
+<p>Sign language is used by millions of people. It's expressive, complex, and beautiful. It's also invisible to most technology. Voice interfaces don't work for people who are Deaf or hard of hearing. Text input assumes a level of fine motor control not everyone has. The accessibility gap is real and mostly ignored.</p>
+<p>So I built a machine learning model that translates sign language gestures into letters using computer vision. It's not perfect. It's a proof of concept, not a finished product. But it works, and it works because the problem is worth solving.</p>
+<p>The technical stuff — training data, model accuracy, latency — was genuinely hard. But what kept me going was the original question. If this makes one interaction easier for one person, that's already worth more than the hours it cost me.</p>
+<p>Accessible technology shouldn't be an afterthought. BuildingBlocs was my attempt to prove that a secondary student can contribute to closing that gap, even a little.</p>
+<p><em>Research project, 2025.</em></p>`
+  },
+  {
+    cat:'Certification',
+    title:'Apple Gave Me a Certificate. My Mum Still Doesn\'t Know What Swift Is.',
+    preview:'I imagined something very formal. A leather folder. A handshake. I was wrong.',
+    tags:['Apple','Certification','iOS','2025'],
+    body:`<p>In 2025, I became an Apple Certified User in App Development with Swift.</p>
+<p>I'll be honest: when I first heard the words "Apple Certified," I imagined something very formal. A leather folder, maybe. A handshake. Someone official saying "well done, young man."</p>
+<p>What I actually got was a certification that represents a genuine year of learning — Swift syntax, iOS design patterns, Xcode's particular flavour of suffering, and the strange satisfaction of watching something you built run on an actual device for the first time.</p>
+<p>The certification covers app development fundamentals: Swift programming, UI design, data handling, and how to build things that feel like real apps rather than homework projects. It's structured, it's rigorous, and passing it meant I actually understood the material rather than just approximating it.</p>
+<p>My mum celebrated by asking if I could fix her iPhone. I could not. The certificate remains on my wall. We move on.</p>`
+  },
+  {
+    cat:'Certification',
+    title:'Eight Months, One App, Zero Chill. 10/10 Would Repeat.',
+    preview:'What it means to ship something versus just finish it. There\'s a difference.',
+    tags:['Swift Accelerator','Apple','IMDA','2025'],
+    body:`<p>The Swift Accelerator Programme is run by Apple, IMDA, and SwiftInSG. It's eight months of intensive iOS development training for secondary school students in Singapore who want to build real things.</p>
+<p>I applied because I wanted to build real things. Coincidence? No. Good judgment? Arguably.</p>
+<p>What I didn't fully anticipate was how much the programme would change the way I think — not just about code, but about design, about users, about what it means to ship something versus just finishing it. There's a difference. Finishing means the code runs. Shipping means someone else can use it and it respects their time.</p>
+<p>Scripties came out of this programme. Eight months of weekends and late evenings and moments of genuine confusion followed by genuine clarity. The mentors were good. The community was better. The experience of presenting your work to actual people — not just your teacher — was something I didn't know I needed.</p>
+<p>I graduated in 2025. I built something I'm proud of. I also discovered that Xcode has opinions about your code that it will express through very red error messages.</p>
+<p>Worth it. All of it.</p>`
+  },
+  {
+    cat:'Accomplishment',
+    title:'I Placed Top 20 Nationally in Robotics. The Robot Did Not Thank Me.',
+    preview:'On paper it\'s about building a robot. In reality it\'s about the three hours before when nothing works.',
+    tags:['NRC','Robotics','Competition','2022'],
+    body:`<p>In 2022, my team placed in the top 20 at the National Robotics Competition Singapore.</p>
+<p>Robotics competitions are an interesting thing. On paper, it's about building a robot that performs tasks. In reality, it's about the three hours before competition when nothing works and you're debugging with tools that are slightly too small for human hands and someone keeps saying "I think it's the sensor" and you are very, very tired.</p>
+<p>And then it works. And you compete. And you place top 20 nationally. And it feels — genuinely, properly — great.</p>
+<p>What I took from NRC wasn't just the result. It was learning how to work under pressure with a team. Learning that "I think" is not the same as "I tested." Learning that constraints (time, materials, rules) aren't obstacles to creativity — they're the shape creativity takes.</p>
+<p>I went in a student who liked building things. I came out a student who understood that building things under real conditions is a different skill, and one worth developing.</p>
+<p>The robot, for the record, performed admirably. It has never acknowledged my contribution.</p>`
+  },
+  {
+    cat:'Accomplishment',
+    title:'I Won an Award for Talking. This Explains a Lot About My Career Trajectory.',
+    preview:'The FLL presentation wasn\'t just about the robot. It was a story. That turned out to matter.',
+    tags:['FLL','Presentation','Storytelling','2021'],
+    body:`<p>In 2021, my First Lego League team was recognised with the Best Presentation award.</p>
+<p>Looking back, this one makes a lot of sense. Scripties is about public speaking. This portfolio has a lot of words on it. I built Kyro with a community focus. There is a common thread here and it is: I have always cared about how you communicate an idea, not just whether you have one.</p>
+<p>The FLL presentation wasn't just "here's our robot, here's what it does." It was a story. A problem we cared about, a solution we built, a case we made for why it mattered. The judges gave us the award for presentation quality and storytelling.</p>
+<p>At the time, I was just trying to do a good job. In retrospect, I think I was already figuring out something important: the best technical work in the world doesn't move people unless it's communicated well.</p>
+<p>That belief has shaped everything I've built since.</p>`
+  },
+];
+
+// render list
+const list = document.getElementById('blog-list');
+const catColors = { Project:'v', Certification:'y', Accomplishment:'g' };
+posts.forEach((p,i) => {
+  const li = document.createElement('li');
+  li.className = 'blog-item';
+  li.innerHTML = `
+    <div class="blog-left">
+      <div class="blog-cat">${p.cat}</div>
+      <div class="blog-title">${p.title}</div>
+      <div class="blog-preview">${p.preview}</div>
+    </div>
+    <div class="blog-meta">
+      <div class="blog-tags">${p.tags.slice(0,2).map(t=>`<span class="blog-tag">${t}</span>`).join('')}</div>
+      <span class="blog-arrow">&#8594;</span>
+    </div>`;
+  li.addEventListener('click', () => openBlog(i));
+  list.appendChild(li);
+});
+
+// open / close
+const modal = document.getElementById('blog-modal');
+function openBlog(i) {
+  const p = posts[i];
+  document.getElementById('blog-panel-cat').textContent = p.cat;
+  document.getElementById('blog-panel-title').textContent = p.title;
+  document.getElementById('blog-panel-tags').innerHTML = p.tags.map(t=>`<span class="blog-tag">${t}</span>`).join('');
+  document.getElementById('blog-panel-body').innerHTML = p.body;
+  document.getElementById('blog-panel-body').scrollTop = 0;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeBlog() {
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeBlog(); });
+document.getElementById('blog-backdrop').addEventListener('click', closeBlog);
+document.getElementById('blog-close').addEventListener('click', closeBlog);
+document.getElementById('blog-panel-title').addEventListener('click', closeBlog);
+window.closeBlog = closeBlog;
+
+/* ─── HOT CHOCOLATE GAME ───
    Story: Ethan at 2am. A fresh mug of hot
    chocolate. Marshmallows rain from heaven.
    Ice cubes try to ruin everything.
    Catch warmth. Dodge coldness. Ship it.
-════════════════════════════════════════ */
+*/
 (function(){
   const canvas = document.getElementById('hc-canvas');
   const ctx    = canvas.getContext('2d');
