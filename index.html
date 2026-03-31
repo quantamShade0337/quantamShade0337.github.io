@@ -638,17 +638,266 @@ footer{
    RESPONSIVE
 ═══════════════════════════════ */
 @media(max-width:960px){
+  .shell{width:min(100% - 1rem, 100%)}
+  .topbar{
+    padding:.7rem .85rem;
+    gap:.75rem;
+  }
   .hero-cell,.photo-cell{grid-column:span 12}
   .photo-cell{min-height:260px}
   .stat-cell{grid-column:span 3}
   .school-cell,.quote-cell,.fun-age-cell,.about-cell,.certs-cell{grid-column:span 12}
   .rec-grid{grid-template-columns:1fr 1fr}
+  .blog-item{
+    align-items:flex-start;
+  }
+  .blog-meta{
+    flex-direction:column;
+    align-items:flex-end;
+    gap:.45rem;
+  }
+  .blog-title{
+    white-space:normal;
+    overflow:visible;
+    text-overflow:unset;
+    max-width:none;
+  }
+  #blog-panel{
+    width:min(100%, 720px);
+  }
   .navlinks{display:none}
 }
 @media(max-width:560px){
+  .shell{
+    width:min(100% - .75rem, 100%);
+    padding:.55rem 0 4rem;
+  }
+  .topbar{
+    top:.5rem;
+    padding:.65rem .7rem;
+    border-radius:12px;
+  }
+  .logo{
+    font-size:1rem;
+  }
+  .tog button{
+    padding:.32rem .58rem;
+    font-size:.58rem;
+  }
+  .sec{
+    gap:.65rem;
+  }
+  .sec h2{
+    font-size:1.05rem;
+  }
+  .hero-cell{
+    padding:1.2rem;
+    min-height:auto;
+  }
+  .hero-cell::before{
+    width:160px;height:160px;top:-45px;right:-45px;
+  }
+  .hero-cell::after{
+    width:72px;height:72px;top:-18px;right:-18px;
+  }
+  .live-row{
+    margin-bottom:.85rem;
+  }
+  .h1{
+    font-size:2.45rem;
+    line-height:.92;
+    margin-bottom:.8rem;
+  }
+  .h1 .ital{
+    font-size:1.25rem;
+  }
+  .hero-desc{
+    font-size:.88rem;
+    line-height:1.7;
+  }
+  .ctas{
+    gap:.55rem;
+    margin-top:1.2rem;
+  }
+  .btn{
+    width:100%;
+    justify-content:center;
+    padding:.78rem 1rem;
+  }
+  .photo-cell{
+    min-height:220px;
+  }
+  .photo-cap{
+    left:.85rem;right:.85rem;bottom:.85rem;
+    gap:.6rem;
+  }
+  .photo-cap strong{
+    font-size:.86rem;
+  }
+  .photo-cap small{
+    font-size:.5rem;
+  }
   .stat-cell{grid-column:span 6}
+  .stat-cell{
+    padding:1rem;
+  }
+  .stat-big{
+    font-size:2.1rem;
+  }
+  .school-cell{
+    padding:1rem;
+    gap:.75rem;
+  }
+  .quote-cell{
+    padding:1.2rem 1rem;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:.8rem;
+  }
+  .quote-attr{
+    white-space:normal;
+  }
+  .proj{
+    padding:1.1rem;
+    gap:.7rem;
+  }
+  .proj-head{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:.7rem;
+  }
+  .proj-name{
+    font-size:1.22rem;
+  }
+  .proj-desc{
+    font-size:.82rem;
+    line-height:1.7;
+  }
+  .about-cell,
+  .certs-cell,
+  .rec-cell{
+    padding:1.1rem;
+  }
+  .about-cell h3{
+    font-size:1.15rem;
+  }
+  .about-cell p{
+    font-size:.84rem;
+    line-height:1.72;
+  }
+  .cert-item{
+    padding:.75rem .8rem;
+  }
   .rec-grid{grid-template-columns:1fr}
+  .blog-inner{
+    padding:1rem;
+  }
+  .blog-list{
+    margin-top:.35rem;
+  }
+  .blog-item{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:.6rem;
+    padding:.9rem .25rem;
+    margin:0;
+  }
+  .blog-preview{
+    -webkit-line-clamp:2;
+  }
+  .blog-meta{
+    width:100%;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+    gap:.65rem;
+  }
+  .blog-tags{
+    overflow:auto;
+    max-width:100%;
+    padding-bottom:.15rem;
+  }
+  #blog-panel{
+    width:100%;
+    border-left:none;
+  }
+  #blog-panel-header{
+    padding:1rem;
+    gap:.75rem;
+  }
+  #blog-panel-title{
+    font-size:1rem;
+    max-width:none;
+  }
+  #blog-close{
+    padding:.35rem .65rem;
+    font-size:.58rem;
+  }
+  #blog-panel-tags{
+    padding:.7rem 1rem;
+  }
+  #blog-panel-body{
+    padding:1rem;
+    font-size:.86rem;
+    line-height:1.75;
+  }
+  #blog-panel-footer{
+    padding:.85rem 1rem;
+    font-size:.52rem;
+  }
+  .game-header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:.85rem;
+    padding:1rem;
+  }
+  .game-meta{
+    width:100%;
+    flex-wrap:wrap;
+    gap:.55rem;
+  }
+  .game-score-box{
+    flex:1 1 auto;
+    min-width:0;
+  }
+  #game-start-btn{
+    width:100%;
+    text-align:center;
+  }
+  #hc-canvas{
+    min-height:260px;
+  }
+  .game-instructions{
+    padding:.8rem 1rem 1rem;
+    font-size:.53rem;
+    gap:.6rem;
+  }
   .contact-cell{flex-direction:column}
+  .contact-cell{
+    padding:1.35rem 1rem;
+    align-items:flex-start;
+    gap:1rem;
+  }
+  .contact-cell h2{
+    font-size:2rem;
+  }
+  .contact-cell p{
+    font-size:.84rem;
+    line-height:1.65;
+  }
+  .cbtns{
+    width:100%;
+  }
+  .cbtns .btn{
+    width:100%;
+    justify-content:center;
+  }
+  footer{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:.45rem;
+    padding:1rem .15rem;
+  }
 }
 
 /* ═══════════════════════════════
@@ -698,6 +947,7 @@ footer{
   display:block;flex:1;width:100%;
   image-rendering:pixelated;
   cursor:crosshair;
+}
 
 .game-instructions{
   padding:.6rem 1.5rem .9rem;
