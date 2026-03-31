@@ -61,30 +61,9 @@ body{
   overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
   transition:background .4s,color .4s;
-  cursor:none;
 }
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
-
-/* ═══════════════════════════════
-   CUSTOM CURSOR
-═══════════════════════════════ */
-#cur{
-  position:fixed;width:10px;height:10px;
-  background:var(--acc);border-radius:50%;
-  pointer-events:none;z-index:9999;
-  transform:translate(-50%,-50%);
-  transition:width .2s,height .2s,background .2s;
-}
-#cur.expand{width:40px;height:40px;background:rgba(var(--accr),.25)}
-#cur-ring{
-  position:fixed;width:36px;height:36px;
-  border:1.5px solid rgba(var(--accr),.45);
-  border-radius:50%;pointer-events:none;z-index:9998;
-  transform:translate(-50%,-50%);
-  transition:all .14s ease;
-}
-#cur.expand + #cur-ring{width:60px;height:60px;opacity:.6}
 
 /* ═══════════════════════════════
    GRAIN
@@ -163,7 +142,7 @@ a{color:inherit;text-decoration:none}
   font-family:var(--mono);font-size:.63rem;
   text-transform:uppercase;letter-spacing:.08em;
   border:none;background:transparent;color:var(--dim);
-  padding:.28rem .7rem;border-radius:7px;cursor:none;
+  padding:.28rem .7rem;border-radius:7px;cursor:pointer;
   transition:all .2s;
 }
 .tog button.on{background:var(--card);color:var(--text);box-shadow:0 1px 5px rgba(0,0,0,.1)}
@@ -272,7 +251,7 @@ a{color:inherit;text-decoration:none}
   padding:.65rem 1.2rem;border-radius:10px;
   font-family:var(--sans);font-size:.82rem;font-weight:700;
   border:2px solid var(--border2);color:var(--text);
-  background:transparent;cursor:none;transition:all .2s;text-decoration:none;
+  background:transparent;cursor:pointer;transition:all .2s;text-decoration:none;
 }
 .btn:hover{background:var(--bg2);transform:translateY(-1px)}
 .btn-acc{background:var(--acc);color:#fff;border-color:var(--acc)}
@@ -392,7 +371,7 @@ a{color:inherit;text-decoration:none}
   display:flex;align-items:center;gap:.85rem;
   padding:.85rem 1rem;border:1px solid var(--border);
   border-radius:12px;background:var(--bg2);margin-bottom:.55rem;
-  transition:border-color .2s,transform .2s;cursor:none;
+  transition:border-color .2s,transform .2s;cursor:default;
 }
 .cert-item:last-child{margin-bottom:0}
 .cert-item:hover{border-color:var(--border2);transform:translateX(4px)}
@@ -578,15 +557,15 @@ footer{
   text-transform:uppercase;letter-spacing:.1em;
   background:rgba(255,160,60,.18);color:#f5c880;
   border:1px solid rgba(255,160,60,.4);
-  border-radius:8px;padding:.42rem 1rem;cursor:none;
+  border-radius:8px;padding:.42rem 1rem;cursor:pointer;
   transition:background .2s,border-color .2s;
 }
 #game-start-btn:hover{background:rgba(255,160,60,.3);border-color:rgba(255,160,60,.7)}
 #hc-canvas{
   display:block;flex:1;width:100%;
   image-rendering:pixelated;
-  cursor:none;
-}
+  cursor:crosshair;
+
 .game-instructions{
   padding:.6rem 1.5rem .9rem;
   font-family:var(--mono);font-size:.6rem;
@@ -600,9 +579,6 @@ footer{
 </head>
 <body>
 
-<!-- custom cursor -->
-<div id="cur"></div>
-<div id="cur-ring"></div>
 <!-- grain -->
 <div id="grain"></div>
 <!-- blobs -->
@@ -653,8 +629,8 @@ footer{
       <a href="#contact">Contact</a>
     </div>
     <div class="tog">
-      <button id="btnL" class="on" onclick="setTheme('light')">Day</button>
-      <button id="btnD" onclick="setTheme('dark')">Night</button>
+      <button id="btnL" class="on">Day</button>
+      <button id="btnD">Night</button>
     </div>
   </nav>
 
@@ -917,7 +893,7 @@ footer{
         <div class="game-meta">
           <div class="game-score-box">Score <span id="score-display">0</span></div>
           <div class="game-score-box">Best <span id="best-display">0</span></div>
-          <button id="game-start-btn" onclick="gameStart()">Play</button>
+          <button id="game-start-btn">Play</button>
         </div>
       </div>
       <canvas id="hc-canvas" width="1200" height="340"></canvas>
@@ -944,7 +920,7 @@ footer{
 
     <footer>
       <span>Ethan Soh &mdash; 2026</span>
-      <span id="footer-egg" style="cursor:none">built with focus, spite, and Outfit font</span>
+      <span id="footer-egg" style="cursor:pointer">built with focus, spite, and Outfit font</span>
     </footer>
 
   </div>
@@ -959,23 +935,10 @@ function setTheme(t) {
   document.getElementById('btnL').classList.toggle('on', t==='light');
   document.getElementById('btnD').classList.toggle('on', t==='dark');
 }
+document.getElementById('btnL').addEventListener('click', () => setTheme('light'));
+document.getElementById('btnD').addEventListener('click', () => setTheme('dark'));
+document.getElementById('game-start-btn').addEventListener('click', () => gameStart());
 setTheme(saved);
-
-/* ─── CURSOR ─── */
-const cur = document.getElementById('cur');
-const ring = document.getElementById('cur-ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
-(function loop(){
-  rx += (mx-rx)*.14; ry += (my-ry)*.14;
-  cur.style.left  = mx+'px'; cur.style.top = my+'px';
-  ring.style.left = rx+'px'; ring.style.top= ry+'px';
-  requestAnimationFrame(loop);
-})();
-document.querySelectorAll('a,button,.cert-item,.rec-card,.cell').forEach(el=>{
-  el.addEventListener('mouseenter',()=>cur.classList.add('expand'));
-  el.addEventListener('mouseleave',()=>cur.classList.remove('expand'));
-});
 
 /* ─── SCROLL REVEAL ─── */
 const obs = new IntersectionObserver(entries=>{
@@ -1022,13 +985,55 @@ document.getElementById('photo-egg').addEventListener('click', ()=>{
 
 /* ─── EASTER EGG 3: Quote cell cycle ─── */
 const quotes = [
-  { q: '"Ship it before you're ready."', a: 'Ethan, probably at 2am — click to change' },
-  { q: '"Coffee is a food group."', a: 'Nutritional fact, probably' },
-  { q: '"It works on my machine."', a: 'Classic defence, 2025' },
-  { q: '"One more feature won't hurt."', a: 'Famous last words' },
-  { q: '"I'll sleep when it's deployed."', a: 'Ethan, definitely' },
-  { q: '"Why use 10 words when 3 suffice."', a: 'Design philosophy' },
-  { q: '"The docs said it would work."', a: 'It did not work' },
+  { q: '"Ship it before you\'re ready."', a: 'Ethan, 2am, no regrets' },
+  { q: '"Is Milo considered hot chocolate?"', a: 'Ethan, very serious question' },
+  { q: '"Where is my hot chocolate?"', a: 'Ethan, every night without fail' },
+  { q: '"Marshmallows are emotional support objects."', a: 'peer-reviewed, probably' },
+  { q: '"Hot chocolate is just therapy with better branding."', a: 'and cheaper too' },
+  { q: '"If it\'s not slightly too hot to drink I don\'t trust it."', a: 'quality standards, non-negotiable' },
+  { q: '"I don\'t have my life together but this cup does."', a: 'the mug understood the assignment' },
+  { q: '"I waited 5 minutes for this and still burned my tongue."', a: 'every. single. time.' },
+  { q: '"Productivity is temporary. Hot chocolate is forever."', a: 'put this in a fortune cookie' },
+  { q: '"Happiness is measured in mugs, not achievements."', a: 'new KPI, effective immediately' },
+  { q: '"Happiness is a warm mug and a green light on prod."', a: 'Ethan, 2am, crying a little' },
+  { q: '"Surely I can vibecode it."', a: 'Ethan, 5 minutes before chaos' },
+  { q: '"Imagine if I ChatGPT a prompt for Codex."', a: 'AI inception speedrun' },
+  { q: '"What could possibly go wrong?"', a: 'everything. everything went wrong.' },
+  { q: '"Local cafes open at 2am?"', a: 'they are not. Ethan checked.' },
+  { q: '"It works on my machine."', a: 'classic. timeless. wrong.' },
+  { q: '"One more feature won\'t hurt."', a: 'famous last words, vol. 47' },
+  { q: '"I\'ll sleep when it\'s deployed."', a: 'Ethan, still not sleeping' },
+  { q: '"The docs said it would work."', a: 'the docs lied' },
+  { q: '"I asked AI for help and it asked me to clarify my life."', a: 'valid response honestly' },
+  { q: '"Artificial intelligence. Real confusion."', a: 'marketing vs reality' },
+  { q: '"The AI is learning but so am I. Unfortunately."', a: 'we\'re both struggling' },
+  { q: '"Sometimes the AI is right and that is deeply concerning."', a: 'unsettling vibes' },
+  { q: '"I automate things to avoid thinking. Now I think about automations."', a: 'the cycle is unbroken' },
+  { q: '"The AI understood the assignment. I did not."', a: 'respectfully humbling' },
+  { q: '"We built AI to save time and used it to waste it faster."', a: 'progress.' },
+  { q: '"AI is just confidence at scale."', a: 'not wrong though' },
+  { q: '"Everyone here is either working or pretending to."', a: 'cafe observation, 3pm' },
+  { q: '"This place smells like ambition and burnout."', a: 'also oat milk' },
+  { q: '"I came here to focus and instead developed a personality."', a: 'worth it?' },
+  { q: '"Cafes are just socially acceptable loitering zones."', a: 'and we love them for it' },
+  { q: '"The wifi is faster than my thoughts."', a: 'low bar, achieved' },
+  { q: '"The louder the keyboard, the less work is being done."', a: 'universal law, no exceptions' },
+  { q: '"Someone here is writing a novel. Someone else is rewatching the same video."', a: 'both valid life choices' },
+  { q: '"I ordered coffee and got a life crisis."', a: 'free with every cup' },
+  { q: '"This is not procrastination. This is a creative pause."', a: 'very different things. legally.' },
+  { q: '"I opened this to do one thing and now I live here."', a: 'rent is free though' },
+  { q: '"Progress is happening quietly. Do not disturb."', a: 'please leave a message' },
+  { q: '"If it works, do not question it. Just feel it."', a: 'senior dev energy' },
+  { q: '"This felt like a good idea 10 minutes ago."', a: 'still shipping it anyway' },
+  { q: '"Small wins are still wins. Especially this one."', a: 'count everything' },
+  { q: '"I am not stuck. I am exploring inefficiently."', a: 'technically correct' },
+  { q: '"The bug was a feature the whole time."', a: 'patch notes: none' },
+  { q: '"I should go to sleep."', a: 'Ethan, 3:47am, not going to sleep' },
+  { q: '"Git commit: fixed stuff, broke other stuff, moved on."', a: 'honest commit history' },
+  { q: '"My code works and I have no idea why."', a: 'shipping it anyway' },
+  { q: '"Stack Overflow has been open for 4 hours. Still not fixed."', a: 'Ethan, coping' },
+  { q: '"This is fine."', a: 'it is not fine. the hot chocolate is cold now too.' },
+  { q: '"git commit -m \\"PLEASE WORK\\""', a: 'Ethan, 2am, spiritually broken' },
 ];
 let qIdx = 0;
 document.getElementById('quote-egg').addEventListener('click', ()=>{
