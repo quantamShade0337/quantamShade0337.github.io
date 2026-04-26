@@ -1,0 +1,2235 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ethan Soh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700;800;900&family=Fragment+Mono&display=swap" rel="stylesheet"/>
+<style>
+
+/* ─── TOKENS ─── */
+:root {
+  --bg:        #000000;
+  --bg1:       #0a0a0a;
+  --bg2:       #111111;
+  --bg3:       #1a1a1a;
+  --bd:        rgba(255,255,255,.07);
+  --bd2:       rgba(255,255,255,.12);
+  --bd3:       rgba(255,255,255,.20);
+  --t:         #ededed;
+  --t2:        #888;
+  --t3:        #444;
+  --t-inv:     #000;
+  --green:     #3ecf8e;
+  --red:       #ff4c4c;
+  --gold:      #f5a623;
+  --violet:    #7c3aed;
+  --v-rgb:     124,58,237;
+  --sans:      'Outfit', -apple-system, sans-serif;
+  --mono:      'Fragment Mono', monospace;
+  --serif:     'Instrument Serif', Georgia, serif;
+  --max:       1120px;
+  --px:        clamp(1.25rem, 4vw, 2.5rem);
+  --gap:       clamp(5rem, 10vw, 9rem);
+  --ease:      cubic-bezier(.4,0,.2,1);
+  --spring:    cubic-bezier(.34,1.56,.64,1);
+  --r:         10px;
+  --rl:        16px;
+}
+[data-theme="light"] {
+  --bg:   #ffffff;
+  --bg1:  #fafafa;
+  --bg2:  #f5f5f5;
+  --bg3:  #eeeeee;
+  --bd:   rgba(0,0,0,.06);
+  --bd2:  rgba(0,0,0,.10);
+  --bd3:  rgba(0,0,0,.18);
+  --t:    #0a0a0a;
+  --t2:   #666;
+  --t3:   #999;
+  --t-inv:#fff;
+}
+
+/* ─── RESET ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--t);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  transition:background .3s var(--ease),color .3s var(--ease);
+  position:relative;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:none;background:none}
+
+/* ─── NOISE ─── */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  pointer-events:none;z-index:500;
+  opacity:.028;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:200px;
+}
+
+/* ─── PROGRESS BAR ─── */
+#progress{
+  position:fixed;top:0;left:0;
+  height:1.5px;
+  background:var(--t);
+  width:0%;
+  z-index:9999;
+  transition:width .08s linear;
+  pointer-events:none;
+}
+
+/* ─── CURSOR GLOW ─── */
+#cursor-glow{
+  position:fixed;
+  width:700px;height:700px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(var(--v-rgb),.055) 0%,transparent 70%);
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+  z-index:0;
+  transition:opacity .4s;
+  opacity:1;
+  will-change:transform;
+}
+[data-theme="light"] #cursor-glow{opacity:0}
+
+/* ─── CONTAINER ─── */
+.wrap{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:0 var(--px);
+}
+
+/* ─── NAV ─── */
+#nav{
+  position:fixed;top:0;left:0;right:0;
+  z-index:200;
+  padding:.85rem var(--px);
+  display:flex;align-items:center;justify-content:space-between;
+  transition:background .3s var(--ease),border-color .3s var(--ease);
+  border-bottom:1px solid transparent;
+}
+#nav.stuck{
+  background:color-mix(in srgb, var(--bg) 85%, transparent);
+  border-bottom-color:var(--bd);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+}
+.nav-logo{
+  font-family:var(--mono);
+  font-size:.7rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--t);
+  cursor:pointer;
+  user-select:none;
+  transition:opacity .2s;
+}
+.nav-logo:hover{opacity:.7}
+.nav-links{display:flex;gap:.1rem}
+.nav-links a{
+  font-family:var(--mono);
+  font-size:.62rem;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  color:var(--t2);
+  padding:.35rem .75rem;
+  border-radius:6px;
+  transition:color .15s,background .15s;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--t);background:var(--bg2)}
+.theme-tog{
+  display:flex;gap:2px;
+  padding:3px;
+  background:var(--bg2);
+  border:1px solid var(--bd2);
+  border-radius:7px;
+}
+.theme-tog button{
+  font-family:var(--mono);
+  font-size:.6rem;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--t3);
+  padding:.25rem .65rem;
+  border-radius:5px;
+  transition:all .15s var(--ease);
+}
+.theme-tog button.on{
+  background:var(--bg3);
+  color:var(--t);
+}
+
+/* ─── HERO ─── */
+.hero{
+  min-height:100svh;
+  padding-top:5rem;
+  padding-bottom:4rem;
+  padding-left:var(--px);
+  padding-right:var(--px);
+  max-width:var(--max);
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  position:relative;
+  z-index:1;
+}
+
+/* subtle hero grid */
+.hero-grid{
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+  background-size:80px 80px;
+  pointer-events:none;
+  z-index:-1;
+  mask-image:radial-gradient(ellipse 80% 80% at 0% 100%,black 30%,transparent 100%);
+}
+[data-theme="light"] .hero-grid{
+  background-image:
+    linear-gradient(rgba(0,0,0,.035) 1px, transparent 1px),
+    linear-gradient(90deg,rgba(0,0,0,.035) 1px,transparent 1px);
+}
+
+.hero-chapter{
+  display:flex;align-items:center;gap:.75rem;
+  margin-bottom:2.5rem;
+}
+.hero-chapter .ch-num{
+  font-family:var(--mono);font-size:.6rem;
+  letter-spacing:.12em;color:var(--t3);
+}
+.hero-chapter .ch-line{
+  width:36px;height:1px;background:var(--bd3);
+}
+.hero-chapter .ch-label{
+  font-family:var(--mono);font-size:.6rem;
+  text-transform:uppercase;letter-spacing:.15em;color:var(--t3);
+}
+
+.hero-name{
+  font-size:clamp(4.5rem,13vw,11rem);
+  font-weight:800;
+  line-height:.88;
+  letter-spacing:-.045em;
+  color:var(--t);
+  margin-bottom:1.6rem;
+}
+
+.hero-roles{
+  display:flex;align-items:center;gap:1.5rem;
+  flex-wrap:wrap;
+  margin-bottom:1.8rem;
+}
+.hero-roles span{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:clamp(.95rem,2vw,1.3rem);
+  color:var(--t2);
+}
+.hero-roles .rdot{color:var(--t3);margin-left:-.5rem}
+
+.hero-body{
+  font-size:clamp(.9rem,1.4vw,1.05rem);
+  line-height:1.8;
+  color:var(--t2);
+  max-width:38rem;
+  margin-bottom:2.2rem;
+}
+
+.hero-status{
+  display:flex;align-items:center;gap:.75rem;
+  flex-wrap:wrap;
+  margin-bottom:2.5rem;
+}
+.status-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--green);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.65)}}
+.hero-status span{
+  font-family:var(--mono);font-size:.62rem;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--t2);
+}
+.hero-status .sep{color:var(--t3)}
+
+.hero-ctas{display:flex;gap:.65rem;flex-wrap:wrap}
+
+/* ─── BUTTONS ─── */
+.btn-fill{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.65rem 1.3rem;
+  background:var(--t);color:var(--bg);
+  border-radius:var(--r);
+  font-size:.8rem;font-weight:700;
+  letter-spacing:-.01em;
+  border:1.5px solid var(--t);
+  transition:opacity .2s,transform .2s var(--ease);
+}
+.btn-fill:hover{opacity:.88;transform:translateY(-1px)}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.65rem 1.3rem;
+  background:transparent;color:var(--t);
+  border-radius:var(--r);
+  font-size:.8rem;font-weight:600;
+  border:1.5px solid var(--bd3);
+  transition:background .2s,transform .2s var(--ease);
+}
+.btn-ghost:hover{background:var(--bg2);transform:translateY(-1px)}
+
+/* ─── MARQUEE ─── */
+.marquee{
+  border-top:1px solid var(--bd);
+  border-bottom:1px solid var(--bd);
+  overflow:hidden;white-space:nowrap;
+  padding:.55rem 0;
+  position:relative;z-index:1;
+}
+.marquee-inner{
+  display:inline-flex;gap:2rem;
+  animation:mq 26s linear infinite;
+}
+.marquee-inner span{
+  font-family:var(--mono);font-size:.58rem;
+  text-transform:uppercase;letter-spacing:.14em;color:var(--t3);
+}
+.marquee-inner .sep{color:var(--bd3)}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ─── STATS ─── */
+.stats-block{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--bd2);
+  border-radius:var(--rl);
+  overflow:hidden;
+  background:var(--bd);
+  gap:1px;
+}
+.stat{
+  background:var(--bg1);
+  padding:1.75rem 2rem;
+  display:flex;flex-direction:column;gap:.4rem;
+}
+.stat-val{
+  font-size:2.4rem;font-weight:900;
+  letter-spacing:-.055em;line-height:1;color:var(--t);
+}
+.stat-lbl{
+  font-family:var(--mono);font-size:.58rem;
+  text-transform:uppercase;letter-spacing:.12em;color:var(--t3);
+}
+
+/* ─── SECTION ─── */
+.section{
+  padding:var(--gap) var(--px);
+  max-width:var(--max);
+  margin:0 auto;
+  position:relative;z-index:1;
+}
+.chapter{
+  display:flex;align-items:center;gap:.75rem;
+  margin-bottom:2.75rem;
+}
+.chapter .cn{
+  font-family:var(--mono);font-size:.6rem;
+  letter-spacing:.12em;color:var(--t3);
+}
+.chapter .cl{width:36px;height:1px;background:var(--bd3)}
+.chapter .ct{
+  font-family:var(--mono);font-size:.6rem;
+  text-transform:uppercase;letter-spacing:.15em;color:var(--t3);
+}
+.sec-heading{
+  font-size:clamp(2rem,5vw,3.8rem);
+  font-weight:800;letter-spacing:-.045em;line-height:.95;
+  color:var(--t);margin-bottom:.6rem;
+}
+.sec-sub{
+  font-size:.9rem;line-height:1.7;
+  color:var(--t2);margin-bottom:3rem;
+}
+
+/* ─── PROJECT LIST ─── */
+/* Featured */
+.proj-featured{
+  border:1px solid var(--bd2);
+  border-radius:var(--rl);
+  padding:2rem 2.25rem;
+  background:var(--bg1);
+  display:flex;align-items:flex-start;gap:1.5rem;
+  margin-bottom:1px;
+  cursor:pointer;
+  transition:background .2s var(--ease);
+  position:relative;overflow:hidden;
+}
+.proj-featured::before{
+  content:'';position:absolute;
+  top:-1px;left:-1px;right:-1px;bottom:-1px;
+  border-radius:var(--rl);
+  border:1px solid transparent;
+  transition:border-color .25s;
+}
+.proj-featured:hover{background:var(--bg2)}
+.proj-featured:hover::before{border-color:var(--bd3)}
+
+.feat-logo{
+  width:52px;height:52px;flex-shrink:0;
+  border-radius:12px;overflow:hidden;
+  background:#000;border:1px solid var(--bd2);
+}
+.feat-logo img{width:100%;height:100%;object-fit:cover}
+.feat-body{flex:1}
+.feat-eyebrow{
+  font-family:var(--mono);font-size:.58rem;
+  text-transform:uppercase;letter-spacing:.12em;color:var(--t3);
+  margin-bottom:.55rem;
+}
+.feat-name{
+  font-size:1.7rem;font-weight:800;
+  letter-spacing:-.04em;color:var(--t);
+  margin-bottom:.65rem;
+}
+.feat-desc{
+  font-size:.88rem;line-height:1.72;
+  color:var(--t2);max-width:52ch;
+  margin-bottom:1.25rem;
+}
+.feat-footer{
+  display:flex;align-items:center;
+  justify-content:space-between;flex-wrap:wrap;gap:1rem;
+}
+.feat-link{
+  font-family:var(--mono);font-size:.62rem;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--t);
+  display:flex;align-items:center;gap:.5rem;
+  transition:gap .2s var(--ease);
+}
+.proj-featured:hover .feat-link{gap:.85rem}
+
+/* List */
+.proj-list{
+  border:1px solid var(--bd);
+  border-radius:var(--rl);
+  overflow:hidden;
+  background:var(--bd);
+  display:flex;flex-direction:column;gap:1px;
+  margin-top:1px;
+}
+.proj-row{
+  display:grid;
+  grid-template-columns:52px 1fr auto;
+  gap:1.5rem;
+  padding:1.5rem 2rem;
+  background:var(--bg1);
+  transition:background .18s var(--ease);
+  cursor:pointer;
+  align-items:start;
+}
+.proj-row.inactive{cursor:default}
+.proj-row:not(.inactive):hover{background:var(--bg2)}
+.proj-num{
+  font-family:var(--mono);font-size:.58rem;
+  letter-spacing:.08em;color:var(--t3);
+  padding-top:.3rem;
+}
+.proj-main{display:flex;flex-direction:column;gap:.45rem}
+.proj-title-row{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.proj-name{
+  font-size:.97rem;font-weight:700;
+  letter-spacing:-.025em;color:var(--t);
+}
+.proj-desc{
+  font-size:.83rem;line-height:1.68;
+  color:var(--t2);max-width:50ch;
+}
+.proj-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.25rem}
+.ptag{
+  font-family:var(--mono);font-size:.53rem;
+  text-transform:uppercase;letter-spacing:.07em;
+  color:var(--t3);background:var(--bg3);
+  border:1px solid var(--bd);
+  padding:.15rem .48rem;border-radius:4px;
+}
+.proj-right{
+  display:flex;flex-direction:column;
+  align-items:flex-end;gap:.75rem;
+  padding-top:.15rem;
+}
+.proj-link{
+  font-family:var(--mono);font-size:.58rem;
+  text-transform:uppercase;letter-spacing:.1em;
+  color:var(--t2);
+  display:flex;align-items:center;gap:.35rem;
+  opacity:0;transform:translateX(-6px);
+  transition:all .2s var(--ease);
+}
+.proj-row:not(.inactive):hover .proj-link{opacity:1;transform:translateX(0);color:var(--t)}
+.proj-link-dead{
+  font-family:var(--mono);font-size:.58rem;
+  text-transform:uppercase;letter-spacing:.1em;
+  color:var(--t3);opacity:.45;
+}
+
+/* badges */
+.badge{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-family:var(--mono);font-size:.58rem;
+  text-transform:uppercase;letter-spacing:.1em;
+  padding:.22rem .6rem;border-radius:999px;
+  white-space:nowrap;
+}
+.bdot{width:5px;height:5px;border-radius:50%}
+.badge-live{
+  color:var(--green);
+  background:rgba(62,207,142,.08);
+  border:1px solid rgba(62,207,142,.22);
+}
+.badge-live .bdot{background:var(--green)}
+.badge-dev{
+  color:var(--t2);
+  background:var(--bg3);border:1px solid var(--bd);
+}
+.badge-dev .bdot{background:var(--t3)}
+.badge-res{
+  color:var(--gold);
+  background:rgba(245,166,35,.08);
+  border:1px solid rgba(245,166,35,.22);
+}
+.badge-res .bdot{background:var(--gold)}
+
+/* ─── QUOTE BANNER ─── */
+.quote-strip{
+  border-top:1px solid var(--bd);
+  border-bottom:1px solid var(--bd);
+  padding:2.75rem var(--px);
+  cursor:pointer;
+  transition:background .2s var(--ease);
+  position:relative;z-index:1;
+}
+.quote-strip:hover{background:var(--bg1)}
+.quote-strip-inner{
+  max-width:var(--max);
+  margin:0 auto;
+  display:flex;align-items:center;
+  justify-content:space-between;gap:2rem;
+}
+.q-text{
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(1.1rem,2.2vw,1.65rem);
+  color:var(--t);line-height:1.35;flex:1;
+}
+.q-attr{
+  font-family:var(--mono);font-size:.58rem;
+  text-transform:uppercase;letter-spacing:.1em;
+  color:var(--t3);flex-shrink:0;text-align:right;
+}
+
+/* ─── ABOUT ─── */
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1.2fr;
+  gap:4rem;align-items:start;
+}
+.about-sticky{position:sticky;top:5.5rem}
+.about-quote{
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(1.6rem,3.5vw,2.4rem);
+  line-height:1.2;letter-spacing:-.025em;
+  color:var(--t);margin-bottom:2rem;
+}
+.about-photo{
+  border-radius:var(--rl);overflow:hidden;
+  border:1px solid var(--bd2);
+}
+.about-photo img{
+  width:100%;aspect-ratio:4/5;
+  object-fit:cover;object-position:center top;
+  transition:transform .5s var(--ease);
+  display:block;
+}
+.about-photo:hover img{transform:scale(1.03)}
+.photo-cap{
+  background:var(--bg2);
+  border-top:1px solid var(--bd);
+  padding:.75rem 1rem;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.photo-cap-name{font-size:.82rem;font-weight:700;color:var(--t)}
+.photo-cap-sub{
+  font-family:var(--mono);font-size:.55rem;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--t3);
+}
+.photo-cap-sg{
+  font-family:var(--mono);font-size:.58rem;
+  color:var(--t2);background:var(--bg3);
+  border:1px solid var(--bd);
+  padding:.18rem .5rem;border-radius:5px;
+}
+.about-body{
+  font-size:.92rem;line-height:1.88;
+  color:var(--t2);margin-bottom:.95rem;
+}
+.about-facts{
+  margin-top:2.5rem;
+  border:1px solid var(--bd);
+  border-radius:var(--r);overflow:hidden;
+  display:flex;flex-direction:column;gap:1px;
+  background:var(--bd);
+}
+.fact{
+  display:flex;justify-content:space-between;
+  align-items:center;gap:1rem;
+  padding:.9rem 1.2rem;background:var(--bg1);
+}
+.fact-lbl{
+  font-family:var(--mono);font-size:.6rem;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--t3);
+}
+.fact-val{
+  font-family:var(--mono);font-size:.75rem;
+  font-weight:700;color:var(--t);text-align:right;
+}
+.fact-val-xl{
+  font-size:1.35rem;font-weight:900;
+  letter-spacing:-.04em;font-family:var(--sans);
+  color:var(--t);
+}
+.school-chip{
+  display:flex;align-items:center;gap:.6rem;
+}
+.school-icon{
+  width:24px;height:24px;border-radius:5px;
+  overflow:hidden;border:1px solid var(--bd);flex-shrink:0;
+}
+.school-icon img{width:100%;height:100%;object-fit:contain}
+
+/* ─── CREDENTIALS ─── */
+.creds-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:2rem;align-items:start;
+}
+.cred-lbl{
+  font-family:var(--mono);font-size:.6rem;
+  text-transform:uppercase;letter-spacing:.14em;
+  color:var(--t3);margin-bottom:1.1rem;
+}
+.cert-list{
+  border:1px solid var(--bd);
+  border-radius:var(--rl);overflow:hidden;
+  display:flex;flex-direction:column;gap:1px;
+  background:var(--bd);
+}
+.cert-row{
+  display:flex;align-items:center;gap:.9rem;
+  padding:1rem 1.25rem;background:var(--bg1);
+  transition:background .18s var(--ease);
+}
+.cert-row:hover{background:var(--bg2)}
+.cert-icon{
+  width:36px;height:36px;border-radius:7px;
+  overflow:hidden;flex-shrink:0;border:1px solid var(--bd);
+}
+.cert-icon img{width:100%;height:100%;object-fit:cover}
+.cert-name{
+  font-size:.83rem;font-weight:700;color:var(--t);margin-bottom:.18rem;
+}
+.cert-meta{
+  font-family:var(--mono);font-size:.56rem;
+  text-transform:uppercase;letter-spacing:.07em;color:var(--t3);
+}
+.rec-list{
+  border:1px solid var(--bd);
+  border-radius:var(--rl);overflow:hidden;
+  display:flex;flex-direction:column;gap:1px;
+  background:var(--bd);
+}
+.rec-row{
+  background:var(--bg1);
+  padding:1.15rem 1.5rem;
+  transition:background .18s var(--ease);
+}
+.rec-row:hover{background:var(--bg2)}
+.rec-yr{
+  font-family:var(--mono);font-size:.58rem;
+  letter-spacing:.1em;color:var(--t3);margin-bottom:.3rem;
+}
+.rec-name{font-size:.88rem;font-weight:700;color:var(--t);margin-bottom:.28rem}
+.rec-desc{font-size:.78rem;line-height:1.6;color:var(--t2)}
+
+/* ─── GAME ─── */
+.game-outer{
+  padding:var(--gap) var(--px);
+  max-width:var(--max);margin:0 auto;
+}
+.game-cell{
+  background:#090600;
+  border:1px solid rgba(255,160,60,.14);
+  border-radius:var(--rl);overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.game-hdr{
+  padding:1.25rem 1.75rem;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid rgba(255,160,60,.09);
+  flex-wrap:wrap;gap:1rem;
+}
+.game-title{
+  font-family:var(--serif);font-style:italic;
+  font-size:1.2rem;color:#f5c880;letter-spacing:-.01em;
+}
+.game-title small{
+  display:block;font-family:var(--mono);font-style:normal;
+  font-size:.56rem;text-transform:uppercase;letter-spacing:.1em;
+  color:rgba(245,200,128,.4);margin-top:.14rem;
+}
+.game-meta{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.game-score-box{
+  font-family:var(--mono);font-size:.65rem;
+  text-transform:uppercase;letter-spacing:.08em;
+  color:rgba(245,200,128,.6);
+  background:rgba(255,160,60,.07);
+  border:1px solid rgba(255,160,60,.18);
+  padding:.28rem .75rem;border-radius:6px;
+}
+.game-score-box span{color:#f5c880;font-size:.88rem;font-weight:600}
+#game-start-btn{
+  font-family:var(--mono);font-size:.65rem;
+  text-transform:uppercase;letter-spacing:.1em;
+  background:rgba(255,160,60,.1);color:#f5c880;
+  border:1px solid rgba(255,160,60,.32);
+  border-radius:6px;padding:.38rem 1rem;
+  transition:background .2s,border-color .2s;
+}
+#game-start-btn:hover{
+  background:rgba(255,160,60,.2);
+  border-color:rgba(255,160,60,.55);
+}
+#hc-canvas{
+  display:block;flex:1;width:100%;
+  image-rendering:pixelated;cursor:crosshair;min-height:300px;
+}
+.game-instruct{
+  padding:.6rem 1.75rem .85rem;
+  font-family:var(--mono);font-size:.56rem;
+  text-transform:uppercase;letter-spacing:.1em;
+  color:rgba(245,200,128,.3);
+  border-top:1px solid rgba(255,160,60,.07);
+  display:flex;gap:1.5rem;flex-wrap:wrap;
+}
+
+/* ─── BLOG ─── */
+.blog-list{
+  list-style:none;
+  border:1px solid var(--bd);
+  border-radius:var(--rl);overflow:hidden;
+  display:flex;flex-direction:column;gap:1px;
+  background:var(--bd);
+}
+.blog-item{
+  display:flex;align-items:flex-start;
+  justify-content:space-between;gap:1.5rem;
+  padding:1.5rem 2rem;
+  background:var(--bg1);
+  cursor:pointer;
+  transition:background .18s var(--ease);
+}
+.blog-item:hover{background:var(--bg2)}
+.blog-item:hover .blog-arr{opacity:1;transform:translateX(4px);color:var(--t)}
+.blog-left{flex:1;min-width:0}
+.blog-cat{
+  font-family:var(--mono);font-size:.56rem;
+  text-transform:uppercase;letter-spacing:.12em;
+  color:var(--t3);margin-bottom:.4rem;
+}
+.blog-title{
+  font-size:.93rem;font-weight:700;
+  letter-spacing:-.02em;color:var(--t);
+  line-height:1.35;margin-bottom:.3rem;
+  max-width:540px;
+}
+.blog-preview{
+  font-size:.78rem;color:var(--t2);line-height:1.6;
+  display:-webkit-box;-webkit-line-clamp:1;
+  -webkit-box-orient:vertical;overflow:hidden;
+}
+.blog-meta{
+  display:flex;flex-direction:column;
+  align-items:flex-end;gap:.65rem;flex-shrink:0;
+}
+.blog-tags{display:flex;gap:.28rem;flex-wrap:nowrap}
+.blog-tag{
+  font-family:var(--mono);font-size:.53rem;
+  text-transform:uppercase;letter-spacing:.07em;
+  color:var(--t3);background:var(--bg3);
+  border:1px solid var(--bd);padding:.15rem .48rem;
+  border-radius:4px;white-space:nowrap;
+}
+.blog-arr{
+  font-size:.9rem;color:var(--t3);
+  opacity:.4;transition:all .2s var(--ease);flex-shrink:0;
+}
+
+/* blog modal */
+#blog-modal{
+  position:fixed;inset:0;z-index:800;
+  display:flex;align-items:stretch;justify-content:flex-end;
+  pointer-events:none;
+}
+#blog-modal.open{pointer-events:all}
+#blog-backdrop{
+  position:absolute;inset:0;
+  background:rgba(0,0,0,.55);
+  opacity:0;transition:opacity .3s var(--ease);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+}
+#blog-modal.open #blog-backdrop{opacity:1}
+#blog-panel{
+  position:relative;z-index:1;
+  width:min(680px,100%);
+  background:var(--bg1);
+  border-left:1px solid var(--bd2);
+  display:flex;flex-direction:column;
+  transform:translateX(100%);
+  transition:transform .38s cubic-bezier(.32,1,.4,1);
+  overflow:hidden;
+}
+#blog-modal.open #blog-panel{transform:translateX(0)}
+#blog-panel-header{
+  padding:1.5rem 2rem 1.2rem;
+  border-bottom:1px solid var(--bd);
+  display:flex;align-items:flex-start;
+  justify-content:space-between;gap:1rem;
+  flex-shrink:0;
+}
+#blog-panel-cat{
+  font-family:var(--mono);font-size:.58rem;
+  text-transform:uppercase;letter-spacing:.12em;
+  color:var(--t3);margin-bottom:.45rem;
+}
+#blog-panel-title{
+  font-size:clamp(1rem,2vw,1.3rem);font-weight:800;
+  letter-spacing:-.03em;line-height:1.25;
+  color:var(--t);max-width:440px;
+}
+#blog-close{
+  border:1px solid var(--bd2);background:var(--bg2);
+  border-radius:6px;padding:.38rem .85rem;
+  font-family:var(--mono);font-size:.6rem;
+  text-transform:uppercase;letter-spacing:.08em;
+  color:var(--t2);flex-shrink:0;
+  transition:background .2s,color .2s,border-color .2s;
+}
+#blog-close:hover{background:var(--t);color:var(--bg);border-color:var(--t)}
+#blog-panel-tags{
+  display:flex;gap:.32rem;flex-wrap:wrap;
+  padding:.8rem 2rem;border-bottom:1px solid var(--bd);flex-shrink:0;
+}
+#blog-panel-body{
+  flex:1;overflow-y:auto;padding:2rem;
+  font-size:.9rem;line-height:1.92;color:var(--t2);
+  scroll-behavior:smooth;
+}
+#blog-panel-body p{margin-bottom:1.1rem}
+#blog-panel-body p:last-child{margin-bottom:0}
+#blog-panel-body strong{color:var(--t);font-weight:700}
+#blog-panel-body em{font-family:var(--serif);font-style:italic;color:var(--t3)}
+#blog-panel-body a{
+  color:var(--t);text-decoration:underline;
+  text-underline-offset:3px;text-decoration-color:var(--bd3);
+}
+#blog-panel-body a:hover{text-decoration-color:var(--t)}
+#blog-panel-footer{
+  padding:.95rem 2rem;border-top:1px solid var(--bd);
+  font-family:var(--mono);font-size:.56rem;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--t3);flex-shrink:0;
+}
+
+/* ─── CONTACT ─── */
+.contact-wrap{
+  border-top:1px solid var(--bd);
+  background:var(--bg1);
+}
+.contact-inner{
+  padding:var(--gap) var(--px);
+  max-width:var(--max);margin:0 auto;
+  display:flex;justify-content:space-between;
+  align-items:flex-start;gap:3rem;flex-wrap:wrap;
+}
+.contact-heading{
+  font-size:clamp(2.2rem,6vw,5rem);
+  font-weight:900;letter-spacing:-.055em;
+  line-height:.9;color:var(--t);margin-bottom:1.25rem;
+}
+.contact-heading em{
+  font-family:var(--serif);
+  font-style:italic;font-weight:400;
+}
+.contact-body{
+  font-size:.9rem;line-height:1.77;
+  color:var(--t2);max-width:30rem;margin-bottom:2rem;
+}
+.contact-btns{display:flex;gap:.6rem;flex-wrap:wrap}
+
+/* ─── FOOTER ─── */
+.footer{
+  border-top:1px solid var(--bd);
+  padding:1.4rem var(--px);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:.75rem;
+  max-width:100%;
+}
+.footer-l,.footer-r{
+  font-family:var(--mono);font-size:.58rem;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--t3);
+}
+.footer-r{cursor:pointer;transition:color .2s}
+.footer-r:hover{color:var(--t2)}
+
+/* ─── TOAST ─── */
+#toast{
+  position:fixed;bottom:2rem;left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--t);color:var(--bg);
+  padding:.65rem 1.3rem;border-radius:999px;
+  font-family:var(--mono);font-size:.68rem;
+  letter-spacing:.06em;z-index:9000;
+  transition:transform .35s var(--spring),opacity .35s;
+  opacity:0;white-space:nowrap;pointer-events:none;
+}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* ─── KONAMI ─── */
+#konami-overlay{
+  position:fixed;inset:0;z-index:8000;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:1rem;
+  opacity:0;pointer-events:none;transition:opacity .4s;
+  border:1px solid var(--bd2);
+}
+#konami-overlay.show{opacity:1;pointer-events:all}
+#konami-overlay h2{
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(2rem,8vw,5rem);color:var(--t);
+  letter-spacing:-.03em;text-align:center;padding:0 2rem;
+}
+#konami-overlay p{
+  font-family:var(--mono);font-size:.78rem;
+  color:var(--t2);letter-spacing:.08em;text-align:center;
+}
+#konami-overlay button{
+  margin-top:.75rem;padding:.65rem 1.5rem;
+  border-radius:var(--r);border:1px solid var(--bd3);
+  background:var(--bg2);color:var(--t);
+  font-family:var(--mono);font-size:.7rem;
+  text-transform:uppercase;letter-spacing:.1em;
+  transition:background .2s,color .2s,border-color .2s;
+}
+#konami-overlay button:hover{
+  background:var(--t);color:var(--bg);border-color:var(--t);
+}
+
+/* ─── SCROLL REVEAL ─── */
+.reveal{
+  opacity:0;transform:translateY(18px);
+  transition:opacity .6s var(--ease),transform .6s var(--ease);
+}
+.reveal.shown{opacity:1;transform:translateY(0)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:960px){
+  .about-grid{grid-template-columns:1fr}
+  .about-sticky{position:relative;top:0}
+  .creds-grid{grid-template-columns:1fr}
+  .stats-block{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+  .nav-links{display:none}
+  .proj-row{grid-template-columns:40px 1fr}
+  .proj-right{display:none}
+}
+@media(max-width:560px){
+  .stats-block{grid-template-columns:1fr 1fr}
+  .stat{padding:1.3rem 1.5rem}
+  .stat-val{font-size:2rem}
+  .hero-name{letter-spacing:-.03em}
+  .proj-featured{flex-direction:column;gap:1rem;padding:1.4rem}
+  .proj-row{padding:1.2rem 1.2rem}
+  .proj-list{border-radius:var(--r)}
+  .blog-item{padding:1.2rem;flex-direction:column}
+  .blog-meta{flex-direction:row;justify-content:space-between;width:100%}
+  .game-hdr{flex-direction:column;align-items:flex-start;gap:.75rem;padding:1rem 1.2rem}
+  .game-meta{width:100%;flex-wrap:wrap}
+  #game-start-btn{width:100%;text-align:center}
+  .game-instruct{padding:.6rem 1.2rem .8rem;font-size:.5rem;gap:.85rem}
+  #hc-canvas{min-height:240px}
+  #blog-panel{width:100%;border-left:none}
+  #blog-panel-header{padding:1rem;gap:.65rem}
+  #blog-panel-tags{padding:.7rem 1rem}
+  #blog-panel-body{padding:1rem;font-size:.85rem}
+  #blog-panel-footer{padding:.8rem 1rem}
+  .contact-inner{flex-direction:column;padding-top:3.5rem;padding-bottom:3.5rem}
+  .footer{flex-direction:column;align-items:flex-start}
+  .quote-strip{padding:1.8rem var(--px)}
+  .quote-strip-inner{flex-direction:column;gap:.85rem}
+  .q-attr{text-align:left}
+}
+
+/* ═══ ENHANCEMENTS ═══ */
+
+/* Selection */
+::selection{background:rgba(124,58,237,.28)}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px}
+::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.2)}
+[data-theme="light"] ::-webkit-scrollbar-thumb{background:rgba(0,0,0,.14)}
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,.22)}
+
+/* Scroll offset for sticky nav */
+html{scroll-padding-top:4.5rem}
+
+/* ─ Hero staggered entrance ─ */
+@keyframes heroIn{
+  from{opacity:0;transform:translateY(22px)}
+  to  {opacity:1;transform:translateY(0)}
+}
+.hero-chapter{animation:heroIn .7s .05s var(--ease) both}
+.hero-name   {animation:heroIn .8s .18s var(--ease) both}
+.hero-roles  {animation:heroIn .65s .33s var(--ease) both}
+.hero-body   {animation:heroIn .6s .46s var(--ease) both}
+.hero-status {animation:heroIn .6s .56s var(--ease) both}
+.hero-ctas   {animation:heroIn .6s .66s var(--ease) both}
+.scroll-hint {animation:heroIn .5s 1.1s var(--ease) both}
+
+/* ─ Hero name gradient ─ */
+.hero-name{
+  background:linear-gradient(172deg,#ffffff 0%,rgba(237,237,237,.5) 100%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+[data-theme="light"] .hero-name{
+  background:linear-gradient(172deg,#000000 0%,rgba(10,10,10,.46) 100%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* ─ Scroll hint ─ */
+.scroll-hint{
+  position:absolute;bottom:2.25rem;right:0;
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  pointer-events:none;
+}
+.sh-line{
+  width:1px;height:38px;
+  background:linear-gradient(to bottom,transparent,var(--t3));
+  animation:shBob 2.4s 1.8s ease-in-out infinite;
+}
+.sh-txt{
+  font-family:var(--mono);font-size:.5rem;
+  text-transform:uppercase;letter-spacing:.2em;
+  color:var(--t3);writing-mode:vertical-rl;
+}
+@keyframes shBob{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(8px)}
+}
+
+/* ─ Scroll-to-top button ─ */
+#top-btn{
+  position:fixed;bottom:2rem;right:2rem;
+  width:36px;height:36px;border-radius:50%;
+  border:1px solid var(--bd3);background:var(--bg2);color:var(--t2);
+  font-size:.85rem;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transform:translateY(10px);
+  transition:opacity .28s var(--ease),transform .28s var(--ease),background .2s,color .2s;
+  z-index:150;pointer-events:none;cursor:pointer;
+}
+#top-btn.vis{opacity:1;transform:translateY(0);pointer-events:all}
+#top-btn:hover{background:var(--t);color:var(--bg);border-color:var(--t)}
+
+/* ─ Blog panel reading bar ─ */
+#panel-progress-bar{
+  height:2px;background:var(--t);
+  width:0%;transition:width .1s linear;flex-shrink:0;
+}
+
+/* ─ Blog category colours ─ */
+.blog-cat.cat-p{color:rgba(170,130,255,.85)}
+.blog-cat.cat-c{color:rgba(245,166,35,.85)}
+.blog-cat.cat-a{color:rgba(62,207,142,.85)}
+[data-theme="light"] .blog-cat.cat-p{color:rgba(100,55,200,.9)}
+[data-theme="light"] .blog-cat.cat-c{color:rgba(165,100,0,.9)}
+[data-theme="light"] .blog-cat.cat-a{color:rgba(15,130,82,.9)}
+
+/* ─ Quote fade ─ */
+.quote-strip-inner{transition:opacity .2s var(--ease)}
+
+/* ─ Project row left accent ─ */
+.proj-row{position:relative}
+.proj-row::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:var(--t);transform:scaleY(0);transform-origin:bottom;
+  transition:transform .22s var(--ease);
+}
+.proj-row:not(.inactive):hover::before{transform:scaleY(1)}
+
+/* ─ Blog item left accent ─ */
+.blog-item{position:relative}
+.blog-item::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:var(--t);transform:scaleY(0);transform-origin:bottom;
+  transition:transform .22s var(--ease);
+}
+.blog-item:hover::before{transform:scaleY(1)}
+
+/* ─ Stat hover ─ */
+.stat{transition:background .2s var(--ease)}
+.stat:hover{background:var(--bg2)}
+
+/* ─ Featured proj hover glow ─ */
+.proj-featured::after{
+  content:'';position:absolute;
+  top:0;left:0;width:240px;height:240px;
+  background:radial-gradient(circle at top left,rgba(124,58,237,.06) 0%,transparent 70%);
+  pointer-events:none;
+  opacity:0;transition:opacity .3s var(--ease);
+}
+.proj-featured:hover::after{opacity:1}
+
+/* ─ Contact watermark ─ */
+.contact-wrap{position:relative;overflow:hidden}
+.contact-wrap::before{
+  content:'06';
+  position:absolute;right:-1.5rem;bottom:-2rem;
+  font-size:clamp(9rem,18vw,18rem);
+  font-weight:900;line-height:1;letter-spacing:-.06em;
+  color:rgba(255,255,255,.04);
+  pointer-events:none;user-select:none;
+  font-family:var(--sans);
+}
+[data-theme="light"] .contact-wrap::before{color:rgba(0,0,0,.04)}
+
+/* ─ Cert row checkmark ─ */
+.cert-check{
+  margin-left:auto;
+  font-size:.6rem;color:var(--green);opacity:.6;flex-shrink:0;
+}
+
+/* ─ Focus ring ─ */
+:focus-visible{outline:2px solid var(--bd3);outline-offset:3px;border-radius:4px}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="cursor-glow"></div>
+<button id="top-btn" aria-label="Scroll to top">&#8593;</button>
+
+<div id="toast"></div>
+
+<div id="konami-overlay">
+  <h2>You found the secret.</h2>
+  <p>&#8593; &#8593; &#8595; &#8595; &#8592; &#8594; &#8592; &#8594; B A &mdash; classic</p>
+  <p style="font-family:var(--sans);font-size:1rem;color:var(--t2);margin-top:.4rem">Ethan approves of your moves.</p>
+  <button onclick="document.getElementById('konami-overlay').classList.remove('show')">Close &times;</button>
+</div>
+
+<div id="blog-modal">
+  <div id="blog-backdrop"></div>
+  <div id="blog-panel">
+    <div id="blog-panel-header">
+      <div>
+        <div id="blog-panel-cat"></div>
+        <div id="blog-panel-title"></div>
+      </div>
+      <button id="blog-close">Close &times;</button>
+    </div>
+    <div id="blog-panel-tags"></div>
+    <div id="panel-progress-bar"></div>
+    <div id="blog-panel-body"></div>
+    <div id="blog-panel-footer">Written by Ethan Soh &mdash; 2026</div>
+  </div>
+</div>
+
+<!-- ─── NAV ─── -->
+<nav id="nav">
+  <div class="nav-logo" id="logo-egg">Ethan Soh</div>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#certs">Certs</a>
+    <a href="#blog">Writing</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="theme-tog">
+    <button id="btnD" class="on">Dark</button>
+    <button id="btnL">Light</button>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<div class="hero">
+  <div class="hero-grid"></div>
+
+  <div class="hero-chapter">
+    <span class="ch-num">01</span>
+    <span class="ch-line"></span>
+    <span class="ch-label">Introduction</span>
+  </div>
+
+  <h1 class="hero-name">Ethan<br>Soh</h1>
+
+  <div class="hero-roles">
+    <span>builder<span class="rdot">.</span></span>
+    <span>designer<span class="rdot">.</span></span>
+    <span>launcher<span class="rdot">.</span></span>
+  </div>
+
+  <p class="hero-body">
+    I build apps, tools, and platforms that help people learn,
+    communicate, and create. Currently shipping across iOS, web,
+    and developer tooling &mdash; mostly on too little sleep.
+  </p>
+
+  <div class="hero-status">
+    <span class="status-dot"></span>
+    <span>Currently shipping</span>
+    <span class="sep">&middot;</span>
+    <span>Singapore</span>
+    <span class="sep">&middot;</span>
+    <span>iOS + Web</span>
+  </div>
+
+  <div class="hero-ctas">
+    <a href="#work" class="btn-fill">See the work &nbsp;&#8594;</a>
+    <a href="https://github.com/quantamShade0337" target="_blank" rel="noopener" class="btn-ghost">GitHub</a>
+    <a href="https://www.linkedin.com/in/ethan-soh-9548863a9/" target="_blank" rel="noopener" class="btn-ghost">LinkedIn</a>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true">
+    <span class="sh-line"></span>
+    <span class="sh-txt">Scroll</span>
+  </div>
+</div>
+
+<!-- ─── MARQUEE ─── -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>Student Developer</span><span class="sep">/</span>
+    <span>Singapore</span><span class="sep">/</span>
+    <span>iOS Builder</span><span class="sep">/</span>
+    <span>Web Products</span><span class="sep">/</span>
+    <span>Swift Accelerator 2025</span><span class="sep">/</span>
+    <span>Apple Certified</span><span class="sep">/</span>
+    <span>Currently Shipping</span><span class="sep">/</span>
+    <span>Kyro Market</span><span class="sep">/</span>
+    <span>Student Developer</span><span class="sep">/</span>
+    <span>Singapore</span><span class="sep">/</span>
+    <span>iOS Builder</span><span class="sep">/</span>
+    <span>Web Products</span><span class="sep">/</span>
+    <span>Swift Accelerator 2025</span><span class="sep">/</span>
+    <span>Apple Certified</span><span class="sep">/</span>
+    <span>Currently Shipping</span><span class="sep">/</span>
+    <span>Kyro Market</span><span class="sep">/</span>
+  </div>
+</div>
+
+<!-- ─── STATS ─── -->
+<div style="max-width:var(--max);margin:3rem auto 0;padding:0 var(--px)">
+  <div class="stats-block reveal">
+    <div class="stat">
+      <div class="stat-val">7</div>
+      <div class="stat-lbl">Projects shipped</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">3</div>
+      <div class="stat-lbl">Live products</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" style="font-size:2rem;letter-spacing:-.03em">iOS+</div>
+      <div class="stat-lbl">Primary platform</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" style="font-size:2rem;letter-spacing:-.02em">SG</div>
+      <div class="stat-lbl">Based in</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── WORK ─── -->
+<div class="section reveal" id="work">
+  <div class="chapter">
+    <span class="cn">02</span>
+    <span class="cl"></span>
+    <span class="ct">The Work</span>
+  </div>
+  <h2 class="sec-heading">Selected projects</h2>
+  <p class="sec-sub">Apps, tools, and platforms &mdash; each one shipped with purpose.</p>
+
+  <!-- Featured -->
+  <div class="proj-featured reveal" onclick="window.open('https://kyromarket.com','_blank')">
+    <div class="feat-logo"><img src="kyro-logo.png" alt="Kyro"/></div>
+    <div class="feat-body">
+      <div class="feat-eyebrow">Case 01 &middot; 2026</div>
+      <div class="feat-name">Kyro Market</div>
+      <p class="feat-desc">Zero-commission developer marketplace. Builders buy and sell code assets, templates, and tools. Community-first &mdash; sellers keep 100% via their own payment links, buyers get verified licence keys.</p>
+      <div class="feat-footer">
+        <div class="proj-tags">
+          <span class="ptag">Node.js</span>
+          <span class="ptag">Firebase</span>
+          <span class="ptag">Marketplace</span>
+          <span class="ptag">Creator Economy</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:.85rem">
+          <span class="badge badge-live"><span class="bdot"></span>Live</span>
+          <span class="feat-link">kyromarket.com &nbsp;&#8594;</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- List -->
+  <div class="proj-list reveal">
+    <div class="proj-row" onclick="window.open('https://scripties-4ug0.onrender.com/','_blank')">
+      <div class="proj-num">02<br>2025</div>
+      <div class="proj-main">
+        <div class="proj-title-row"><span class="proj-name">Scripties</span></div>
+        <p class="proj-desc">Public speaking mastery. Turns pacing and delivery into something you can actually inspect and improve. Swift Accelerator 2025.</p>
+        <div class="proj-tags">
+          <span class="ptag">iOS</span><span class="ptag">Swift</span><span class="ptag">Education</span>
+        </div>
+      </div>
+      <div class="proj-right">
+        <span class="badge badge-live"><span class="bdot"></span>Live</span>
+        <span class="proj-link">Open &nbsp;&#8594;</span>
+      </div>
+    </div>
+
+    <div class="proj-row" onclick="window.open('https://flowday.ethansoh.com','_blank')">
+      <div class="proj-num">03<br>2025</div>
+      <div class="proj-main">
+        <div class="proj-title-row"><span class="proj-name">Flowday</span></div>
+        <p class="proj-desc">Smart study companion. Goals, exam dates, focus sessions &mdash; one place, one rhythm.</p>
+        <div class="proj-tags">
+          <span class="ptag">Web</span><span class="ptag">Focus</span><span class="ptag">Students</span>
+        </div>
+      </div>
+      <div class="proj-right">
+        <span class="badge badge-live"><span class="bdot"></span>Live</span>
+        <span class="proj-link">Open &nbsp;&#8594;</span>
+      </div>
+    </div>
+
+    <div class="proj-row inactive">
+      <div class="proj-num">04<br>2026</div>
+      <div class="proj-main">
+        <div class="proj-title-row"><span class="proj-name">Chinese</span></div>
+        <p class="proj-desc">iOS app for mastering Mandarin &mdash; vocabulary, tones, reading practice. One focused tool. (Yes, it's harder than it looks.)</p>
+        <div class="proj-tags">
+          <span class="ptag">iOS</span><span class="ptag">Swift</span><span class="ptag">Language</span>
+        </div>
+      </div>
+      <div class="proj-right">
+        <span class="badge badge-dev"><span class="bdot"></span>In development</span>
+        <span class="proj-link-dead">Coming soon</span>
+      </div>
+    </div>
+
+    <div class="proj-row inactive">
+      <div class="proj-num">05<br>2026</div>
+      <div class="proj-main">
+        <div class="proj-title-row"><span class="proj-name">ADHD</span></div>
+        <p class="proj-desc">A game that teaches what it actually feels like to have ADHD. Built to build empathy &mdash; intentionally hard to focus in.</p>
+        <div class="proj-tags">
+          <span class="ptag">iOS</span><span class="ptag">Game</span><span class="ptag">Empathy</span>
+        </div>
+      </div>
+      <div class="proj-right">
+        <span class="badge badge-dev"><span class="bdot"></span>In development</span>
+        <span class="proj-link-dead">Coming soon</span>
+      </div>
+    </div>
+
+    <div class="proj-row inactive">
+      <div class="proj-num">06<br>2025</div>
+      <div class="proj-main">
+        <div class="proj-title-row"><span class="proj-name">BuildingBlocs</span></div>
+        <p class="proj-desc">ML + computer vision translating sign language into letters. Accessibility tech that actually goes where it's needed.</p>
+        <div class="proj-tags">
+          <span class="ptag">ML</span><span class="ptag">Python</span><span class="ptag">Accessibility</span>
+        </div>
+      </div>
+      <div class="proj-right">
+        <span class="badge badge-res"><span class="bdot"></span>Research</span>
+        <span class="proj-link-dead">Research project</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── QUOTE ─── -->
+<div class="quote-strip reveal" id="quote-egg">
+  <div class="quote-strip-inner">
+    <div class="q-text">&ldquo;Ship it before you&rsquo;re ready.&rdquo;</div>
+    <div class="q-attr">Ethan, 2am &mdash; click to change</div>
+  </div>
+</div>
+
+<!-- ─── ABOUT ─── -->
+<div class="section reveal" id="about">
+  <div class="chapter">
+    <span class="cn">03</span>
+    <span class="cl"></span>
+    <span class="ct">The Builder</span>
+  </div>
+  <div class="about-grid">
+    <div class="about-sticky">
+      <div class="about-quote">&ldquo;Still early.<br>Already intentional.&rdquo;</div>
+      <div class="about-photo" id="photo-egg">
+        <img src="ethan-photo.png" alt="Ethan Soh"/>
+        <div class="photo-cap">
+          <div>
+            <div class="photo-cap-name">Ethan Soh</div>
+            <div class="photo-cap-sub">Class of 2026</div>
+          </div>
+          <span class="photo-cap-sg">SG</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="about-body">I&rsquo;m a student developer from Singapore who builds products with clear structure and a strong sense of purpose. My work is shaped by app design, public speaking, storytelling, and the belief that good software earns trust through clarity.</p>
+      <p class="about-body">I&rsquo;m drawn to tools that help people learn faster, communicate better, or feel less overwhelmed. Also to vending machines. Mostly tools though.</p>
+      <div class="about-facts">
+        <div class="fact">
+          <span class="fact-lbl">School</span>
+          <div class="school-chip">
+            <div class="school-icon"><img src="bpghs-logo.png" alt="BPGHS"/></div>
+            <span class="fact-val">Bukit Panjang Govt High</span>
+          </div>
+        </div>
+        <div class="fact">
+          <span class="fact-lbl">Lines written at 2am</span>
+          <span class="fact-val-xl" id="loc-counter">0</span>
+        </div>
+        <div class="fact">
+          <span class="fact-lbl">Powered by</span>
+          <span class="fact-val">Hot chocolate</span>
+        </div>
+        <div class="fact">
+          <span class="fact-lbl">Primary stack</span>
+          <span class="fact-val">Swift &middot; Node.js &middot; Firebase</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── CREDENTIALS ─── -->
+<div class="section reveal" id="certs">
+  <div class="chapter">
+    <span class="cn">04</span>
+    <span class="cl"></span>
+    <span class="ct">The Proof</span>
+  </div>
+  <h2 class="sec-heading">Credentials</h2>
+  <p class="sec-sub">Certified, recognised, and still going.</p>
+
+  <div class="creds-grid">
+    <div>
+      <div class="cred-lbl">Certifications</div>
+      <div class="cert-list" id="cert-apple-egg">
+        <div class="cert-row">
+          <div class="cert-icon"><img src="apple-cert.png" alt="Apple"/></div>
+          <div>
+            <div class="cert-name">App Development with Swift</div>
+            <div class="cert-meta">Apple Certified User &middot; 2025</div>
+          </div>
+          <span class="cert-check">&#10003;</span>
+        </div>
+        <div class="cert-row">
+          <div class="cert-icon"><img src="apple-cert.png" alt="Apple Teacher"/></div>
+          <div>
+            <div class="cert-name">Apple Teacher (Mac)</div>
+            <div class="cert-meta">Apple Teacher &middot; Mac</div>
+          </div>
+          <span class="cert-check">&#10003;</span>
+        </div>
+        <div class="cert-row">
+          <div class="cert-icon"><img src="apple-cert.png" alt="Apple Teacher Swift"/></div>
+          <div>
+            <div class="cert-name">Apple Teacher (Swift)</div>
+            <div class="cert-meta">Apple Teacher &middot; Swift</div>
+          </div>
+          <span class="cert-check">&#10003;</span>
+        </div>
+        <div class="cert-row">
+          <div class="cert-icon"><img src="swift-logo.png" alt="Swift Accelerator"/></div>
+          <div>
+            <div class="cert-name">Swift Accelerator Graduate</div>
+            <div class="cert-meta">Apple &middot; IMDA &middot; TinkerTanker &middot; 2025</div>
+          </div>
+          <span class="cert-check">&#10003;</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="cred-lbl">Recognition</div>
+      <div class="rec-list">
+        <div class="rec-row">
+          <div class="rec-yr">2025</div>
+          <div class="rec-name">Swift Accelerator Programme</div>
+          <div class="rec-desc">Eight-month iOS talent programme by Apple, IMDA, and SwiftInSG. Graduated. Survived. Shipped.</div>
+        </div>
+        <div class="rec-row">
+          <div class="rec-yr">2022</div>
+          <div class="rec-name">NRC Top 20</div>
+          <div class="rec-desc">Placed nationally in the top 20 at the National Robotics Competition Singapore.</div>
+        </div>
+        <div class="rec-row">
+          <div class="rec-yr">2021</div>
+          <div class="rec-name">FLL Best Presentation</div>
+          <div class="rec-desc">Recognised for presentation quality and storytelling at First Lego League.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── GAME ─── -->
+<div class="game-outer">
+  <div class="chapter reveal">
+    <span class="cn">&mdash;</span>
+    <span class="cl"></span>
+    <span class="ct">Interlude</span>
+  </div>
+  <div class="game-cell reveal" id="game-cell">
+    <div class="game-hdr">
+      <div>
+        <div class="game-title">
+          Hot Chocolate Run
+          <small>the story of every late-night coding session</small>
+        </div>
+      </div>
+      <div class="game-meta">
+        <div class="game-score-box">Score <span id="score-display">0</span></div>
+        <div class="game-score-box">Best <span id="best-display">0</span></div>
+        <button id="game-start-btn">Play</button>
+      </div>
+    </div>
+    <canvas id="hc-canvas" width="1200" height="320"></canvas>
+    <div class="game-instruct">
+      <span>&#8592; &#8594; arrow keys or A D to move</span>
+      <span>catch marshmallows +1</span>
+      <span>avoid ice cubes</span>
+      <span>don&rsquo;t let the mug cool down</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── WRITING ─── -->
+<div class="section reveal" id="blog">
+  <div class="chapter">
+    <span class="cn">05</span>
+    <span class="cl"></span>
+    <span class="ct">The Voice</span>
+  </div>
+  <h2 class="sec-heading">Writing</h2>
+  <p class="sec-sub">Projects, certifications, and thoughts &mdash; in my own words.</p>
+  <ul class="blog-list" id="blog-list"></ul>
+</div>
+
+<!-- ─── CONTACT ─── -->
+<div class="contact-wrap" id="contact">
+  <div class="contact-inner">
+    <div class="reveal">
+      <div class="chapter" style="margin-bottom:2rem">
+        <span class="cn">06</span>
+        <span class="cl"></span>
+        <span class="ct">The Connection</span>
+      </div>
+      <h2 class="contact-heading">Let&rsquo;s build<br><em>something.</em></h2>
+      <p class="contact-body">Thoughtful work in education, communication, or product design? I&rsquo;d genuinely love to hear about it. Non-scammy emails only, please.</p>
+      <div class="contact-btns">
+        <a href="https://www.linkedin.com/in/ethan-soh-9548863a9/" target="_blank" rel="noopener" class="btn-fill">LinkedIn &nbsp;&#8594;</a>
+        <a href="https://github.com/quantamShade0337" target="_blank" rel="noopener" class="btn-ghost">GitHub</a>
+        <a href="https://kyromarket.com" target="_blank" rel="noopener" class="btn-ghost">Kyro</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer class="footer">
+  <span class="footer-l">Ethan Soh &mdash; 2026</span>
+  <span class="footer-r" id="footer-egg">built with focus, spite, and Outfit font</span>
+</footer>
+
+<script>
+/* ─── THEME ─── */
+const saved = localStorage.getItem('eth-theme') || 'dark';
+function setTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  localStorage.setItem('eth-theme', t);
+  document.getElementById('btnD').classList.toggle('on', t==='dark');
+  document.getElementById('btnL').classList.toggle('on', t==='light');
+}
+document.getElementById('btnD').addEventListener('click', () => setTheme('dark'));
+document.getElementById('btnL').addEventListener('click', () => setTheme('light'));
+setTheme(saved);
+
+/* ─── PROGRESS BAR ─── */
+const progressEl = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  progressEl.style.width = (scrolled / total * 100) + '%';
+}, { passive: true });
+
+/* ─── CURSOR GLOW ─── */
+const glow = document.getElementById('cursor-glow');
+window.addEventListener('mousemove', e => {
+  glow.style.left = e.clientX + 'px';
+  glow.style.top  = e.clientY + 'px';
+}, { passive: true });
+
+/* ─── NAV STUCK ─── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('stuck', window.scrollY > 60);
+}, { passive: true });
+
+/* ─── ACTIVE NAV ─── */
+const sections = ['work','about','certs','blog','contact'];
+const navAs = document.querySelectorAll('.nav-links a');
+const sectionEls = sections.map(id => document.getElementById(id)).filter(Boolean);
+const ioNav = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navAs.forEach(a => a.classList.remove('active'));
+      const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { threshold: 0.35 });
+sectionEls.forEach(el => ioNav.observe(el));
+
+/* ─── SCROLL REVEAL ─── */
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('shown'); });
+}, { threshold: .1 });
+document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+
+/* ─── TOAST ─── */
+const toastEl = document.getElementById('toast');
+let toastTimer;
+function showToast(msg) {
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2800);
+}
+
+/* ─── EASTER EGG 1: Logo click ─── */
+const logoNames = [
+  'ethan.exe','E. Soh, Esq.','The Builder','quantamShade0337',
+  'Ethan Soh','Loading...','probably debugging','404: sleep not found'
+];
+let logoIdx = 0;
+document.getElementById('logo-egg').addEventListener('click', () => {
+  logoIdx = (logoIdx + 1) % logoNames.length;
+  document.getElementById('logo-egg').textContent = logoNames[logoIdx];
+  showToast('Logo mutated. Reload to restore.');
+});
+
+/* ─── EASTER EGG 2: Photo click ─── */
+let photoClicks = 0;
+const photoMsgs = [
+  'Nice photo, Ethan.','He sees you.','Still sees you.',
+  'ok this is getting weird','STOP CLICKING HIM','fine. have a biscuit.'
+];
+document.getElementById('photo-egg').addEventListener('click', () => {
+  showToast(photoMsgs[photoClicks % photoMsgs.length]);
+  photoClicks++;
+});
+
+/* ─── EASTER EGG 3: Quote cycle ─── */
+const quotes = [
+  { q: '"Ship it before you\'re ready."', a: 'Ethan, 2am, no regrets' },
+  { q: '"Is Milo considered hot chocolate?"', a: 'Ethan, very serious question' },
+  { q: '"Where is my hot chocolate?"', a: 'Ethan, every night without fail' },
+  { q: '"Marshmallows are emotional support objects."', a: 'peer-reviewed, probably' },
+  { q: '"Hot chocolate is just therapy with better branding."', a: 'and cheaper too' },
+  { q: '"If it\'s not slightly too hot to drink I don\'t trust it."', a: 'quality standards, non-negotiable' },
+  { q: '"I don\'t have my life together but this cup does."', a: 'the mug understood the assignment' },
+  { q: '"I waited 5 minutes for this and still burned my tongue."', a: 'every. single. time.' },
+  { q: '"Productivity is temporary. Hot chocolate is forever."', a: 'put this in a fortune cookie' },
+  { q: '"Happiness is measured in mugs, not achievements."', a: 'new KPI, effective immediately' },
+  { q: '"Happiness is a warm mug and a green light on prod."', a: 'Ethan, 2am, crying a little' },
+  { q: '"Surely I can vibecode it."', a: 'Ethan, 5 minutes before chaos' },
+  { q: '"Imagine if I ChatGPT a prompt for Codex."', a: 'AI inception speedrun' },
+  { q: '"What could possibly go wrong?"', a: 'everything. everything went wrong.' },
+  { q: '"Local cafes open at 2am?"', a: 'they are not. Ethan checked.' },
+  { q: '"It works on my machine."', a: 'classic. timeless. wrong.' },
+  { q: '"One more feature won\'t hurt."', a: 'famous last words, vol. 47' },
+  { q: '"I\'ll sleep when it\'s deployed."', a: 'Ethan, still not sleeping' },
+  { q: '"The docs said it would work."', a: 'the docs lied' },
+  { q: '"I asked AI for help and it asked me to clarify my life."', a: 'valid response honestly' },
+  { q: '"Artificial intelligence. Real confusion."', a: 'marketing vs reality' },
+  { q: '"The AI is learning but so am I. Unfortunately."', a: 'we\'re both struggling' },
+  { q: '"Sometimes the AI is right and that is deeply concerning."', a: 'unsettling vibes' },
+  { q: '"I automate things to avoid thinking. Now I think about automations."', a: 'the cycle is unbroken' },
+  { q: '"The AI understood the assignment. I did not."', a: 'respectfully humbling' },
+  { q: '"We built AI to save time and used it to waste it faster."', a: 'progress.' },
+  { q: '"AI is just confidence at scale."', a: 'not wrong though' },
+  { q: '"Everyone here is either working or pretending to."', a: 'cafe observation, 3pm' },
+  { q: '"This place smells like ambition and burnout."', a: 'also oat milk' },
+  { q: '"I came here to focus and instead developed a personality."', a: 'worth it?' },
+  { q: '"Cafes are just socially acceptable loitering zones."', a: 'and we love them for it' },
+  { q: '"The wifi is faster than my thoughts."', a: 'low bar, achieved' },
+  { q: '"The louder the keyboard, the less work is being done."', a: 'universal law, no exceptions' },
+  { q: '"This is not procrastination. This is a creative pause."', a: 'very different things. legally.' },
+  { q: '"I opened this to do one thing and now I live here."', a: 'rent is free though' },
+  { q: '"Progress is happening quietly. Do not disturb."', a: 'please leave a message' },
+  { q: '"If it works, do not question it. Just feel it."', a: 'senior dev energy' },
+  { q: '"This felt like a good idea 10 minutes ago."', a: 'still shipping it anyway' },
+  { q: '"Small wins are still wins. Especially this one."', a: 'count everything' },
+  { q: '"I am not stuck. I am exploring inefficiently."', a: 'technically correct' },
+  { q: '"The bug was a feature the whole time."', a: 'patch notes: none' },
+  { q: '"I should go to sleep."', a: 'Ethan, 3:47am, not going to sleep' },
+  { q: '"Git commit: fixed stuff, broke other stuff, moved on."', a: 'honest commit history' },
+  { q: '"My code works and I have no idea why."', a: 'shipping it anyway' },
+  { q: '"Stack Overflow has been open for 4 hours. Still not fixed."', a: 'Ethan, coping' },
+  { q: '"This is fine."', a: 'it is not fine. the hot chocolate is cold now too.' },
+  { q: '"git commit -m \\"PLEASE WORK\\""', a: 'Ethan, 2am, spiritually broken' },
+];
+let qIdx = 0;
+(function(){
+  const strip = document.getElementById('quote-egg');
+  const inner = strip.querySelector('.quote-strip-inner');
+  strip.addEventListener('click', () => {
+    qIdx = (qIdx + 1) % quotes.length;
+    inner.style.opacity = '0';
+    setTimeout(() => {
+      inner.querySelector('.q-text').textContent = quotes[qIdx].q;
+      inner.querySelector('.q-attr').textContent = quotes[qIdx].a;
+      inner.style.opacity = '1';
+    }, 200);
+  });
+})();
+
+/* ─── EASTER EGG 4: Apple cert triple-click ─── */
+let certClicks = 0, certTimer;
+document.getElementById('cert-apple-egg').addEventListener('click', () => {
+  certClicks++;
+  clearTimeout(certTimer);
+  certTimer = setTimeout(() => certClicks = 0, 600);
+  if (certClicks >= 3) { certClicks = 0; showToast('Apple certified and proud. Yes, really.'); }
+});
+
+/* ─── EASTER EGG 5: Footer ─── */
+let footerIdx = 0;
+const footerLines = [
+  'built with focus, spite, and Outfit font',
+  'no frameworks were harmed in this build',
+  'CSS: the real dark arts',
+  'deployed at 11:59pm like a pro',
+  'vsc0de gang forever',
+  'it took longer than expected. always does.',
+];
+document.getElementById('footer-egg').addEventListener('click', () => {
+  footerIdx = (footerIdx + 1) % footerLines.length;
+  document.getElementById('footer-egg').textContent = footerLines[footerIdx];
+});
+
+/* ─── EASTER EGG 6: Konami ─── */
+const konami = [38,38,40,40,37,39,37,39,66,65];
+let ki = 0;
+document.addEventListener('keydown', e => {
+  if (e.keyCode === konami[ki]) { ki++; if (ki === konami.length) { document.getElementById('konami-overlay').classList.add('show'); ki = 0; } }
+  else { ki = 0; }
+});
+
+/* ─── LOC COUNTER ─── */
+(function(){
+  const el = document.getElementById('loc-counter');
+  const target = 13857;
+  let started = false;
+  function fmt(n){ return n.toLocaleString('en-US'); }
+  function animate(){
+    const dur = 2200, start = performance.now();
+    function tick(now){
+      const t = Math.min((now - start) / dur, 1);
+      const ease = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+      el.textContent = fmt(Math.round(ease * target));
+      if (t < 1) requestAnimationFrame(tick);
+      else el.textContent = fmt(target);
+    }
+    requestAnimationFrame(tick);
+  }
+  const lo = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting && !started){ started = true; animate(); } });
+  }, { threshold: .5 });
+  lo.observe(el);
+})();
+
+/* ─── EASTER EGG 7: type "ethan" ─── */
+let typed = '';
+document.addEventListener('keypress', e => {
+  typed += e.key.toLowerCase();
+  if (typed.includes('ethan')) { showToast('hey, that\'s my name. good memory.'); typed = ''; }
+  if (typed.length > 20) typed = typed.slice(-10);
+});
+
+/* ─── BLOG DATA ─── */
+const posts = [
+  {
+    cat:'Project',
+    title:'I Built a Marketplace Because I Was Tired of Watching Other People\'s Dreams Die in a Google Drive Folder',
+    preview:'Developers build incredible things and then zip them up and forget about them. That felt wrong.',
+    tags:['Kyro Market','Marketplace','2026'],
+    body:`<p>It started with a simple, slightly annoying observation: developers build incredible things — tools, templates, scripts, little utilities that save you three hours on a Tuesday — and then they just... zip them up and forget about them. Maybe they post a GitHub link once. Maybe it gets three stars. Maybe it doesn't.</p>
+<p>That felt wrong to me.</p>
+<p>Kyro Market started as a question: what if there was a place built specifically for developers to sell what they actually make? Not courses. Not consulting. The actual thing. The code, the template, the tool.</p>
+<p>The twist — and the part I'm most proud of — is the zero commission model. Sellers keep 100% by using their own payment links. Buyers get verified licence keys. The platform earns trust, not a cut. It's a weird model for a marketplace but it felt honest, and honest felt like the right place to start.</p>
+<p>Building it taught me things no tutorial ever would. I learned what a fake purchase flow looks like (and how to block it). I learned that sequential enumerable product IDs are a gift to bad actors. I learned that "just add Stripe" is never just adding Stripe. I also learned that shipping something imperfect is infinitely better than shipping nothing perfect.</p>
+<p>Kyro isn't finished. It's also not just a marketplace anymore — it's becoming a community. A place for builders who are also buyers. People who ship things and use things and understand that the two are connected.</p>
+<p>Is it scary putting your work on the internet? Yes. Did I do it anyway? Obviously. That's kind of the whole point.</p>
+<p><a href="https://kyromarket.com" target="_blank" rel="noopener">&#8594; kyromarket.com</a></p>`
+  },
+  {
+    cat:'Project',
+    title:'I Made an App to Help People Talk Better. The Irony of Explaining It Is Not Lost on Me.',
+    preview:'The hardest part of public speaking isn\'t the words. It\'s the space between them.',
+    tags:['Scripties','iOS','Swift','2025'],
+    body:`<p>Here's something nobody tells you about public speaking: the hardest part isn't the words. It's the space between them.</p>
+<p>The filler words. The rushed sentences. The moment you realise you've been talking at the speed of anxiety for four minutes straight and the audience has quietly checked out.</p>
+<p>Scripties was built to fix that — or at least make it visible. The app analyses your delivery: pacing, pauses, how you sound when you're nervous versus when you're actually in control. It turns all that invisible stuff into something you can actually look at, reflect on, and improve.</p>
+<p>I built it during the Swift Accelerator Programme in 2025. Eight months. A lot of Xcode. A lot of moments where I asked myself why I was spending a Saturday debugging audio processing when I could be doing literally anything else.</p>
+<p>The answer, every time, was: because this actually matters.</p>
+<p>Scripties grew out of my own experience with public speaking — which, for the record, I both love and find terrifying in equal measure. The best speakers I've watched don't seem nervous. But when I looked closer, they'd just done the work. They'd practised until the nerves became rhythm.</p>
+<p>That's what Scripties is for. Making the practice feel less like guessing.</p>
+<p><a href="https://scripties-4ug0.onrender.com/" target="_blank" rel="noopener">&#8594; Open project</a></p>`
+  },
+  {
+    cat:'Project',
+    title:'A Study App Built by Someone Who Definitely Had His Life Together While Building It (He Did Not)',
+    preview:'I had too many tabs open and too many deadlines. This one\'s for you.',
+    tags:['Flowday','Web','Students','2025'],
+    body:`<p>I built Flowday because I had too many tabs open and too many deadlines and the cognitive load of tracking all of them separately was genuinely affecting my ability to do any of them.</p>
+<p>Sound familiar? Good. This one's for you.</p>
+<p>Flowday is a student planning tool. Goals, exam dates, focus sessions — one place. The idea sounds simple because it is simple. That's the whole point. Students don't need more complexity. They need one clear surface that tells them what matters today and then gets out of the way.</p>
+<p>The design philosophy was: the interface should be calmer than your schedule. If looking at the app makes you more stressed, the app has failed. So I stripped it back. No noise, no dashboard overload, no gamification pressure. Just your stuff, organised, with a clear path forward.</p>
+<p>Did I use Flowday while building Flowday? Yes. Did it help? Also yes. Did I still pull a 2am session and forget to eat dinner? That's between me and my hot chocolate.</p>
+<p><a href="https://flowday.ethansoh.com" target="_blank" rel="noopener">&#8594; flowday.ethansoh.com</a></p>`
+  },
+  {
+    cat:'Project',
+    title:'Learning Mandarin Is Hard. I Made an App About It Anyway. Solidarity.',
+    preview:'I\'m Singaporean. Mandarin is compulsory. You would think that means I had this handled.',
+    tags:['Chinese','iOS','Swift','Unreleased'],
+    body:`<p>I'm Singaporean. Mandarin is compulsory. You would think that means I've had this handled since primary school. You would be optimistic.</p>
+<p>The reality is that learning a language — really learning it, not just surviving exams — is genuinely difficult. Tones are hard. Characters are harder. And most apps treat it like a game where you collect coins for getting things right, which sounds fun until you realise you've been grinding easy vocabulary for two weeks to keep a streak alive.</p>
+<p>Chinese is my attempt at something different. No gamification for its own sake. No streak anxiety. Just vocabulary, tones, and reading practice — organised in a way that actually builds understanding rather than recognition.</p>
+<p>It's unreleased. Still in development. But the reason I'm building it is real, and I think that's enough to start.</p>
+<p><em>In development — coming when it's ready.</em></p>`
+  },
+  {
+    cat:'Project',
+    title:'I Made a Game That\'s Intentionally Hard to Focus In. You\'re Welcome.',
+    preview:'Most people think ADHD means you can\'t focus. That\'s not quite it.',
+    tags:['ADHD','iOS','Game','Empathy','Unreleased'],
+    body:`<p>Most people think ADHD means you can't focus. That's not quite it. ADHD means your brain focuses — just not always on what you tell it to. Something in the corner becomes the most important thing in the room. The task you were supposed to do becomes physically difficult to stay on.</p>
+<p>It's not laziness. It's not a lack of trying. It's something structural, and most people who haven't experienced it genuinely don't understand what that's like.</p>
+<p>So I'm making a game that shows them.</p>
+<p>ADHD is a game where the environment works against you on purpose. Distractions are intentional. Staying on task is hard. Not because the task is hard, but because everything around it is louder. The experience is the point.</p>
+<p>I want people to finish a level and think: oh. That's what it's like.</p>
+<p>If it does that, I'll consider it a success.</p>
+<p><em>In development — because some ideas take time to get right.</em></p>`
+  },
+  {
+    cat:'Project',
+    title:'I Taught a Computer to Read Sign Language. The Computer Was More Patient Than I Was.',
+    preview:'What if a camera could actually understand what your hands are saying?',
+    tags:['BuildingBlocs','ML','Accessibility','2025'],
+    body:`<p>BuildingBlocs started with a question that felt small and turned out not to be: what if a camera could understand you?</p>
+<p>Not read your face or guess your mood. Actually understand what your hands are saying.</p>
+<p>Sign language is used by millions of people. It's expressive, complex, and beautiful. It's also invisible to most technology. Voice interfaces don't work for people who are Deaf or hard of hearing. Text input assumes a level of fine motor control not everyone has. The accessibility gap is real and mostly ignored.</p>
+<p>So I built a machine learning model that translates sign language gestures into letters using computer vision. It's not perfect. It's a proof of concept, not a finished product. But it works, and it works because the problem is worth solving.</p>
+<p>The technical stuff — training data, model accuracy, latency — was genuinely hard. But what kept me going was the original question. If this makes one interaction easier for one person, that's already worth more than the hours it cost me.</p>
+<p>Accessible technology shouldn't be an afterthought. BuildingBlocs was my attempt to prove that a secondary student can contribute to closing that gap, even a little.</p>
+<p><em>Research project, 2025.</em></p>`
+  },
+  {
+    cat:'Certification',
+    title:'Apple Gave Me a Certificate. My Mum Still Doesn\'t Know What Swift Is.',
+    preview:'I imagined something very formal. A leather folder. A handshake. I was wrong.',
+    tags:['Apple','Certification','iOS','2025'],
+    body:`<p>In 2025, I became an Apple Certified User in App Development with Swift.</p>
+<p>I'll be honest: when I first heard the words "Apple Certified," I imagined something very formal. A leather folder, maybe. A handshake. Someone official saying "well done, young man."</p>
+<p>What I actually got was a certification that represents a genuine year of learning — Swift syntax, iOS design patterns, Xcode's particular flavour of suffering, and the strange satisfaction of watching something you built run on an actual device for the first time.</p>
+<p>The certification covers app development fundamentals: Swift programming, UI design, data handling, and how to build things that feel like real apps rather than homework projects. It's structured, it's rigorous, and passing it meant I actually understood the material rather than just approximating it.</p>
+<p>My mum celebrated by asking if I could fix her iPhone. I could not. The certificate remains on my wall. We move on.</p>`
+  },
+  {
+    cat:'Certification',
+    title:'Eight Months, One App, Zero Chill. 10/10 Would Repeat.',
+    preview:'What it means to ship something versus just finish it. There\'s a difference.',
+    tags:['Swift Accelerator','Apple','IMDA','2025'],
+    body:`<p>The Swift Accelerator Programme is run by Apple, IMDA, and SwiftInSG. It's eight months of intensive iOS development training for secondary school students in Singapore who want to build real things.</p>
+<p>I applied because I wanted to build real things. Coincidence? No. Good judgment? Arguably.</p>
+<p>What I didn't fully anticipate was how much the programme would change the way I think — not just about code, but about design, about users, about what it means to ship something versus just finishing it. There's a difference. Finishing means the code runs. Shipping means someone else can use it and it respects their time.</p>
+<p>Scripties came out of this programme. Eight months of weekends and late evenings and moments of genuine confusion followed by genuine clarity. The mentors were good. The community was better. The experience of presenting your work to actual people — not just your teacher — was something I didn't know I needed.</p>
+<p>I graduated in 2025. I built something I'm proud of. I also discovered that Xcode has opinions about your code that it will express through very red error messages.</p>
+<p>Worth it. All of it.</p>`
+  },
+  {
+    cat:'Accomplishment',
+    title:'I Placed Top 20 Nationally in Robotics. The Robot Did Not Thank Me.',
+    preview:'On paper it\'s about building a robot. In reality it\'s about the three hours before when nothing works.',
+    tags:['NRC','Robotics','Competition','2022'],
+    body:`<p>In 2022, my team placed in the top 20 at the National Robotics Competition Singapore.</p>
+<p>Robotics competitions are an interesting thing. On paper, it's about building a robot that performs tasks. In reality, it's about the three hours before competition when nothing works and you're debugging with tools that are slightly too small for human hands and someone keeps saying "I think it's the sensor" and you are very, very tired.</p>
+<p>And then it works. And you compete. And you place top 20 nationally. And it feels — genuinely, properly — great.</p>
+<p>What I took from NRC wasn't just the result. It was learning how to work under pressure with a team. Learning that "I think" is not the same as "I tested." Learning that constraints (time, materials, rules) aren't obstacles to creativity — they're the shape creativity takes.</p>
+<p>I went in a student who liked building things. I came out a student who understood that building things under real conditions is a different skill, and one worth developing.</p>
+<p>The robot, for the record, performed admirably. It has never acknowledged my contribution.</p>`
+  },
+  {
+    cat:'Accomplishment',
+    title:'I Won an Award for Talking. This Explains a Lot About My Career Trajectory.',
+    preview:'The FLL presentation wasn\'t just about the robot. It was a story. That turned out to matter.',
+    tags:['FLL','Presentation','Storytelling','2021'],
+    body:`<p>In 2021, my First Lego League team was recognised with the Best Presentation award.</p>
+<p>Looking back, this one makes a lot of sense. Scripties is about public speaking. This portfolio has a lot of words on it. I built Kyro with a community focus. There is a common thread here and it is: I have always cared about how you communicate an idea, not just whether you have one.</p>
+<p>The FLL presentation wasn't just "here's our robot, here's what it does." It was a story. A problem we cared about, a solution we built, a case we made for why it mattered. The judges gave us the award for presentation quality and storytelling.</p>
+<p>At the time, I was just trying to do a good job. In retrospect, I think I was already figuring out something important: the best technical work in the world doesn't move people unless it's communicated well.</p>
+<p>That belief has shaped everything I've built since.</p>`
+  },
+];
+
+/* ─── BLOG RENDER ─── */
+const catCls = { Project:'cat-p', Certification:'cat-c', Accomplishment:'cat-a' };
+const list = document.getElementById('blog-list');
+posts.forEach((p, i) => {
+  const li = document.createElement('li');
+  li.className = 'blog-item';
+  li.innerHTML = `
+    <div class="blog-left">
+      <div class="blog-cat ${catCls[p.cat]||''}">${p.cat}</div>
+      <div class="blog-title">${p.title}</div>
+      <div class="blog-preview">${p.preview}</div>
+    </div>
+    <div class="blog-meta">
+      <div class="blog-tags">${p.tags.slice(0,2).map(t=>`<span class="blog-tag">${t}</span>`).join('')}</div>
+      <span class="blog-arr">&#8594;</span>
+    </div>`;
+  li.addEventListener('click', () => openBlog(i));
+  list.appendChild(li);
+});
+
+/* ─── BLOG MODAL ─── */
+const modal = document.getElementById('blog-modal');
+function openBlog(i) {
+  const p = posts[i];
+  document.getElementById('blog-panel-cat').textContent = p.cat;
+  document.getElementById('blog-panel-title').textContent = p.title;
+  document.getElementById('blog-panel-tags').innerHTML = p.tags.map(t=>`<span class="blog-tag">${t}</span>`).join('');
+  document.getElementById('blog-panel-body').innerHTML = p.body;
+  document.getElementById('blog-panel-body').scrollTop = 0;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeBlog() {
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBlog(); });
+document.getElementById('blog-backdrop').addEventListener('click', closeBlog);
+document.getElementById('blog-close').addEventListener('click', closeBlog);
+window.closeBlog = closeBlog;
+
+/* ─── BLOG PANEL READING PROGRESS ─── */
+(function(){
+  const body = document.getElementById('blog-panel-body');
+  const bar  = document.getElementById('panel-progress-bar');
+  body.addEventListener('scroll', () => {
+    const { scrollTop, scrollHeight, clientHeight } = body;
+    const pct = scrollHeight <= clientHeight ? 0 : (scrollTop / (scrollHeight - clientHeight)) * 100;
+    bar.style.width = pct + '%';
+  }, { passive: true });
+})();
+
+/* ─── SCROLL TO TOP ─── */
+(function(){
+  const btn = document.getElementById('top-btn');
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('vis', window.scrollY > 500);
+  }, { passive: true });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+})();
+
+/* ─── GAME START BTN ─── */
+document.getElementById('game-start-btn').addEventListener('click', () => gameStart());
+
+/* ════════════════════════════════════════
+   HOT CHOCOLATE GAME
+════════════════════════════════════════ */
+(function(){
+  const canvas  = document.getElementById('hc-canvas');
+  const ctx     = canvas.getContext('2d');
+  const scoreEl = document.getElementById('score-display');
+  const bestEl  = document.getElementById('best-display');
+  const startBtn= document.getElementById('game-start-btn');
+
+  function resize(){
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width  = rect.width;
+    canvas.height = 320;
+  }
+  resize();
+  window.addEventListener('resize', ()=>{ resize(); if(!running) drawIdle(); });
+
+  let running=false, over=false;
+  let score=0, best=parseInt(localStorage.getItem('hc-best')||'0');
+  let raf;
+  bestEl.textContent = best;
+
+  const mug = { x:0, y:0, w:54, h:64, speed:0, maxSpeed:7, warmth:100, catchFlash:0, hitFlash:0 };
+  let items=[], spawnTimer=0, spawnInterval=90, frameCount=0, steam=[];
+  const keys={};
+
+  document.addEventListener('keydown',e=>{
+    keys[e.key]=true;
+    if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','a','d'].includes(e.key)) e.preventDefault();
+  });
+  document.addEventListener('keyup',e=>{ keys[e.key]=false; });
+
+  canvas.addEventListener('mousemove', e=>{
+    if(!running) return;
+    const r = canvas.getBoundingClientRect();
+    mug.x = e.clientX - r.left - mug.w/2;
+  });
+  canvas.addEventListener('touchstart',e=>{ e.preventDefault(); },{passive:false});
+  canvas.addEventListener('touchmove',e=>{
+    if(!running) return;
+    const r=canvas.getBoundingClientRect();
+    mug.x = e.touches[0].clientX - r.left - mug.w/2;
+    e.preventDefault();
+  },{passive:false});
+
+  function roundRect(x,y,w,h,r){
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+    ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+    ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+    ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);
+    ctx.closePath();
+  }
+
+  function lerp(a,b,t){return a+(b-a)*Math.clamp(t,0,1)}
+  Math.clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+  function drawMug(x,y,warmth,catchFlash,hitFlash){
+    const W=mug.w, H=mug.h;
+    const sx = hitFlash>0 ? (Math.random()-.5)*6 : 0;
+    x += sx;
+    const warm=warmth/100;
+    const br=Math.floor(lerp(180,120,warm)), bg=Math.floor(lerp(60,40,warm)), bb=Math.floor(lerp(20,10,warm));
+    ctx.save();
+    roundRect(x,y,W,H,10);
+    const bodyGrad=ctx.createLinearGradient(x,y,x+W,y+H);
+    bodyGrad.addColorStop(0,`rgb(${br+30},${bg+20},${bb+10})`);
+    bodyGrad.addColorStop(1,`rgb(${br},${bg},${bb})`);
+    ctx.fillStyle=bodyGrad;
+    if(catchFlash>0){ctx.shadowColor='#ffe080';ctx.shadowBlur=20;}
+    if(hitFlash>0){ctx.shadowColor='#80c8ff';ctx.shadowBlur=22;}
+    ctx.fill();ctx.restore();
+    const liquidY=y+10, liquidH=H-20;
+    const hotColor=`rgba(${lerp(60,180,warm)|0},${lerp(30,80,warm)|0},${lerp(10,20,warm)|0},.95)`;
+    roundRect(x+6,liquidY,W-12,liquidH,6);ctx.fillStyle=hotColor;ctx.fill();
+    ctx.beginPath();ctx.moveTo(x+6,liquidY+8);ctx.bezierCurveTo(x+6+10,liquidY+4,x+W-16,liquidY+12,x+W-6,liquidY+6);
+    ctx.strokeStyle=`rgba(255,220,160,${.3+warm*.4})`;ctx.lineWidth=3;ctx.stroke();
+    ctx.beginPath();ctx.arc(x+W+8,y+H/2,14,-Math.PI*.6,Math.PI*.6);
+    ctx.strokeStyle=`rgb(${br},${bg},${bb})`;ctx.lineWidth=7;ctx.stroke();
+    if(warmth<40){roundRect(x,y,W,H,10);ctx.fillStyle=`rgba(100,180,255,${.12*(1-warmth/40)})`;ctx.fill();}
+    const bw=W,bh=5,by=y+H+6;
+    ctx.fillStyle='rgba(255,255,255,.08)';roundRect(x,by,bw,bh,3);ctx.fill();
+    const wc=warmth>60?'#f5a040':warmth>30?'#f0c040':'#60aaff';
+    ctx.fillStyle=wc;roundRect(x,by,bw*(warmth/100),bh,3);ctx.fill();
+  }
+
+  function drawMarshmallow(x,y,r,wobble){
+    ctx.save();ctx.translate(x,y);ctx.rotate(wobble);
+    const puff=[[0,-r*.3,r*.7],[r*.3,r*.1,r*.65],[-r*.3,r*.1,r*.65],[0,r*.3,r*.6]];
+    puff.forEach(([px,py,pr])=>{
+      ctx.beginPath();ctx.arc(px,py,pr,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,248,240,.95)';ctx.shadowColor='rgba(255,180,80,.4)';ctx.shadowBlur=6;ctx.fill();
+    });
+    ctx.shadowBlur=0;
+    [[-.3,-.5],[.3,-.4],[0,-.8]].forEach(([dx,dy])=>{
+      ctx.beginPath();ctx.arc(dx*r,dy*r,r*.12,0,Math.PI*2);ctx.fillStyle='rgba(255,160,180,.7)';ctx.fill();
+    });
+    ctx.restore();
+  }
+
+  function drawIceCube(x,y,size,rot){
+    ctx.save();ctx.translate(x,y);ctx.rotate(rot);
+    const s=size;
+    ctx.beginPath();ctx.rect(-s/2,-s/2,s,s);
+    const ig=ctx.createLinearGradient(-s/2,-s/2,s/2,s/2);
+    ig.addColorStop(0,'rgba(180,230,255,.92)');ig.addColorStop(.5,'rgba(210,245,255,.85)');ig.addColorStop(1,'rgba(140,200,240,.9)');
+    ctx.fillStyle=ig;ctx.strokeStyle='rgba(120,180,240,.5)';ctx.lineWidth=1.5;ctx.fill();ctx.stroke();
+    ctx.beginPath();ctx.moveTo(-s*.3,-s*.3);ctx.lineTo(-s*.05,-s*.3);ctx.lineTo(-s*.3,-s*.05);ctx.closePath();
+    ctx.fillStyle='rgba(255,255,255,.45)';ctx.fill();
+    ctx.beginPath();ctx.moveTo(-s*.1,-s*.4);ctx.lineTo(-s*.1,s*.4);ctx.moveTo(-s*.4,-s*.1);ctx.lineTo(s*.4,-s*.1);
+    ctx.strokeStyle='rgba(160,210,240,.4)';ctx.lineWidth=1;ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawSteam(s){
+    ctx.save();ctx.globalAlpha=s.alpha;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,220,180,1)';ctx.fill();ctx.restore();
+  }
+
+  function drawBg(){
+    const grad=ctx.createLinearGradient(0,0,0,canvas.height);
+    grad.addColorStop(0,'#1a0900');grad.addColorStop(1,'#0f0500');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.beginPath();ctx.moveTo(0,canvas.height-55);ctx.lineTo(canvas.width,canvas.height-55);
+    ctx.strokeStyle='rgba(160,80,20,.25)';ctx.lineWidth=2;ctx.stroke();
+    ctx.strokeStyle='rgba(255,120,30,.04)';ctx.lineWidth=1;
+    for(let x=0;x<canvas.width;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,canvas.height);ctx.stroke();}
+    for(let y=0;y<canvas.height;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(canvas.width,y);ctx.stroke();}
+    const glow=ctx.createRadialGradient(mug.x+mug.w/2,mug.y+mug.h,0,mug.x+mug.w/2,mug.y+mug.h,120);
+    glow.addColorStop(0,`rgba(255,140,40,${.06*(mug.warmth/100)})`);glow.addColorStop(1,'rgba(255,140,40,0)');
+    ctx.fillStyle=glow;ctx.fillRect(0,0,canvas.width,canvas.height);
+  }
+
+  function drawHUD(){
+    if(!over){
+      ctx.font=`600 12px 'Fragment Mono'`;ctx.fillStyle='rgba(245,200,128,.5)';
+      ctx.textAlign='left';ctx.fillText(`WARMTH ${Math.ceil(mug.warmth)}%`,16,22);
+      ctx.textAlign='right';ctx.fillText(`SCORE ${score}`,canvas.width-16,22);
+    }
+  }
+
+  function drawIdleScreen(){
+    ctx.save();ctx.fillStyle='rgba(0,0,0,.55)';ctx.fillRect(0,0,canvas.width,canvas.height);
+    const cx=canvas.width/2, cy=canvas.height/2-30;
+    mug.x=cx-mug.w/2;mug.y=cy;drawMug(mug.x,mug.y,100,0,0);
+    for(let i=0;i<3;i++){
+      const sx=cx+[-10,0,10][i],sy=cy-(i*8+10);
+      ctx.beginPath();ctx.arc(sx,sy,4,0,Math.PI*2);
+      ctx.fillStyle=`rgba(255,200,140,${.15+i*.05})`;ctx.fill();
+    }
+    ctx.textAlign='center';ctx.fillStyle='#f5c880';
+    ctx.font=`italic 600 22px 'Instrument Serif'`;ctx.fillText('Hot Chocolate Run',cx,cy+mug.h+36);
+    ctx.font=`500 11px 'Fragment Mono'`;ctx.fillStyle='rgba(245,200,128,.55)';
+    ctx.fillText("ethan's at 2am. the hot choc must survive.",cx,cy+mug.h+58);
+    ctx.fillText('press PLAY or use arrow keys to start',cx,cy+mug.h+76);
+    ctx.restore();
+  }
+
+  function drawGameOver(){
+    ctx.save();ctx.fillStyle='rgba(0,0,0,.65)';ctx.fillRect(0,0,canvas.width,canvas.height);
+    const cx=canvas.width/2,cy=canvas.height/2;
+    ctx.textAlign='center';
+    const msg=score>=20?'legendary. the hot choc survived.':score>=10?'solid effort. the marshmallows thank you.':score>=5?'not bad. could be worse.':'the hot chocolate went cold. tragic.';
+    ctx.fillStyle='#f5c880';ctx.font=`italic 700 26px 'Instrument Serif'`;
+    ctx.fillText(score>=10?'Warmth preserved!':'Mug went cold.',cx,cy-28);
+    ctx.font=`500 12px 'Fragment Mono'`;ctx.fillStyle='rgba(245,200,128,.7)';ctx.fillText(msg,cx,cy+4);
+    ctx.fillStyle='rgba(245,200,128,.4)';ctx.font=`500 11px 'Fragment Mono'`;
+    ctx.fillText(`Score: ${score}  |  Best: ${best}`,cx,cy+30);ctx.fillText('Press PLAY to try again',cx,cy+52);
+    ctx.restore();
+  }
+
+  function drawIdle(){drawBg();drawIdleScreen();}
+
+  function spawnItem(){
+    const isMarshmallow=Math.random()<.55;
+    const x=20+Math.random()*(canvas.width-40);
+    items.push({type:isMarshmallow?'marsh':'ice',x,y:-30,vy:1.8+Math.random()*2.2+score*.04,wobble:0,wobbleDir:Math.random()<.5?1:-1,size:isMarshmallow?18+Math.random()*10:14+Math.random()*10,rot:Math.random()*Math.PI*2,rotV:(Math.random()-.5)*.06});
+  }
+
+  function hitTest(item){
+    const mx2=mug.x+mug.w,my2=mug.y+mug.h,ir=item.size;
+    return item.x+ir>mug.x&&item.x-ir<mx2&&item.y+ir>mug.y&&item.y-ir<my2;
+  }
+
+  function loop(){
+    if(!running) return;
+    frameCount++;ctx.clearRect(0,0,canvas.width,canvas.height);drawBg();
+    const spd=6;
+    if(keys['ArrowLeft']||keys['a']||keys['A']) mug.x-=spd;
+    if(keys['ArrowRight']||keys['d']||keys['D']) mug.x+=spd;
+    mug.x=Math.clamp(mug.x,0,canvas.width-mug.w);
+    mug.warmth-=.07+score*.001;
+    if(mug.warmth<0) mug.warmth=0;
+    spawnTimer++;
+    if(spawnTimer>=spawnInterval){spawnItem();spawnTimer=0;spawnInterval=Math.max(38,90-score*2.5);}
+    for(let i=items.length-1;i>=0;i--){
+      const it=items[i];it.y+=it.vy;it.wobble+=it.wobbleDir*.07;it.rot+=it.rotV;
+      if(hitTest(it)){
+        if(it.type==='marsh'){
+          score++;mug.warmth=Math.min(100,mug.warmth+12);mug.catchFlash=12;scoreEl.textContent=score;
+          if(score>best){best=score;localStorage.setItem('hc-best',best);bestEl.textContent=best;}
+          for(let s=0;s<6;s++) steam.push({x:mug.x+mug.w/2+(Math.random()-.5)*20,y:mug.y,r:2+Math.random()*3,vy:-1.5-Math.random()*2,vx:(Math.random()-.5)*1.5,alpha:.7,life:35});
+        } else {mug.warmth-=22;mug.hitFlash=14;}
+        items.splice(i,1);continue;
+      }
+      if(it.y>canvas.height+40){items.splice(i,1);continue;}
+      if(it.type==='marsh') drawMarshmallow(it.x,it.y,it.size,it.wobble);
+      else drawIceCube(it.x,it.y,it.size,it.rot);
+    }
+    for(let s=steam.length-1;s>=0;s--){
+      const p=steam[s];p.x+=p.vx;p.y+=p.vy;p.alpha-=.02;p.r+=.08;
+      if(p.alpha<=0){steam.splice(s,1);continue;}drawSteam(p);
+    }
+    if(frameCount%8===0&&mug.warmth>20) steam.push({x:mug.x+mug.w/2+(Math.random()-.5)*10,y:mug.y+4,r:1.5,vy:-1.2-Math.random(),vx:(Math.random()-.5)*.8,alpha:.35*(mug.warmth/100),life:40});
+    if(mug.catchFlash>0) mug.catchFlash--;
+    if(mug.hitFlash>0)   mug.hitFlash--;
+    drawMug(mug.x,mug.y,mug.warmth,mug.catchFlash,mug.hitFlash);drawHUD();
+    if(mug.warmth<=0){running=false;over=true;startBtn.textContent='Try Again';drawGameOver();return;}
+    raf=requestAnimationFrame(loop);
+  }
+
+  window.gameStart=function(){
+    cancelAnimationFrame(raf);running=true;over=false;
+    score=0;scoreEl.textContent=0;
+    mug.warmth=100;mug.catchFlash=0;mug.hitFlash=0;
+    mug.x=canvas.width/2-mug.w/2;mug.y=canvas.height-mug.h-64;
+    items=[];steam=[];frameCount=0;spawnTimer=0;spawnInterval=90;
+    startBtn.textContent='Restart';loop();
+  };
+
+  document.addEventListener('keydown',e=>{
+    if(!running&&!over&&(e.key==='ArrowLeft'||e.key==='ArrowRight'||e.key==='a'||e.key==='d')) gameStart();
+  });
+
+  drawIdle();
+})();
+</script>
+</body>
+</html>
