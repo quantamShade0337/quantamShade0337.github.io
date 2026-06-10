@@ -136,6 +136,12 @@ u, em, b, i { text-decoration: none; font-style: normal; }
   font-weight: 700; line-height: 1.06; letter-spacing: -.025em;
   margin-bottom: 22px;
 }
+.hero-sub {
+  display: block;
+  font-size: .46em; font-weight: 600;
+  letter-spacing: -.02em; line-height: 1.25;
+  margin-top: 12px;
+}
 .hl {
   background: var(--highlight);
   padding: .02em .14em; margin: 0 -.04em;
