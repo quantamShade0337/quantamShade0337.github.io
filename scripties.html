@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
+  <title>Scripties — your pocket speaking coach</title>
+  <meta name="description" content="Scripties is an iOS app that listens to you rehearse and tells you the truth about your pacing. Built by Ethan Soh during Swift Accelerator 2025." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='50,12 92,86 8,86' fill='%231d1d1f'/></svg>" />
+  <link rel="stylesheet" href="style.css?v=11" />
+  <style>
+    .sp-hero { padding: calc(var(--nav-h) + 88px) 0 96px; }
+    .sp-hero .hero-grid { grid-template-columns: 1.15fr .85fr; }
+    .sp-hero .hero-photo img {
+      width: 100%; max-width: 300px; margin: 0 auto;
+      aspect-ratio: auto; object-fit: unset; transform: none;
+    }
+    .sp-feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .sp-stat-strip { display: flex; gap: 48px; flex-wrap: wrap; margin-top: 40px; }
+    .sp-stat-strip strong { display: block; font-size: 34px; font-weight: 700; letter-spacing: -.02em; line-height: 1.15; }
+    .sp-stat-strip span { font-size: 13px; color: var(--gray); }
+    .sp-story p { color: #515154; font-size: 17px; line-height: 1.55; max-width: 58ch; margin-bottom: 16px; }
+    @media (max-width: 960px) { .sp-feature-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="Ethan Soh — home">
+        <svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,12 92,86 8,86"/></svg>
+        <span>Ethan Soh</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="index.html#work">Work</a>
+        <a href="index.html#open-source">Open Source</a>
+        <a href="index.html#certs">Certifications</a>
+        <a href="index.html#about">About</a>
+      </nav>
+      <a class="btn btn-blue btn-sm" href="index.html#contact">Get in touch</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- hero -->
+    <section class="sp-hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="hero-eyebrow reveal">iOS · Swift Accelerator 2025</p>
+          <h1 class="hero-title reveal" style="--d:.08s">Your pocket <span class="hl">speaking coach</span>.</h1>
+          <p class="hero-lead reveal" style="--d:.18s">
+            Scripties listens while you rehearse and tells you the truth — how fast
+            you're going, how steady you sound, and where it fell apart. Like a
+            speech coach, minus the judgemental eyebrows.
+          </p>
+          <div class="cta-row reveal" style="--d:.28s">
+            <a class="btn btn-blue" href="index.html#contact">Ask me about it</a>
+            <a class="link-chevron" href="index.html#work">Back to the work <span>›</span></a>
+          </div>
+          <div class="sp-stat-strip reveal" style="--d:.38s">
+            <div><strong>207</strong><span>wpm — me, panicking</span></div>
+            <div><strong>120</strong><span>wpm — the ideal</span></div>
+            <div><strong>80–85%</strong><span>consistency sweet spot</span></div>
+          </div>
+        </div>
+        <div class="hero-photo reveal" style="--d:.2s">
+          <img class="shot shot-phone" src="shot-scripties.webp?v=2" alt="Scripties review screen showing words per minute and consistency scores" style="transform:none" />
+        </div>
+      </div>
+    </section>
+
+    <!-- features -->
+    <section class="band-gray">
+      <div class="container">
+        <header class="section-head">
+          <h2 class="reveal">What it actually does.</h2>
+          <p class="reveal">Rehearse, get roasted by data, improve. Repeat until stage-ready.</p>
+        </header>
+        <div class="sp-feature-grid">
+          <article class="beyond-card reveal">
+            <span class="beyond-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l4-9 3 6 2.5-4L17 17"/><path d="M3 21h18"/></svg>
+            </span>
+            <h3>Words per minute</h3>
+            <p>Tracks your pace against the ideal range. Turns out I rehearse at 207 wpm when nervous. The green band keeps you honest.</p>
+          </article>
+          <article class="beyond-card reveal" style="--d:.06s">
+            <span class="beyond-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l2-7 4 14 3-10 2 3h4"/></svg>
+            </span>
+            <h3>Consistency score</h3>
+            <p>Measures how steady your delivery is across the whole run. 80–85% is the sweet spot — enough rhythm to follow, enough variety to stay awake.</p>
+          </article>
+          <article class="beyond-card reveal" style="--d:.12s">
+            <span class="beyond-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m10 8.5 5 3.5-5 3.5z"/></svg>
+            </span>
+            <h3>Playback &amp; review</h3>
+            <p>Listen back to your run with the numbers next to it. Painful at first, weirdly addictive after. That's how the improving happens.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- story -->
+    <section class="section">
+      <div class="container band-grid">
+        <div class="sp-story">
+          <h2 class="reveal">Why this exists.</h2>
+          <p class="reveal">I've been obsessed with public speaking since FIRST LEGO League, where the presentation award mattered to me more than the robot did.</p>
+          <p class="reveal">When I got into Swift Accelerator, I knew exactly what to build: the coach I always wanted. Something that doesn't just record you, but actually tells you what to fix — pacing, steadiness, the spots where you sped through the good part.</p>
+          <p class="reveal">It became my capstone project. I tested every build on my own speeches first, which means the app has heard more bad takes of me than any human ever will.</p>
+        </div>
+        <dl class="facts">
+          <div class="reveal"><dt>Platform</dt><dd>iOS</dd></div>
+          <div class="reveal" style="--d:.06s"><dt>Built with</dt><dd>Swift</dd></div>
+          <div class="reveal" style="--d:.12s"><dt>Programme</dt><dd>Swift Accelerator 2025</dd></div>
+          <div class="reveal" style="--d:.18s"><dt>Role</dt><dd>Design, build, test — all of it</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- cta -->
+    <section class="contact" style="padding: 120px 0">
+      <div class="container contact-inner">
+        <h2 class="reveal">Want the full story?</h2>
+        <p class="reveal">Happy to demo it, talk through how the analysis works, or hear what you'd add. Non-scammy emails only, as always.</p>
+        <div class="cta-row reveal">
+          <a class="btn btn-blue" href="index.html#contact">Get in touch</a>
+          <a class="link-chevron" href="index.html">Back home <span>›</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>© 2026 Ethan Soh. Built with focus and spite.</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="https://github.com/quantamShade0337" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/ethan-soh-9548863a9/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // minimal reveal-on-scroll (this page doesn't load main.js)
+    const io = new IntersectionObserver((es) => {
+      for (const e of es) if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+    document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+    setTimeout(() => document.querySelectorAll(".reveal:not(.in)").forEach((el) => {
+      if (el.getBoundingClientRect().top < innerHeight) el.classList.add("in");
+    }), 2500);
+  </script>
+</body>
+</html>

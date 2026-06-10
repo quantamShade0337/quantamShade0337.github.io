@@ -406,7 +406,10 @@
     link: "https://ethn.link",
     links: "https://ethn.link",
     kyro: "https://kyromarket.com",
-    meshlab: "https://github.com/quantamShade0337/meshlab",
+    meshlab: "https://meshlab.ethansoh.com",
+    flowday: "https://flowday.ethansoh.com",
+    axinote: "https://flowday.ethansoh.com",
+    scripties: "scripties.html",
     email: "mailto:ethansytwrites@gmail.com",
     mail: "mailto:ethansytwrites@gmail.com",
     source: "https://github.com/quantamShade0337/quantamShade0337.github.io"
