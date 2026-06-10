@@ -208,32 +208,6 @@ u, em, b, i { text-decoration: none; font-style: normal; }
 }
 .shot-phone { max-width: 300px; border-radius: 28px; }
 
-/* ─── CSS product mockups ─── */
-.mock-viewport {
-  border-radius: 14px; overflow: hidden; background: #161617;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, .14);
-  max-width: 520px; margin: 0 auto;
-}
-.mock-bar { display: flex; align-items: center; gap: 6px; padding: 11px 13px; background: #f0f0f2; }
-.mock-bar i { width: 10px; height: 10px; border-radius: 50%; }
-.mock-bar i:nth-child(1) { background: #ff5f57; }
-.mock-bar i:nth-child(2) { background: #febc2e; }
-.mock-bar i:nth-child(3) { background: #28c840; }
-.mock-url {
-  margin: 0 auto; background: #fff; border-radius: 6px;
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0;
-  color: #86868b; padding: 3px 16px;
-}
-.mock-bar.dark { background: #2c2c2e; }
-.mock-bar.dark .mock-url { background: #1d1d1f; color: #98989d; }
-
-/* meshlab: 3D viewport */
-.mock-canvas { padding: 10px 16px 16px; }
-.mock-canvas svg { width: 100%; display: block; }
-.mock-chips { display: flex; gap: 6px; margin-top: 6px; }
-.mock-chips span { font-family: var(--mono); font-size: 10px; letter-spacing: 0; color: #d2d2d7; background: #2c2c2e; padding: 3px 10px; border-radius: 6px; }
-.mock-chips .ok { color: #30d158; }
-
 /* smaller projects */
 .mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; padding-top: 18px; }
 .mini-card {
