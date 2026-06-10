@@ -1,133 +1,45 @@
-# Ethan Soh - Portfolio
+# Ethan Soh — Portfolio
 
-Personal portfolio website showcasing my projects, accomplishments, and experience as a student developer from Singapore.
+Personal portfolio website in Apple's product-page design language: pure black canvas, San Francisco type, flat rounded panels, one blue accent, alternating black/white bands. No gradients, no gimmicks.
 
-## 🚀 Live Demo
+**Live:** https://quantamshade0337.github.io
 
-Visit the live site: [Your GitHub Pages URL will be here]
+## Features
 
-## 📋 About
+- **Apple design system** — `#f5f5f7`/`#86868b` grays, `#1d1d1f` panels, `#0071e3` blue, system San Francisco fonts (zero font downloads)
+- **Restrained motion** — fade-up scroll reveals on Apple's easing curve, count-up stats, a typing macOS terminal, copy-email toast, Konami code easter egg
+- **Live open-source section** — every original public repo pulled from the GitHub API at load, with an embedded snapshot fallback and language filters
+- **All 10 certifications** — Apple, Google, Microsoft, and IMDA, with credential IDs
+- **Accessible & responsive** — `prefers-reduced-motion` respected, semantic markup, mobile-first breakpoints
 
-This portfolio features:
-- **FlowDay** - Smart study companion for students
-- **Scripties** - Public speaking mastery app (Swift Accelerator 2025 project)
-- **Sign Language AI** - Computer vision project for accessibility
-- Swift Accelerator Programme graduate (2025)
-- Various accomplishments and awards
+## Stack
 
-## 🛠️ Built With
+HTML + CSS + vanilla JavaScript. No build step, no dependencies, no web fonts.
 
-- HTML5
-- CSS3 (Custom styling with CSS Variables)
-- Vanilla JavaScript
-- No frameworks or dependencies
-
-## 📁 Project Structure
+## Files
 
 ```
-portfolio-site/
-├── index.html           # Main HTML file
-├── assets/              # Image assets
-│   ├── scripties-logo.png
-│   ├── ethan-photo.png
-│   ├── bpghs-logo.png
-│   └── flowday-logo.png (add your own)
-└── README.md           # This file
+index.html      # markup
+style.css       # design system + components
+main.js         # interactions, repo/cert rendering
+DESIGN.md       # Apple design spec the site follows
+index.old.html  # previous version (kept as reference)
 ```
 
-## 🎨 Features
+## Develop
 
-- **Light Theme** - Clean, minimal design inspired by modern portfolios
-- **Responsive Design** - Works on desktop, tablet, and mobile
-- **Project Showcase** - Interactive cards for each project
-- **Timeline** - Education and experience displayed chronologically
-- **Fast Loading** - No external dependencies, pure HTML/CSS/JS
-
-## 📦 Setup
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/portfolio-site.git
-   cd portfolio-site
-   ```
-
-2. **Add your FlowDay logo**
-   - Place your FlowDay logo in the `assets/` folder
-   - Name it `flowday-logo.png`
-   - Recommended: 512x512px, PNG format with transparent background
-
-3. **Open locally**
-   - Simply open `index.html` in your web browser
-   - Or use a local server: `python -m http.server 8000`
-
-## 🌐 Deploy to GitHub Pages
-
-1. **Push to GitHub**
-   ```bash
-   git add .
-   git commit -m "Initial commit"
-   git push origin main
-   ```
-
-2. **Enable GitHub Pages**
-   - Go to your repository settings
-   - Navigate to "Pages" in the sidebar
-   - Under "Source", select "Deploy from a branch"
-   - Select branch: `main` and folder: `/ (root)`
-   - Click "Save"
-
-3. **Access your site**
-   - Your site will be live at: `https://YOUR_USERNAME.github.io/portfolio-site/`
-   - It may take a few minutes to deploy
-
-## ✏️ Customization
-
-### Update Content
-Edit `index.html` to update:
-- Personal information in the header
-- Project descriptions
-- Accomplishments
-- Social media links
-
-### Update Styling
-All styles are in the `<style>` section of `index.html`:
-- Color scheme defined in `:root` CSS variables
-- Easy to change colors, fonts, spacing
-- Responsive breakpoints at 768px
-
-### Add Projects
-Follow the existing project card structure:
-```html
-<a href="YOUR_PROJECT_URL" class="project-card" target="_blank">
-    <div class="project-header">
-        <div class="project-icon">
-            <img src="assets/your-logo.png" alt="Project Name">
-        </div>
-        <div class="project-info">
-            <h3 class="project-name">Project Name</h3>
-            <p class="project-tagline">Short tagline</p>
-        </div>
-    </div>
-    <p class="project-description">
-        Detailed description of your project...
-    </p>
-    <span class="project-badge">Badge Text</span>
-</a>
+```bash
+python3 -m http.server 8000
+# open http://localhost:8000
 ```
 
-## 📄 License
+Test helper: `?snap` disables entrance animations (for screenshots).
 
-This project is open source and available under the [MIT License](LICENSE).
+## Contact
 
-## 📬 Contact
-
-- **GitHub**: [@quantamShade0337](https://github.com/quantamShade0337)
-- **LinkedIn**: [Ethan Soh](https://www.linkedin.com/in/ethan-soh-9548863a9/)
-
-## 🙏 Acknowledgments
-- Swift Accelerator Programme by Apple, IMDA, and SwiftInSG
-- Bukit Panjang Government High School
+- GitHub: [@quantamShade0337](https://github.com/quantamShade0337)
+- LinkedIn: [Ethan Soh](https://www.linkedin.com/in/ethan-soh-9548863a9/)
 
 ---
 
-Built with focus and dedication. © 2026 Ethan Soh
+© 2026 Ethan Soh. Built with focus and spite.

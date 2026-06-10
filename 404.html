@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
+  <title>Ethan Soh — 404</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='50,12 92,86 8,86' fill='%231d1d1f'/></svg>" />
+  <script>
+    // slash shortcuts — ethansoh.github.io/<key> redirects via this 404 page
+    (() => {
+      const map = {
+        github: "https://github.com/quantamShade0337",
+        gh: "https://github.com/quantamShade0337",
+        repos: "https://github.com/quantamShade0337?tab=repositories",
+        linkedin: "https://www.linkedin.com/in/ethan-soh-9548863a9/",
+        in: "https://www.linkedin.com/in/ethan-soh-9548863a9/",
+        link: "https://ethn.link",
+        links: "https://ethn.link",
+        kyro: "https://kyromarket.com",
+        meshlab: "https://github.com/quantamShade0337/meshlab",
+        email: "mailto:ethansytwrites@gmail.com",
+        mail: "mailto:ethansytwrites@gmail.com",
+        source: "https://github.com/quantamShade0337/quantamShade0337.github.io"
+      };
+      const key = location.pathname.replace(/^\/+|\/+$/g, "").toLowerCase();
+      if (map[key]) location.replace(map[key]);
+    })();
+  </script>
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    .nf { min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 22px; }
+    .nf h1 { font-size: clamp(48px, 8vw, 96px); font-weight: 700; letter-spacing: -.025em; line-height: 1.04; margin-bottom: 16px; }
+    .nf > p { font-size: 19px; color: var(--gray); max-width: 480px; margin-bottom: 36px; }
+    .nf-shortcuts { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 48px; max-width: 560px; }
+    .nf-shortcuts a { font-family: var(--mono); font-size: 13px; letter-spacing: 0; color: var(--gray); background: var(--panel); padding: 7px 14px; border-radius: 99px; transition: background .25s var(--ease), color .25s var(--ease); }
+    .nf-shortcuts a:hover { background: var(--ink); color: #fff; }
+    .nf-hint { font-size: 12px; color: var(--gray); margin-top: 14px; }
+  </style>
+</head>
+<body>
+  <main class="nf">
+    <h1>404. Page shipped<br/>without this route.</h1>
+    <p>Whatever you were looking for isn't here. It either never existed or I refactored it away at 2am.</p>
+    <div class="cta-row" style="justify-content:center">
+      <a class="btn btn-blue" href="/">Back home</a>
+      <a class="link-chevron" href="mailto:ethansytwrites@gmail.com">Report it <span>›</span></a>
+    </div>
+    <div class="nf-shortcuts">
+      <a href="/github">/github</a>
+      <a href="/repos">/repos</a>
+      <a href="/linkedin">/linkedin</a>
+      <a href="/link">/link</a>
+      <a href="/kyro">/kyro</a>
+      <a href="/meshlab">/meshlab</a>
+      <a href="/email">/email</a>
+      <a href="/source">/source</a>
+    </div>
+    <p class="nf-hint">Pro tip: these shortcuts work from any URL on this site.</p>
+  </main>
+</body>
+</html>
