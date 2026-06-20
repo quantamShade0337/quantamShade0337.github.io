@@ -1,16 +1,12 @@
-/* Ethan Soh — portfolio interactions */
 (() => {
   "use strict";
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  // ?snap — render everything immediately (used for screenshots/tests)
   if (new URLSearchParams(location.search).has("snap")) {
     document.documentElement.classList.add("snap");
   }
 
-  /* ───────── toast ───────── */
   const toast = $("#toast");
   let toastTimer;
   const showToast = (msg) => {
@@ -20,7 +16,6 @@
     toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
   };
 
-  /* ───────── copy email ───────── */
   $("#copyEmail").addEventListener("click", async (e) => {
     const email = e.currentTarget.dataset.email;
     try {
@@ -31,15 +26,11 @@
     }
   });
 
-  /* ───────── reveal on scroll ───────── */
   const io = new IntersectionObserver((entries) => {
     for (const en of entries) {
       if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
     }
   }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
-
-  // safety net: if an environment never fires the observer, reveal anything
-  // already inside the viewport bounds shortly after load
   const forceReveal = () => {
     $$(".reveal:not(.in)").forEach((el) => {
       if (el.getBoundingClientRect().top < innerHeight) el.classList.add("in");
@@ -48,7 +39,6 @@
   setTimeout(forceReveal, 2500);
   addEventListener("hashchange", () => setTimeout(forceReveal, 800));
 
-  /* ───────── count-up ───────── */
   const counters = new IntersectionObserver((entries) => {
     for (const en of entries) {
       if (!en.isIntersecting) continue;
@@ -67,9 +57,6 @@
     }
   }, { threshold: 0.6 });
 
-  /* ───────── open-source repos ─────────
-     Embedded snapshot (June 2026) renders instantly;
-     a live GitHub API fetch replaces it when available. */
   const FALLBACK_REPOS = [
     { name: "meshlab", description: "Image-to-3D pipeline with real STL/OBJ/GLB export for 3D printing.", html_url: "https://github.com/quantamShade0337/meshlab", homepage: "", language: "TypeScript", pushed_at: "2026-06-09" },
     { name: "CTFSolverWeb", description: "Capture-the-flag solving toolkit on the web.", html_url: "https://github.com/quantamShade0337/CTFSolverWeb", homepage: "https://ctf-solver-web.vercel.app", language: "JavaScript", pushed_at: "2026-06-08" },
@@ -119,8 +106,6 @@
 
   const repoGrid = $("#repoGrid");
   const filterRow = $("#filterRow");
-
-  // collapsed by default: 2 full rows + a faded sliver of row 3 as a hint
   let reposExpanded = false;
   const repoClipbox = $("#repoClipbox");
   const repoToggle = $("#repoToggle");
@@ -184,8 +169,6 @@
         open(el.dataset.href, "_blank", "noopener");
       });
     });
-
-    // language filter pills
     const langs = [...new Set(repos.map((r) => r.language).filter(Boolean))];
     filterRow.innerHTML =
       `<button class="filter-pill active" data-lang="">All</button>` +
@@ -218,16 +201,11 @@
         if (counter) counter.dataset.target = repos.length;
       }
     })
-    .catch(() => {}); // fallback snapshot already rendered
+    .catch(() => {});
 
-  /* ───────── GitHub contribution graph ─────────
-     Real data via the public contributions JSON API
-     (same source react-github-calendar uses). */
   const contrib = $("#contrib");
   const renderContrib = (days, total) => {
       if (!days || !days.length) return;
-
-      // pad so the first column starts on Sunday, then split into weeks
       const cells = Array(new Date(days[0].date).getDay()).fill(null).concat(days);
       const weeks = [];
       for (let i = 0; i < cells.length; i += 7) weeks.push(cells.slice(i, i + 7));
@@ -271,9 +249,6 @@
         <div class="contrib-legend"><span>Less</span><i class="cl0"></i><i class="cl1"></i><i class="cl2"></i><i class="cl3"></i><i class="cl4"></i><span>More</span></div>`;
       contrib.hidden = false;
   };
-
-  // embedded snapshot (taken Jun 10, 2026) renders instantly and without
-  // any third-party request — the live fetch below replaces it when it can
   const CONTRIB_SNAP = {
     start: "2025-06-08",
     total: 1004,
@@ -300,15 +275,13 @@
       renderContrib(days, days.reduce((s, d) => s + d.count, 0));
     })
     .catch(() =>
-      // fallback mirror (caches aggressively, may lag a few hours)
       fetch("https://github-contributions-api.jogruber.de/v4/quantamShade0337?y=last")
         .then((r) => (r.ok ? r.json() : Promise.reject()))
         .then((data) => renderContrib(data.contributions,
           (data.total && data.total.lastYear) ?? data.contributions.reduce((s, d) => s + d.count, 0)))
-        .catch(() => {}) // snapshot is already on screen
+        .catch(() => {})
     );
 
-  /* ───────── certifications ───────── */
   const CERTS = [
     { issuer: "Apple", name: "App Development with Swift — Certified User", meta: "Issued Mar 2026 · Expires Mar 2031", id: "Certiport-verified" },
     { issuer: "Apple", name: "Apple Teacher (Swift)", meta: "Issued Apr 2026 · Swift, Education" },
@@ -330,7 +303,6 @@
       </div>
     </article>`).join("");
 
-  /* ───────── terminal typing ───────── */
   const TERM_LINES = [
     ["$ ", "whoami", "\nethan-soh — student, builder, launcher\n"],
     ["$ ", "ls ~/projects | wc -l", "\n31\n"],
@@ -373,7 +345,6 @@
   }, { threshold: 0.4 });
   termIO.observe(term);
 
-  /* ───────── konami ───────── */
   const KONAMI = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
   let ki = 0;
   addEventListener("keydown", (e) => {
@@ -394,35 +365,6 @@
     }
   });
 
-  /* ───────── slash shortcuts ─────────
-     404.html handles direct URLs on GitHub Pages; here we point the
-     footer pills at their real destinations so they work on any host. */
-  const SHORTCUTS = {
-    github: "https://github.com/quantamShade0337",
-    gh: "https://github.com/quantamShade0337",
-    repos: "https://github.com/quantamShade0337?tab=repositories",
-    linkedin: "https://www.linkedin.com/in/ethan-soh-9548863a9/",
-    in: "https://www.linkedin.com/in/ethan-soh-9548863a9/",
-    link: "https://ethn.link",
-    links: "https://ethn.link",
-    kyro: "https://kyromarket.com",
-    meshlab: "https://meshlab.ethansoh.com",
-    flowday: "https://flowday.ethansoh.com",
-    axinote: "https://flowday.ethansoh.com",
-    scripties: "scripties.html",
-    email: "mailto:ethansytwrites@gmail.com",
-    mail: "mailto:ethansytwrites@gmail.com",
-    source: "https://github.com/quantamShade0337/quantamShade0337.github.io"
-  };
-  $$(".footer-shortcuts a").forEach((a) => {
-    const key = a.getAttribute("href").replace(/^\//, "").toLowerCase();
-    const dest = SHORTCUTS[key];
-    if (!dest) return;
-    a.href = dest;
-    if (!dest.startsWith("mailto:")) { a.target = "_blank"; a.rel = "noopener"; }
-  });
-
-  /* ───────── wire up static elements ───────── */
   $$(".reveal").forEach((el) => io.observe(el));
   $$(".count").forEach((el) => counters.observe(el));
 })();

@@ -41,7 +41,6 @@
   </header>
 
   <main>
-    <!-- hero -->
     <section class="sp-hero">
       <div class="container hero-grid">
         <div class="hero-copy">
@@ -67,8 +66,6 @@
         </div>
       </div>
     </section>
-
-    <!-- features -->
     <section class="band-gray">
       <div class="container">
         <header class="section-head">
@@ -100,8 +97,6 @@
         </div>
       </div>
     </section>
-
-    <!-- story -->
     <section class="section">
       <div class="container band-grid">
         <div class="sp-story">
@@ -118,8 +113,6 @@
         </dl>
       </div>
     </section>
-
-    <!-- cta -->
     <section class="contact" style="padding: 120px 0">
       <div class="container contact-inner">
         <h2 class="reveal">Want the full story?</h2>
@@ -144,7 +137,6 @@
   </footer>
 
   <script>
-    // minimal reveal-on-scroll (this page doesn't load main.js)
     const io = new IntersectionObserver((es) => {
       for (const e of es) if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
     }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
