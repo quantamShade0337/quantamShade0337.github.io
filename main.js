@@ -303,48 +303,6 @@
       </div>
     </article>`).join("");
 
-  const TERM_LINES = [
-    ["$ ", "whoami", "\nethan-soh — student, builder, launcher\n"],
-    ["$ ", "ls ~/projects | wc -l", "\n31\n"],
-    ["$ ", "git commit -m ", '"ship it before you\'re ready"', "\n[main 2am4eva] 1 file changed, ∞ insertions\n"],
-    ["$ ", "deploy --prod", "\n", "<span class='td'>✓ Production: deployed in 9s</span>\n"],
-    ["$ ", "make hot-chocolate", "\n", "<span class='td'>brewing… done. back to work.</span>\n"]
-  ];
-  const term = $("#terminal");
-  const termIO = new IntersectionObserver((entries) => {
-    if (!entries[0].isIntersecting) return;
-    termIO.disconnect();
-    if (reduced || document.documentElement.classList.contains("snap")) {
-      term.innerHTML = TERM_LINES.map((l) => l.join("")).join("") + '<span class="cursor-block"></span>';
-      return;
-    }
-    let li = 0, html = "";
-    const typeLine = () => {
-      if (li >= TERM_LINES.length) { term.innerHTML = html + '<span class="cursor-block"></span>'; return; }
-      const parts = TERM_LINES[li];
-      let pi = 0;
-      const typePart = () => {
-        const part = parts[pi];
-        if (part == null) { li++; setTimeout(typeLine, 500); return; }
-        if (part.startsWith("<") || part.startsWith("\n")) {
-          html += part; term.innerHTML = html + '<span class="cursor-block"></span>';
-          pi++; setTimeout(typePart, 120);
-        } else {
-          let ci = 0;
-          const tick = () => {
-            html += part[ci]; term.innerHTML = html + '<span class="cursor-block"></span>';
-            if (++ci < part.length) setTimeout(tick, 22 + Math.random() * 40);
-            else { pi++; setTimeout(typePart, 100); }
-          };
-          tick();
-        }
-      };
-      typePart();
-    };
-    typeLine();
-  }, { threshold: 0.4 });
-  termIO.observe(term);
-
   const KONAMI = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
   let ki = 0;
   addEventListener("keydown", (e) => {

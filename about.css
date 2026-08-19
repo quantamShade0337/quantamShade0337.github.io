@@ -1,0 +1,89 @@
+.story-hero { padding: 32px 0 120px; }
+.story-back { display: inline-block; color: var(--gray); font-size: 15px; padding: 10px 0; transition: color .2s var(--ease); }
+.story-back:hover { color: var(--ink); }
+.story-intro { max-width: 880px; padding: 110px 0 72px; }
+.story-kicker { color: var(--gray); font-size: 13px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.story-intro h1 { max-width: 900px; font-size: clamp(44px, 6vw, 80px); font-weight: 700; line-height: .96; letter-spacing: -.04em; margin: 14px 0 28px; }
+.story-lead { max-width: 720px; color: var(--gray); font-size: clamp(20px, 2.5vw, 28px); line-height: 1.4; letter-spacing: -.018em; }
+.story-cover img { width: 100%; height: min(68vw, 680px); object-fit: cover; object-position: center 40%; border-radius: 22px; }
+.story-cover figcaption, .story-photo figcaption { color: var(--gray); font-size: 13px; margin-top: 12px; }
+
+.story-section { padding: 140px 0; }
+.story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 88px; align-items: center; }
+.story-grid-reverse .print-visual { order: 0; }
+.story-copy h2, .story-narrow h2, .story-dark-copy h2, .story-closing h2 { font-size: clamp(38px, 5vw, 62px); font-weight: 700; line-height: 1.04; letter-spacing: -.03em; margin: 16px 0 30px; }
+.story-copy > p:not(.story-number), .story-dark-copy > p:not(.story-number) { color: #515154; font-size: 18px; line-height: 1.62; letter-spacing: -.012em; margin-top: 18px; }
+.story-photo img { width: 100%; height: auto; aspect-ratio: 4/3; object-fit: cover; object-position: center 44%; border-radius: 20px; box-shadow: 0 24px 48px rgba(0, 0, 0, .12); }
+
+.story-narrow { max-width: 900px; }
+.story-columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px; margin-top: 50px; }
+.story-columns p { color: #515154; font-size: 17px; line-height: 1.65; }
+
+.story-dark { background: #000; color: #f5f5f7; }
+.story-dark .story-number, .story-dark .gallery-note { color: #86868b; }
+.story-dark-copy { max-width: 760px; margin-bottom: 70px; }
+.story-dark-copy > p:not(.story-number) { color: #a1a1a6; max-width: 64ch; }
+.photo-wall { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+.photo-wall figure { overflow: hidden; border-radius: 16px; background: #1d1d1f; }
+.photo-wall img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
+.photo-wall .concert-landscape { grid-column: span 8; height: 620px; }
+.photo-wall .concert-portrait { grid-column: span 4; height: 620px; }
+.photo-wall .concert-wide { grid-column: 1 / -1; height: 430px; }
+.photo-wall .concert-atmosphere { grid-column: span 7; height: 430px; }
+.photo-wall .night-detail { grid-column: span 5; height: 430px; }
+.photo-wall .night-architecture { grid-column: 3 / 11; height: 560px; }
+.photo-wall .concert-landscape img { object-position: center center; }
+.photo-wall .concert-portrait img { object-position: center top; }
+.photo-wall .concert-wide img { object-position: center 68%; }
+.photo-wall .concert-atmosphere img { object-position: center 78%; }
+.photo-wall .night-detail img { object-position: center 58%; }
+.photo-wall .night-architecture img { object-position: center 58%; }
+.photo-wall figure:hover img { transform: scale(1.015); }
+.gallery-note { margin-top: 18px; font-size: 13px; }
+.gallery-footer { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; }
+.gallery-link { color: #2997ff; font-size: 17px; white-space: nowrap; }
+.gallery-link:hover { text-decoration: underline; }
+
+.story-split { display: grid; grid-template-columns: 1.15fr .85fr; gap: 96px; align-items: center; }
+.guitar-photo img { width: 100%; height: 640px; object-fit: cover; object-position: center 38%; border-radius: 20px; box-shadow: 0 24px 48px rgba(0, 0, 0, .12); }
+.guitar-photo figcaption { color: var(--gray); font-size: 13px; line-height: 1.5; margin-top: 12px; }
+
+.print-visual { display: grid; place-items: center; min-height: 480px; background: var(--panel); border-radius: 22px; padding: 48px; }
+.print-visual svg { width: min(100%, 330px); }
+.print-visual span { color: var(--gray); font-family: var(--mono); font-size: 13px; letter-spacing: 0; }
+
+.story-closing { padding: 160px 0; border-top: 1px solid var(--hairline); }
+.story-closing-inner { max-width: 820px; }
+.story-closing-inner > p:not(.story-number) { color: var(--gray); font-size: 19px; line-height: 1.6; max-width: 64ch; margin-top: 18px; }
+.story-closing .cta-row { margin-top: 42px; }
+
+@media (max-width: 800px) {
+  .story-hero { padding-bottom: 88px; }
+  .story-intro { padding: 72px 0 52px; }
+  .story-section { padding: 96px 0; }
+  .story-grid, .story-split { grid-template-columns: 1fr; gap: 56px; }
+  .story-columns { grid-template-columns: 1fr; gap: 22px; }
+  .story-photo { max-width: 520px; }
+  .photo-wall { grid-template-columns: 1fr 1fr; }
+  .photo-wall .concert-landscape, .photo-wall .concert-portrait,
+  .photo-wall .concert-atmosphere, .photo-wall .night-detail { grid-column: span 1; height: 440px; }
+  .photo-wall .concert-wide, .photo-wall .night-architecture { grid-column: 1 / -1; height: 400px; }
+  .guitar-photo img { height: 560px; }
+  .print-visual { min-height: 380px; }
+  .story-closing { padding: 110px 0; }
+}
+
+@media (max-width: 560px) {
+  .story-cover img { height: 72svh; min-height: 460px; }
+  .photo-wall { grid-template-columns: 1fr; }
+  .photo-wall .concert-landscape, .photo-wall .concert-portrait,
+  .photo-wall .concert-wide, .photo-wall .concert-atmosphere,
+  .photo-wall .night-detail, .photo-wall .night-architecture { grid-column: 1; }
+  .photo-wall .concert-landscape, .photo-wall .concert-wide,
+  .photo-wall .concert-atmosphere, .photo-wall .night-detail { height: 300px; }
+  .photo-wall .concert-portrait, .photo-wall .night-architecture { height: 440px; }
+  .gallery-footer { display: block; }
+  .gallery-link { display: inline-block; margin-top: 18px; }
+  .guitar-photo img { height: 520px; }
+  .print-visual { min-height: 320px; padding: 32px; }
+}

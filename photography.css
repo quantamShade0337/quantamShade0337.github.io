@@ -1,0 +1,65 @@
+body { background: #000; color: #f5f5f7; }
+.photo-header { padding: 32px 0 112px; }
+.photo-back { display: inline-block; padding: 10px 0; color: #86868b; font-size: 15px; transition: color .18s ease; }
+.photo-back:hover { color: #f5f5f7; }
+.photo-intro { max-width: 820px; padding-top: 112px; }
+.photo-intro h1 { font-size: clamp(44px, 6vw, 80px); line-height: .96; letter-spacing: -.04em; }
+.photo-intro p { max-width: 620px; margin-top: 32px; color: #a1a1a6; font-size: clamp(20px, 2.4vw, 28px); line-height: 1.4; }
+.photo-collection { padding-bottom: 140px; }
+.photo-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+.photo-grid figure { overflow: hidden; min-height: 0; background: #111; border-radius: 16px; }
+.photo-grid img { width: 100%; height: 100%; object-fit: cover; }
+.photo-main { grid-column: span 8; height: 660px; }
+.photo-tall { grid-column: span 4; height: 660px; }
+.photo-wide { grid-column: 1 / -1; height: 500px; }
+.photo-stage { grid-column: span 7; height: 460px; }
+.photo-reflection { grid-column: span 5; height: 460px; }
+.photo-pavilion { grid-column: 3 / 11; height: 620px; }
+.photo-architecture { grid-column: span 5; height: 620px; }
+.photo-sunset { grid-column: span 7; height: 620px; }
+.photo-marina { grid-column: 1 / -1; height: 560px; }
+.photo-exhibit { grid-column: span 7; height: 520px; }
+.photo-greenery { grid-column: span 5; height: 520px; }
+.photo-mountain { grid-column: span 7; height: 470px; }
+.photo-dusk { grid-column: span 5; height: 470px; }
+.photo-rays { grid-column: 1 / -1; height: 620px; }
+.photo-concert-wide-new { grid-column: 1 / -1; height: 520px; }
+.photo-flight { grid-column: span 7; height: 460px; }
+.photo-red-sun { grid-column: span 5; height: 460px; }
+.photo-alpaca { grid-column: 3 / 11; height: 580px; }
+.photo-main img { object-position: center; }
+.photo-tall img { object-position: center top; }
+.photo-wide img { object-position: center 68%; }
+.photo-stage img { object-position: center 78%; }
+.photo-reflection img { object-position: center 58%; }
+.photo-pavilion img { object-position: center 58%; }
+.photo-architecture img { object-position: center 72%; }
+.photo-sunset img { object-position: center 58%; }
+.photo-marina img { object-position: center 66%; }
+.photo-exhibit img { object-position: center 45%; }
+.photo-greenery img { object-position: center 52%; }
+.photo-mountain img { object-position: center 62%; }
+.photo-dusk img { object-position: center 58%; }
+.photo-rays img { object-position: center 38%; }
+.photo-concert-wide-new img { object-position: center 58%; }
+.photo-flight img { object-position: center 58%; }
+.photo-red-sun img { object-position: center 44%; }
+.photo-alpaca img { object-position: center 52%; }
+.photo-footer { padding: 0 0 88px; }
+.photo-footer a { color: #2997ff; font-size: 17px; }
+.photo-footer a:hover { text-decoration: underline; }
+
+@media (max-width: 800px) {
+  .photo-header { padding-bottom: 80px; }
+  .photo-intro { padding-top: 72px; }
+  .photo-grid { grid-template-columns: 1fr 1fr; }
+  .photo-main, .photo-tall, .photo-stage, .photo-reflection, .photo-architecture, .photo-sunset, .photo-exhibit, .photo-greenery, .photo-mountain, .photo-dusk, .photo-flight, .photo-red-sun { grid-column: span 1; height: 440px; }
+  .photo-wide, .photo-pavilion, .photo-marina, .photo-rays, .photo-concert-wide-new, .photo-alpaca { grid-column: 1 / -1; height: 400px; }
+}
+
+@media (max-width: 560px) {
+  .photo-grid { grid-template-columns: 1fr; gap: 12px; }
+  .photo-main, .photo-tall, .photo-wide, .photo-stage, .photo-reflection, .photo-pavilion, .photo-architecture, .photo-sunset, .photo-marina, .photo-exhibit, .photo-greenery, .photo-mountain, .photo-dusk, .photo-rays, .photo-concert-wide-new, .photo-flight, .photo-red-sun, .photo-alpaca { grid-column: 1; }
+  .photo-main, .photo-wide, .photo-stage, .photo-reflection, .photo-sunset, .photo-marina, .photo-exhibit, .photo-mountain, .photo-dusk, .photo-rays, .photo-concert-wide-new, .photo-flight, .photo-red-sun, .photo-alpaca { height: 300px; }
+  .photo-tall, .photo-pavilion, .photo-architecture, .photo-greenery { height: 440px; }
+}

@@ -29,9 +29,11 @@ index.old.html  # previous version (kept as reference)
 ## Develop
 
 ```bash
-python3 -m http.server 8000
+python3 dev_server.py
 # open http://localhost:8000
 ```
+
+The development server disables caching and serves `404.html` for missing routes.
 
 Test helper: `?snap` disables entrance animations (for screenshots).
 
